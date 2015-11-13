@@ -91,7 +91,7 @@ public class FloorGenerator : MonoBehaviour {
 
                 GameObject wp = Instantiate(WaypointPrefab, StartSpot.position + SizeOfHexagonUpwards * rowf + SizeOfHexagonRightWards * colf + (oddRow ? Vector3.zero : SizeOfHexagonHalfWards), Quaternion.identity) as GameObject;
                 wp.transform.SetParent(wpPathfinder.transform);
-                wp.GetComponent<WaypointNode>().position = wp.transform.position;
+                wp.GetComponent<WaypointNode>().position = wp.transform.position + new Vector3(0,0,1);
                 wp.GetComponent<WaypointNode>().ID = row + col * sizeRightwards;
                 wp.GetComponent<WaypointNode>().isActive = true;
                 nodeStorages[col].Add(wp);
