@@ -12,25 +12,60 @@ public class GameManager : MonoBehaviour {
     public Transform StartPoint;
     public Transform EndPoint;
 
+	public GameObject readyButton;
+
+	public bool GameStarted = false;
+	public bool GamePaused = false;
+
     void Awake()
     {
         DOTween.Init();
         instance = this;
     }
 
+	void LoadLevelData (int levelSelected)
+	{
+
+	}
+
+	void LoadPlayerData (LevelOptions levelOptions)
+	{
+
+	}
 
 	// Use this for initialization
-	void Start () {
-        Invoke("LateStart", 0.5f);
+	void Start ()
+	{
+		LoadPlayerData(PlayerManager.instance.levelOptions);
+		LoadLevelData(PlayerManager.instance.selectedLevel);
     }
 	
 	// Update is called once per frame
-	void Update () {
+	void Update (){
 	
 	}
 
-    void LateStart()
-    {
-        thePath = floorGenerator.FindPath(StartPoint.position, EndPoint.position);
-    }
+	void ShowReadyButton ()
+	{
+		readyButton.SetActive(true);
+	}
+
+	public void GeneratePath()
+	{
+		thePath = floorGenerator.FindPath(StartPoint.position, EndPoint.position);
+		ShowReadyButton();
+	}
+
+	void StartWaves ()
+	{
+		enemyGenerator.StartWaves();
+	}
+
+	public void GameStart()
+	{
+		readyButton.SetActive(false);
+		StartWaves();
+		GameStarted = true;
+	}
+
 }

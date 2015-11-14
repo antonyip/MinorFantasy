@@ -43,7 +43,7 @@ public class FloorGenerator : MonoBehaviour {
         SizeOfHexagonRightWards = new Vector3(SizeOfHexagon.x,0,0);
         SizeOfHexagonHalfWards = new Vector3(0, SizeOfHexagon.y/2f, SizeOfHexagon.z/2f);
 
-        GenerateFloor(6, 18);
+        GenerateFloor(8, 18);
 
         
         
@@ -109,6 +109,7 @@ public class FloorGenerator : MonoBehaviour {
         }
 
         wpPathfinder.Start();
+		GameManager.instance.GeneratePath();
     }
 
     private void AddNeighboursFor(int col, int row)

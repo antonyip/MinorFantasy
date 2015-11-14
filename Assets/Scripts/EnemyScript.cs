@@ -5,32 +5,31 @@ using System;
 
 public class EnemyScript : MonoBehaviour {
 
-    List<Vector3> path;
+    public List<Vector3> path;
     List<Bullet> bullets;
 
     int hp = 5;
     int maxhp = 5;
     float speed = 1f;
 
-    // Use this for initialization
-    void Start () {
-        path = new List<Vector3>(GameManager.instance.thePath);
-        transform.DOMove(path[0], speed).OnComplete(NextMove);
-
-    }
-
     void NextMove()
     {
-        if (path.Count > 2)
+        if (path.Count > 0)
         {
-            path.RemoveAt(0);
             transform.DOMove(path[0], speed).OnComplete(NextMove);
+			path.RemoveAt(0);
         }
         else
         {
             Destroy(gameObject);
         }
     }
+
+	public void StartWalking()
+	{
+		path = new List<Vector3>(GameManager.instance.thePath);
+		NextMove();
+	}
 
     // Update is called once per frame
     void Update () {
