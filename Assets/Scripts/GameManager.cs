@@ -7,6 +7,8 @@ public class GameManager : MonoBehaviour {
     public static GameManager instance;
     public FloorGenerator floorGenerator;
     public EnemyGenerator enemyGenerator;
+	public TowerGenerator towerGenerator;
+	public BulletGenerator bulletGenerator;
     public List<Vector3> thePath;
 
     public Transform StartPoint;

@@ -18,6 +18,9 @@ public class SpawnObject
 public class EnemyGenerator : MonoBehaviour {
 
     public GameObject[] enemyPrefab;
+
+	public List<GameObject> listOfEnemiesSpawned = new List<GameObject>();
+
 	public float TimeBetweenWaves = 30f;
 	public List<SpawnObject> listOfEnemies = new List<SpawnObject>();
 
@@ -53,6 +56,7 @@ public class EnemyGenerator : MonoBehaviour {
         GameObject go = Instantiate(enemyPrefab[id]) as GameObject;
 		go.transform.position = GameManager.instance.StartPoint.position;
 		go.GetComponent<EnemyScript>().StartWalking();
+		listOfEnemiesSpawned.Add(go);
 		return go;
     }
 

@@ -6,9 +6,9 @@ using System;
 public class EnemyScript : MonoBehaviour {
 
     public List<Vector3> path;
-    List<Bullet> bullets;
+    List<Bullet> bullets = new List<Bullet>();
 
-    int hp = 5;
+    public int hp = 5;
     int maxhp = 5;
     float speed = 1f;
 
@@ -21,9 +21,9 @@ public class EnemyScript : MonoBehaviour {
         }
         else
         {
-            Destroy(gameObject);
-        }
-    }
+			EnemyHitBase();
+		}
+	}
 
 	public void StartWalking()
 	{
@@ -40,10 +40,33 @@ public class EnemyScript : MonoBehaviour {
     {
         bullets.Add(new Bullet(b));
         hp -= b.damage;
+
+		if (hp <= 0)
+		{
+			DOTween.Kill(gameObject);
+			EnemyDied();
+		}
     }
     
     void FixedUpdate()
     {
 
     }
+
+	void EnemyHitBase()
+	{
+		EnemyDiedandCleanUp();
+	}
+
+	void EnemyDied()
+	{
+
+		EnemyDiedandCleanUp();
+	}
+
+	void EnemyDiedandCleanUp()
+	{
+		GameManager.instance.enemyGenerator.listOfEnemiesSpawned.Remove(gameObject);
+		Destroy(gameObject);
+	}
 }

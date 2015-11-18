@@ -20,17 +20,18 @@ public class FloorScript : MonoBehaviour {
     int col;
 	public SpriteRenderer Image;
 	public FloorType floorType = FloorType.NULL;
+	public Tower tower;
 
     public void SetID(int row, int col)
     {
         this.row = row;
         this.col = col;
-		Setup(row,col,FloorType.NULL);
+		Setup(row,col,FloorType.WHITE);
     }
 
-	public void Setup(int row, int col, FloorType floorType)
+	public void Setup(int row, int col, FloorType setFloorType)
 	{
-		floorType = FloorType.ORANGE;
+		floorType = setFloorType;
 
 		switch(floorType)
 		{
@@ -67,6 +68,17 @@ public class FloorScript : MonoBehaviour {
 
     void OnMouseDown()
     {
-        Debug.Log("pos: " + row + " " + col);
+		if (!UIManager.instance.isFloorSelectorOpen)
+		{
+	        Debug.Log("pos: " + row + " " + col);
+			UIManager.instance.isFloorSelectorOpen = true;
+			FloorSelectorScript.instance.FloorClicked(this);
+		}
+		else
+		{
+			UIManager.instance.isFloorSelectorOpen = false;
+			FloorSelectorScript.instance.CloseFloor();
+		}
+
     }
 }
