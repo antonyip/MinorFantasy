@@ -31,9 +31,9 @@ public class TouchCamera : MonoBehaviour
                 Vector2 newTouchPosition = currentPosition;
                 Vector2 movement = (Vector2)oldTouchPositions[0] - newTouchPosition;
                 //Ensure the camera is within the boundary of the game scene
-                if (!(transform.position.x <= GameManager.instance.bottomLeft.x && movement.x < 0) && 
-                        !(transform.position.x >= GameManager.instance.topRight.x && movement.x > 0) && 
-                        !(transform.position.y <= GameManager.instance.bottomLeft.y && movement.y < 0) && 
+                if (!(transform.position.x <= GameManager.instance.bottomLeft.x && movement.x < 0) &&
+                        !(transform.position.x >= GameManager.instance.topRight.x && movement.x > 0) &&
+                        !(transform.position.y <= GameManager.instance.bottomLeft.y && movement.y < 0) &&
                         !(transform.position.y >= GameManager.instance.topRight.y && movement.y > 0))
                 {
                     transform.position += transform.TransformDirection((Vector3)((oldTouchPositions[0] - newTouchPosition) * GetComponent<Camera>().orthographicSize / GetComponent<Camera>().pixelHeight * 2f));
@@ -42,14 +42,19 @@ public class TouchCamera : MonoBehaviour
             }
         }
         //For mouse zooming (Scrolling)
-        else if (Input.GetAxis("Mouse ScrollWheel") > 0) // Zoom out
+        else if (Input.GetAxis("Mouse ScrollWheel") > 0) // Zoom in
         {
-            Camera.main.orthographicSize--;
+            if ((Camera.main.orthographicSize * Screen.width / Screen.height * 2.0) >= GameManager.instance.minZoom)
+            { 
+                Camera.main.orthographicSize--;
+            }
         }
-        else if (Input.GetAxis("Mouse ScrollWheel") < 0) // Zoom in
+        else if (Input.GetAxis("Mouse ScrollWheel") < 0) // Zoom out
         {
-            Camera.main.orthographicSize++;
-            Debug.Log(Camera.main.orthographicSize);
+            if ((Camera.main.orthographicSize * Screen.width / Screen.height * 2.0) <= GameManager.instance.maxZoom)
+            {
+                Camera.main.orthographicSize++;
+            }
         }
         else if (Input.touchCount == 0)
         {
@@ -78,7 +83,11 @@ public class TouchCamera : MonoBehaviour
 
                 transform.position += transform.TransformDirection((Vector3)((oldTouchPositions[0] + oldTouchPositions[1] - screen) * GetComponent<Camera>().orthographicSize / screen.y));
                 //transform.localRotation *= Quaternion.Euler(new Vector3(0, 0, Mathf.Asin(Mathf.Clamp((oldTouchVector.y * newTouchVector.x - oldTouchVector.x * newTouchVector.y) / oldTouchDistance / newTouchDistance, -1f, 1f)) / 0.0174532924f));
-                GetComponent<Camera>().orthographicSize *= oldTouchDistance / newTouchDistance;
+                float newOrthographicSize = GetComponent<Camera>().orthographicSize * oldTouchDistance / newTouchDistance;
+                if (newOrthographicSize <= GameManager.instance.maxZoom && newOrthographicSize >= GameManager.instance.minZoom)
+                {
+                    Camera.main.orthographicSize = newOrthographicSize;
+                }
                 transform.position -= transform.TransformDirection((newTouchPositions[0] + newTouchPositions[1] - screen) * GetComponent<Camera>().orthographicSize / screen.y);
 
                 oldTouchPositions[0] = newTouchPositions[0];

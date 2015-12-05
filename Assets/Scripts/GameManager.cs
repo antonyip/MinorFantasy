@@ -20,13 +20,17 @@ public class GameManager : MonoBehaviour {
 	public bool GamePaused = false;
 
     //Boundary limits
-    public Vector3 bottomLeft;
-    public Vector3 topRight;
+    public Vector2 bottomLeft;
+    public Vector2 topRight;
+    public float maxZoom;
+    public float minZoom;
 
-    public void setBoundary(Vector3 bottomLeft, Vector3 topRight)
+    public void setBoundary(Vector2 bottomLeft, Vector2 topRight, float minZoom, float maxZoom)
     {
         this.bottomLeft = bottomLeft;
         this.topRight = topRight;
+        this.minZoom = minZoom;
+        this.maxZoom = maxZoom;
     }
 
     void Awake()

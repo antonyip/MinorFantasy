@@ -161,7 +161,10 @@ public class FloorGenerator : MonoBehaviour {
             }
         }
 
-        GameManager.instance.setBoundary(startBoundary, endBoundary);
+        //Zooming boundaries
+        float maxZoom = (endBoundary.x - startBoundary.x) * 1.2f;
+        float minZoom = (SizeOfHexagonRightWards.x * 3) * 1.2f;
+        GameManager.instance.setBoundary(startBoundary, endBoundary, minZoom, maxZoom);
         wpPathfinder.Start();
 		GameManager.instance.GeneratePath();
     }
