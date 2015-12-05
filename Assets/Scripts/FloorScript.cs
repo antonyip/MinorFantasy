@@ -22,15 +22,15 @@ public class FloorScript : MonoBehaviour {
 	public FloorType floorType = FloorType.NULL;
 	public Tower tower;
 
-    public void SetID(int row, int col)
+    void SetID(int row, int col)
     {
         this.row = row;
         this.col = col;
-		Setup(row,col,FloorType.WHITE);
     }
 
 	public void Setup(int row, int col, FloorType setFloorType)
 	{
+		SetID(row,col);
 		floorType = setFloorType;
 
 		switch(floorType)
@@ -39,7 +39,7 @@ public class FloorScript : MonoBehaviour {
 			Image.gameObject.SetActive(false);
 			break;
 		case FloorType.BLACK:
-			Image.color = Color.black;
+			Image.color = Color.grey;
 			break;
 		case FloorType.WHITE:
 			Image.color = Color.white;
@@ -68,16 +68,18 @@ public class FloorScript : MonoBehaviour {
 
     void OnMouseDown()
     {
-		if (!UIManager.instance.isFloorSelectorOpen)
+		if (GameManager.instance.GameStarted && !GameManager.instance.GamePaused)
 		{
-	        Debug.Log("pos: " + row + " " + col);
-			UIManager.instance.isFloorSelectorOpen = true;
-			FloorSelectorScript.instance.FloorClicked(this);
-		}
-		else
-		{
-			UIManager.instance.isFloorSelectorOpen = false;
-			FloorSelectorScript.instance.CloseFloor();
+			if (!UIManager.instance.isFloorSelectorOpen)
+			{
+				UIManager.instance.isFloorSelectorOpen = true;
+				FloorSelectorScript.instance.FloorClicked(this);
+			}
+			else
+			{
+				UIManager.instance.isFloorSelectorOpen = false;
+				FloorSelectorScript.instance.CloseFloor();
+			}
 		}
 
     }

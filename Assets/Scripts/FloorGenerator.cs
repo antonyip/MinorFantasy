@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections.Generic;
 
 enum Directions
@@ -41,12 +41,7 @@ public class FloorGenerator : MonoBehaviour {
     void Start () {
         SizeOfHexagonUpwards = new Vector3(0, SizeOfHexagon.y, SizeOfHexagon.z);
         SizeOfHexagonRightWards = new Vector3(SizeOfHexagon.x,0,0);
-        SizeOfHexagonHalfWards = new Vector3(0, SizeOfHexagon.y/2f, SizeOfHexagon.z/2f);
-
-        GenerateFloor(8, 18);
-
-        
-        
+        SizeOfHexagonHalfWards = new Vector3(0, SizeOfHexagon.y/2f, SizeOfHexagon.z/2f);              
     }
 	
 	// Update is called once per frame
@@ -60,7 +55,49 @@ public class FloorGenerator : MonoBehaviour {
         return wpPathfinder.FindPath(start, end);
     }
 
-    void GenerateFloor(int Rightwards, int Upwards)
+	FloorType LetterToFloor(char c)
+	{
+		FloorType returnFloorType = FloorType.NULL;
+		switch (c)
+		{
+		case 'R':
+			returnFloorType = FloorType.RED;
+				break;
+		case 'B':
+			returnFloorType = FloorType.BLUE;
+			break;
+		case 'G':
+			returnFloorType = FloorType.GREEN;
+			break;
+		case 'Y':
+			returnFloorType = FloorType.YELLOW;
+			break;
+		case 'O':
+			returnFloorType = FloorType.ORANGE;
+			break;
+		case 'P':
+			returnFloorType = FloorType.PURPLE;
+			break;
+		case 'W':
+			returnFloorType = FloorType.WHITE;
+			break;
+		case 'N':
+			returnFloorType = FloorType.NULL;
+			break;
+		case 'S':
+			returnFloorType = FloorType.BLACK;
+			break;
+		case 'E':
+			returnFloorType = FloorType.BLACK;
+			break;
+		default:
+			Debug.LogError("Invalid Type");
+			break;
+		}
+		return returnFloorType;
+	}
+
+    public void GenerateFloor(int Rightwards, int Upwards, string floorData)
     {
         if (Rightwards < 0)
             return;
@@ -76,7 +113,7 @@ public class FloorGenerator : MonoBehaviour {
         // generate the rows and cols and the waypoint positions
 
         nodeStorages = new List<List<GameObject>>();
-
+		int counter = 0;
         for (int col = 0; col < Rightwards; ++col)
         {
             nodeStorages.Add(new List<GameObject>());
@@ -86,15 +123,25 @@ public class FloorGenerator : MonoBehaviour {
                 float colf = col;
                 bool oddRow = col % 2 == 0;
                 GameObject go = Instantiate(FloorPrefab, StartSpot.position + SizeOfHexagonUpwards * rowf + SizeOfHexagonRightWards * colf + (oddRow ? Vector3.zero : SizeOfHexagonHalfWards),Quaternion.identity) as GameObject;
-                go.GetComponent<FloorScript>().SetID(row, col);
-                go.transform.SetParent(FloorHolder);
+
+				go.GetComponent<FloorScript>().Setup(row, col,LetterToFloor(floorData[counter]));
+				go.transform.SetParent(FloorHolder);
 
                 GameObject wp = Instantiate(WaypointPrefab, StartSpot.position + SizeOfHexagonUpwards * rowf + SizeOfHexagonRightWards * colf + (oddRow ? Vector3.zero : SizeOfHexagonHalfWards), Quaternion.identity) as GameObject;
                 wp.transform.SetParent(wpPathfinder.transform);
                 wp.GetComponent<WaypointNode>().position = wp.transform.position + new Vector3(0,0,1);
                 wp.GetComponent<WaypointNode>().ID = row + col * sizeRightwards;
-                wp.GetComponent<WaypointNode>().isActive = true;
+				wp.GetComponent<WaypointNode>().isActive = false;
+				if (LetterToFloor(floorData[counter]) != FloorType.NULL)
+                	wp.GetComponent<WaypointNode>().isActive = true;
                 nodeStorages[col].Add(wp);
+
+				if ((floorData[counter]) == 'S')
+					GameManager.instance.SetStart(wp.transform.position + new Vector3(0,0,1));
+
+				if ((floorData[counter]) == 'E')
+					GameManager.instance.SetEnd(wp.transform.position + new Vector3(0,0,1));
+				++counter;
             }
         }
 
@@ -114,14 +161,17 @@ public class FloorGenerator : MonoBehaviour {
 
     private void AddNeighboursFor(int col, int row)
     {
+		if (!nodeStorages[col][row].GetComponent<WaypointNode>().isActive)
+			return;
         // if even
+
         if (col%2 == 0)
         {
             for (int i = 0; i < 6; i++)
             {
                 int colEdit = col + evenCol[i];
                 int rowEdit = row + evenRow[i];
-                if (checkInRange(colEdit, rowEdit))
+				if (checkInRange(colEdit, rowEdit) && nodeStorages[colEdit][rowEdit].GetComponent<WaypointNode>().isActive)
                     nodeStorages[col][row].GetComponent<WaypointNode>().neighbors.Add(nodeStorages[colEdit][rowEdit].GetComponent<WaypointNode>());
             }
         }
@@ -131,7 +181,7 @@ public class FloorGenerator : MonoBehaviour {
             {
                 int colEdit = col + oddCol[i];
                 int rowEdit = row + oddRow[i];
-                if (checkInRange(colEdit, rowEdit))
+				if (checkInRange(colEdit, rowEdit) && nodeStorages[colEdit][rowEdit].GetComponent<WaypointNode>().isActive)
                     nodeStorages[col][row].GetComponent<WaypointNode>().neighbors.Add(nodeStorages[colEdit][rowEdit].GetComponent<WaypointNode>());
             }
         }

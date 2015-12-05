@@ -27,7 +27,8 @@ public class GameManager : MonoBehaviour {
 
 	void LoadLevelData (int levelSelected)
 	{
-
+		var levelDetails = Google2u.Levels.Instance.Rows[0];
+		floorGenerator.GenerateFloor(levelDetails._L_RIGHTWARD,levelDetails._L_UPWARD,levelDetails._L_FLOOR);
 	}
 
 	void LoadPlayerData (LevelOptions levelOptions)
@@ -55,6 +56,7 @@ public class GameManager : MonoBehaviour {
 	public void GeneratePath()
 	{
 		thePath = floorGenerator.FindPath(StartPoint.position, EndPoint.position);
+		thePath.RemoveAt(0);
 		ShowReadyButton();
 	}
 
@@ -68,6 +70,16 @@ public class GameManager : MonoBehaviour {
 		readyButton.SetActive(false);
 		StartWaves();
 		GameStarted = true;
+	}
+
+	public void SetStart(Vector3 pos)
+	{
+		StartPoint.position = pos;
+	}
+
+	public void SetEnd(Vector3 pos)
+	{
+		EndPoint.position = pos;
 	}
 
 }

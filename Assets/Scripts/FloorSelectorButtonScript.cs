@@ -17,7 +17,6 @@ public class FloorSelectorButtonScript : MonoBehaviour {
 
 	void OnMouseDown()
 	{
-		Debug.Log("FloorSelectorButtonScript" + ID);
 		UIManager.instance.isFloorSelectorOpen = false;
 		FloorSelectorScript.instance.SelectionClicked(ID);
 	}
