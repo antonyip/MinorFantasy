@@ -9,7 +9,12 @@ public class EnemyScript : MonoBehaviour {
     List<Bullet> bullets = new List<Bullet>();
 
     public int hp = 5;
-    int maxhp = 5;
+    public int maxhp = 5;
+	public int defaultarmor = 0;
+	public int armor = 0;
+	public float movespeed = 1;
+	public float defaultmovespeed = 1;
+
     float speed = 1f;
 
     void NextMove()
@@ -31,11 +36,6 @@ public class EnemyScript : MonoBehaviour {
 		NextMove();
 	}
 
-    // Update is called once per frame
-    void Update () {
-	
-	}
-
     public void AddBullet(Bullet b)
     {
         bullets.Add(new Bullet(b));
@@ -46,11 +46,6 @@ public class EnemyScript : MonoBehaviour {
 			DOTween.Kill(gameObject);
 			EnemyDied();
 		}
-    }
-    
-    void FixedUpdate()
-    {
-
     }
 
 	void EnemyHitBase()

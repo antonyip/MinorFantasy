@@ -37,12 +37,6 @@ public class EnemyGenerator : MonoBehaviour {
 		if (GameManager.instance.GameStarted && !GameManager.instance.GamePaused)
 			TimeRightNow += Time.deltaTime;
 
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            SpawnEnemy(0);
-        }
-
-
 		if (listOfEnemies.Count > 1 && listOfEnemies[0].time < TimeRightNow)
 		{
 			SpawnEnemy(listOfEnemies[0].id);
