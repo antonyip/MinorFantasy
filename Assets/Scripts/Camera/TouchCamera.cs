@@ -29,7 +29,14 @@ public class TouchCamera : MonoBehaviour
             }
             else {
                 Vector2 newTouchPosition = currentPosition;
-                transform.position += transform.TransformDirection((Vector3)((oldTouchPositions[0] - newTouchPosition) * GetComponent<Camera>().orthographicSize / GetComponent<Camera>().pixelHeight * 2f));
+                Vector2 movement = (Vector2)oldTouchPositions[0] - newTouchPosition;
+                if (!(transform.position.x <= GameManager.instance.bottomLeft.x && movement.x < 0) && 
+                        !(transform.position.x >= GameManager.instance.topRight.x && movement.x > 0) && 
+                        !(transform.position.y <= GameManager.instance.bottomLeft.y && movement.y < 0) && 
+                        !(transform.position.y >= GameManager.instance.topRight.y && movement.y > 0))
+                {
+                    transform.position += transform.TransformDirection((Vector3)((oldTouchPositions[0] - newTouchPosition) * GetComponent<Camera>().orthographicSize / GetComponent<Camera>().pixelHeight * 2f));
+                }
                 oldTouchPositions[0] = newTouchPosition;
             }
         }

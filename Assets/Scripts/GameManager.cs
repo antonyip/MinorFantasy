@@ -19,6 +19,16 @@ public class GameManager : MonoBehaviour {
 	public bool GameStarted = false;
 	public bool GamePaused = false;
 
+    //Boundary limits
+    public Vector3 bottomLeft;
+    public Vector3 topRight;
+
+    public void setBoundary(Vector3 bottomLeft, Vector3 topRight)
+    {
+        this.bottomLeft = bottomLeft;
+        this.topRight = topRight;
+    }
+
     void Awake()
     {
         DOTween.Init();

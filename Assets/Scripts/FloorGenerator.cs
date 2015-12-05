@@ -47,7 +47,6 @@ public class FloorGenerator : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
        
-
     }
 
     public List<Vector3> FindPath(Vector3 start, Vector3 end)
@@ -107,6 +106,13 @@ public class FloorGenerator : MonoBehaviour {
         sizeRightwards = Rightwards;
         sizeUpwards = Upwards;
 
+        //Set boundary limits
+        Vector3 startBoundary = StartSpot.position;
+        startBoundary.x -= SizeOfHexagonHalfWards.x;
+        Vector3 endBoundary = StartSpot.position;
+        endBoundary.y += SizeOfHexagonUpwards.y * Upwards;
+        endBoundary.x += SizeOfHexagonRightWards.x * Rightwards - (Rightwards%2 * SizeOfHexagonHalfWards.x);
+
         // counts from bottom left upwards.
         // going right is a col
         // going up is a row
@@ -124,7 +130,7 @@ public class FloorGenerator : MonoBehaviour {
                 bool oddRow = col % 2 == 0;
                 GameObject go = Instantiate(FloorPrefab, StartSpot.position + SizeOfHexagonUpwards * rowf + SizeOfHexagonRightWards * colf + (oddRow ? Vector3.zero : SizeOfHexagonHalfWards),Quaternion.identity) as GameObject;
 
-				go.GetComponent<FloorScript>().Setup(row, col,LetterToFloor(floorData[counter]));
+                go.GetComponent<FloorScript>().Setup(row, col,LetterToFloor(floorData[counter]));
 				go.transform.SetParent(FloorHolder);
 
                 GameObject wp = Instantiate(WaypointPrefab, StartSpot.position + SizeOfHexagonUpwards * rowf + SizeOfHexagonRightWards * colf + (oddRow ? Vector3.zero : SizeOfHexagonHalfWards), Quaternion.identity) as GameObject;
@@ -155,6 +161,8 @@ public class FloorGenerator : MonoBehaviour {
             }
         }
 
+        GameManager.instance.setBoundary(startBoundary, endBoundary);
+        Debug.Log(endBoundary.ToString());
         wpPathfinder.Start();
 		GameManager.instance.GeneratePath();
     }
