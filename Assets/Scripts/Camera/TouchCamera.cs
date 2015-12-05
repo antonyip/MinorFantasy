@@ -58,6 +58,7 @@ public class TouchCamera : MonoBehaviour
         }
         else if (Input.touchCount == 0)
         {
+            dragging = false;
             oldTouchPositions[0] = null;
             oldTouchPositions[1] = null;
         }

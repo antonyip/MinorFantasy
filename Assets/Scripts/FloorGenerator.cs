@@ -98,6 +98,7 @@ public class FloorGenerator : MonoBehaviour {
 
     public void GenerateFloor(int Rightwards, int Upwards, string floorData)
     {
+        Debug.Log(Upwards);
         if (Rightwards < 0)
             return;
         if (Upwards < 0)
@@ -108,10 +109,11 @@ public class FloorGenerator : MonoBehaviour {
 
         //Set boundary limits
         Vector3 startBoundary = StartSpot.position;
-        startBoundary.x -= SizeOfHexagonHalfWards.x;
+        startBoundary.x -= SizeOfHexagonRightWards.x;
+        startBoundary.y -= SizeOfHexagonUpwards.y;
         Vector3 endBoundary = StartSpot.position;
-        endBoundary.y += SizeOfHexagonUpwards.y * Upwards;
-        endBoundary.x += SizeOfHexagonRightWards.x * Rightwards - (Rightwards%2 * SizeOfHexagonHalfWards.x);
+        endBoundary.y += (SizeOfHexagonUpwards.y * Upwards+1);
+        endBoundary.x += ((SizeOfHexagonRightWards.x * Rightwards) - (Rightwards/2 * SizeOfHexagonHalfWards.x));
 
         // counts from bottom left upwards.
         // going right is a col
