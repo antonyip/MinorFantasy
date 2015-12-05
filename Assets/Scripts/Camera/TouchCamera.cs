@@ -30,6 +30,7 @@ public class TouchCamera : MonoBehaviour
             else {
                 Vector2 newTouchPosition = currentPosition;
                 Vector2 movement = (Vector2)oldTouchPositions[0] - newTouchPosition;
+                //Ensure the camera is within the boundary of the game scene
                 if (!(transform.position.x <= GameManager.instance.bottomLeft.x && movement.x < 0) && 
                         !(transform.position.x >= GameManager.instance.topRight.x && movement.x > 0) && 
                         !(transform.position.y <= GameManager.instance.bottomLeft.y && movement.y < 0) && 
@@ -40,12 +41,24 @@ public class TouchCamera : MonoBehaviour
                 oldTouchPositions[0] = newTouchPosition;
             }
         }
+        //For mouse zooming (Scrolling)
+        else if (Input.GetAxis("Mouse ScrollWheel") > 0) // Zoom out
+        {
+            Camera.main.orthographicSize--;
+        }
+        else if (Input.GetAxis("Mouse ScrollWheel") < 0) // Zoom in
+        {
+            Camera.main.orthographicSize++;
+            Debug.Log(Camera.main.orthographicSize);
+        }
         else if (Input.touchCount == 0)
         {
             oldTouchPositions[0] = null;
             oldTouchPositions[1] = null;
         }
-        else {
+        //For input touch zooming
+        else
+        {
             if (oldTouchPositions[1] == null)
             {
                 oldTouchPositions[0] = Input.GetTouch(0).position;

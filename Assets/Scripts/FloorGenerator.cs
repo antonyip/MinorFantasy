@@ -162,7 +162,6 @@ public class FloorGenerator : MonoBehaviour {
         }
 
         GameManager.instance.setBoundary(startBoundary, endBoundary);
-        Debug.Log(endBoundary.ToString());
         wpPathfinder.Start();
 		GameManager.instance.GeneratePath();
     }
