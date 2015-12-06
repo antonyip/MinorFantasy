@@ -210,11 +210,11 @@ namespace Google2u
 	{
 		public enum rowIds {
 			T01, T02, T03, T04, T05, T06, T07, T08, T09, T10, T11, T12, T13, T14, T15, T16, T17, T18
-			
+			, T19, T20, T21, T22, T23, T24
 		};
 		public string [] rowNames = {
 			"T01", "T02", "T03", "T04", "T05", "T06", "T07", "T08", "T09", "T10", "T11", "T12", "T13", "T14", "T15", "T16", "T17", "T18"
-			
+			, "T19", "T20", "T21", "T22", "T23", "T24"
 		};
 		public System.Collections.Generic.List<TowersRow> Rows = new System.Collections.Generic.List<TowersRow>();
 
@@ -231,24 +231,30 @@ namespace Google2u
 
 		private Towers()
 		{
-			Rows.Add( new TowersRow("T01", "Rapid Fire", "RED", "2", "2", "0.5", "2", "0", "0", "0", "0", "0"));
-			Rows.Add( new TowersRow("T02", "Slow Burn", "RED", "1", "1", "0.5", "3", "0", "0", "0", "0", "0"));
-			Rows.Add( new TowersRow("T03", "Fire Boost", "RED", "0", "0", "1", "1", "0", "0", "0", "0", "0"));
-			Rows.Add( new TowersRow("T04", "Glacial Wall", "BLUE", "2", "2", "0.5", "0", "0", "1", "0", "0", "0"));
-			Rows.Add( new TowersRow("T05", "Blizzard Storm", "BLUE", "2", "2", "0.5", "0", "0", "2", "0", "0", "0"));
-			Rows.Add( new TowersRow("T06", "Ice Boost", "BLUE", "0", "0", "1", "0", "0", "1", "0", "0", "0"));
-			Rows.Add( new TowersRow("T07", "Shock Tower", "YELLOW", "2", "8", "0.4", "0", "0", "0", "0.2", "0", "0"));
-			Rows.Add( new TowersRow("T08", "Charged Stun", "YELLOW", "4", "10", "0.5", "0", "0", "0", "0.4", "0", "0"));
-			Rows.Add( new TowersRow("T09", "Stun Boost", "YELLOW", "0", "0", "1", "0", "0", "0", "0.1", "0", "0"));
-			Rows.Add( new TowersRow("T10", "Posion Ivy", "GREEN", "3", "5", "1", "0", "3", "0", "0", "0", "0"));
-			Rows.Add( new TowersRow("T11", "Gasious Tower", "GREEN", "2", "4", "0.5", "0", "4", "0", "0", "0", "0"));
-			Rows.Add( new TowersRow("T12", "Poison Boost", "GREEN", "0", "0", "1", "0", "2", "0", "0", "0", "0"));
-			Rows.Add( new TowersRow("T13", "Armor Reductor", "PURPLE", "2", "4", "1", "0", "0", "0", "0", "1", "0"));
-			Rows.Add( new TowersRow("T14", "Null Zone", "PURPLE", "2", "2", "0.5", "0", "0", "0", "0", "1", "0"));
-			Rows.Add( new TowersRow("T15", "Attack Boost", "PURPLE", "0", "0", "1", "0", "0", "0", "0", "1", "0"));
-			Rows.Add( new TowersRow("T16", "Pure Damage", "ORANGE", "4", "6", "0.5", "0", "0", "0", "0", "0", "0"));
-			Rows.Add( new TowersRow("T17", "Pure Nuke", "ORANGE", "6", "10", "3", "0", "0", "0", "0", "0", "1"));
-			Rows.Add( new TowersRow("T18", "Damage Boost", "ORANGE", "0", "0", "1", "0", "0", "0", "0", "0", "2"));
+			Rows.Add( new TowersRow("T01", "Base Red", "RED", "3", "5", "0.5", "0", "0", "0", "0", "0", "0"));
+			Rows.Add( new TowersRow("T02", "Rapid Fire", "RED", "2", "2", "0.5", "2", "0", "0", "0", "0", "0"));
+			Rows.Add( new TowersRow("T03", "Slow Burn", "RED", "1", "1", "0.5", "3", "0", "0", "0", "0", "0"));
+			Rows.Add( new TowersRow("T04", "Fire Boost", "RED", "0", "0", "1", "1", "0", "0", "0", "0", "0"));
+			Rows.Add( new TowersRow("T05", "Base Blue", "BLUE", "3", "5", "0.5", "0", "0", "0", "0", "0", "0"));
+			Rows.Add( new TowersRow("T06", "Glacial Wall", "BLUE", "2", "2", "0.5", "0", "0", "1", "0", "0", "0"));
+			Rows.Add( new TowersRow("T07", "Blizzard Storm", "BLUE", "2", "2", "0.5", "0", "0", "2", "0", "0", "0"));
+			Rows.Add( new TowersRow("T08", "Ice Boost", "BLUE", "0", "0", "1", "0", "0", "1", "0", "0", "0"));
+			Rows.Add( new TowersRow("T09", "Base Yellow", "YELLOW", "3", "5", "0.5", "0", "0", "0", "0", "0", "0"));
+			Rows.Add( new TowersRow("T10", "Shock Tower", "YELLOW", "2", "8", "0.4", "0", "0", "0", "0.2", "0", "0"));
+			Rows.Add( new TowersRow("T11", "Charged Stun", "YELLOW", "4", "10", "0.5", "0", "0", "0", "0.4", "0", "0"));
+			Rows.Add( new TowersRow("T12", "Stun Boost", "YELLOW", "0", "0", "1", "0", "0", "0", "0.1", "0", "0"));
+			Rows.Add( new TowersRow("T13", "Base Green", "GREEN", "3", "5", "0.5", "0", "0", "0", "0", "0", "0"));
+			Rows.Add( new TowersRow("T14", "Posion Ivy", "GREEN", "3", "5", "1", "0", "3", "0", "0", "0", "0"));
+			Rows.Add( new TowersRow("T15", "Gasious Tower", "GREEN", "2", "4", "0.5", "0", "4", "0", "0", "0", "0"));
+			Rows.Add( new TowersRow("T16", "Poison Boost", "GREEN", "0", "0", "1", "0", "2", "0", "0", "0", "0"));
+			Rows.Add( new TowersRow("T17", "Base Purple", "PURPLE", "3", "5", "0.5", "0", "0", "0", "0", "0", "0"));
+			Rows.Add( new TowersRow("T18", "Armor Reductor", "PURPLE", "2", "4", "1", "0", "0", "0", "0", "1", "0"));
+			Rows.Add( new TowersRow("T19", "Null Zone", "PURPLE", "2", "2", "0.5", "0", "0", "0", "0", "1", "0"));
+			Rows.Add( new TowersRow("T20", "Attack Boost", "PURPLE", "0", "0", "1", "0", "0", "0", "0", "1", "0"));
+			Rows.Add( new TowersRow("T21", "Base Orange", "ORANGE", "3", "5", "0.5", "0", "0", "0", "0", "0", "0"));
+			Rows.Add( new TowersRow("T22", "Pure Damage", "ORANGE", "4", "6", "0.5", "0", "0", "0", "0", "0", "0"));
+			Rows.Add( new TowersRow("T23", "Pure Nuke", "ORANGE", "6", "10", "3", "0", "0", "0", "0", "0", "1"));
+			Rows.Add( new TowersRow("T24", "Damage Boost", "ORANGE", "0", "0", "1", "0", "0", "0", "0", "0", "2"));
 		}
 		public IGoogle2uRow GetGenRow(string in_RowString)
 		{

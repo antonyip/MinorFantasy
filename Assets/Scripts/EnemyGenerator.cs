@@ -62,8 +62,9 @@ public class EnemyGenerator : MonoBehaviour {
 	public void NextWaves ()
 	{
 		++wave;
-		for (int i = 0; i < 5; i++) {
-			listOfEnemies.Add(new SpawnObject(0,i+wave*TimeBetweenWaves));
+		for (int i = 0; i < Google2u.EnemyWaves.Instance.Rows[wave]._W_COUNT; i++)
+		{
+			listOfEnemies.Add(new SpawnObject(Google2u.EnemyWaves.Instance.Rows[wave]._W_ID,i+wave*TimeBetweenWaves));
 		}
 		Invoke("NextWaves",TimeBetweenWaves);
 	}

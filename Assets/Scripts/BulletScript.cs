@@ -20,7 +20,7 @@ public class BulletScript : MonoBehaviour {
 	public void setTarget (GameObject enemy)
 	{
 		target = enemy;
-		transform.DOMove(target.transform.position,0.5f).OnComplete(DestroySelf);
+		transform.DOMove(target.transform.position,0.5f).OnComplete(DestroySelf).SetEase(Ease.Linear);
 	}
 
 	void DestroySelf()

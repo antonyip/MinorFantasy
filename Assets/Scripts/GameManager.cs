@@ -43,6 +43,7 @@ public class GameManager : MonoBehaviour {
 	{
 		var levelDetails = Google2u.Levels.Instance.Rows[0];
 		floorGenerator.GenerateFloor(levelDetails._L_RIGHTWARD,levelDetails._L_UPWARD,levelDetails._L_FLOOR);
+
 	}
 
 	void LoadPlayerData (LevelOptions levelOptions)

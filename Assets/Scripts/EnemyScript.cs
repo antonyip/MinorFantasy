@@ -21,7 +21,7 @@ public class EnemyScript : MonoBehaviour {
     {
         if (path.Count > 0)
         {
-            transform.DOMove(path[0], speed).OnComplete(NextMove);
+            transform.DOMove(path[0], speed).OnComplete(NextMove).SetEase(Ease.Linear);
 			path.RemoveAt(0);
         }
         else
