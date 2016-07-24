@@ -5,6 +5,12 @@ using Google2u;
 
 public class DataManager : MonoBehaviour {
 
+    public enum EnemyEnum
+    {
+        DustBunny,
+        Butterfly
+    }
+
 	public static DataManager instance;
 	public LevelData selectedLevel;
 
@@ -13,6 +19,7 @@ public class DataManager : MonoBehaviour {
 	public List<Sprite> listOfBackgrounds;
 	public List<Sprite> listOfPlayers;
 
+    public List<Monster> MonsterDatabase;
     public List<Team> listOfTeams = new List<Team>();
     public int selectedTeam = 0;
 	

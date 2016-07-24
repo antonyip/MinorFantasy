@@ -6,29 +6,29 @@ public class SpriteAnimation : MonoBehaviour
 {
 
     public Sprite[] sprites;
-    int counter = 0;
-    void Awake()
-    {
-        // load all frames in fruitsSprites array
-        sprites = Resources.LoadAll<Sprite>("DustBunny");
-    }
+    int counter = 1;
+    bool Loaded = false;
 
-    void Start()
+    public void LoadEnemyImage(string s)
     {
-        // create the object
+        sprites = Resources.LoadAll<Sprite>(s);
         GetComponent<Image>().sprite = sprites[0];
+        GetComponent<Image>().SetNativeSize();
+        Loaded = true;
     }
 
     float totalTimeCounter = 0;
-
     void Update()
     {
-        totalTimeCounter += Time.deltaTime;
-        if (totalTimeCounter > 0.16f)
+        if (Loaded)
         {
-            GetComponent<Image>().sprite = sprites[counter % sprites.Length];
-            totalTimeCounter = 0;
-            ++counter;
+            totalTimeCounter += Time.deltaTime;
+            if (totalTimeCounter > 0.16f)
+            {
+                GetComponent<Image>().sprite = sprites[counter % sprites.Length];
+                totalTimeCounter = 0;
+                ++counter;
+            }
         }
     }
 }
