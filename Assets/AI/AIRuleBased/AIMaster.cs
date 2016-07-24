@@ -16,82 +16,18 @@ public class AIMaster : MonoBehaviour {
 	{
 		ListOfAIActions = new List<AIAction> ();
 		ListOfAILogic = new List<AILogic> ();
-
-		//// Fake enum actions
-		//ListOfAIActions.Add (new ActionAddVelocity());
-		//ListOfAIActions.Add (new ActionAttackTarget());
-		//ListOfAIActions.Add (new ActionHealTarget());
-		//ListOfAIActions.Add (new ActionMoveToTarget());
-		//ListOfAIActions.Add (new ActionMoveToRandomSpot());
-		//ListOfAIActions.Add (new ActionBuffAttackTarget());
-		//ListOfAIActions.Add (new ActionHealSelf());
-
-		//// Fake enum Logic
-		//ListOfAILogic.Add (new LogicAlwaysTrue());
-		//ListOfAILogic.Add (new LogicAlwaysFalse());
-		//ListOfAILogic.Add (new LogicAlternateTrueFalse());
-		//ListOfAILogic.Add (new LogicTargetNearestEnemy());
-		//ListOfAILogic.Add (new LogicTargetFurthestEnemy());
-
-		//ListOfAILogic.Add (new LogicTargetNearestFriend());
-		//ListOfAILogic.Add (new LogicTargetFurthestFriend());
-		//ListOfAILogic.Add (new LogicTargetRandomEnemy());
-		//ListOfAILogic.Add (new LogicTargetRandomFriend());
-		//ListOfAILogic.Add (new LogicTargetSelf());
-
-		//ListOfAILogic.Add (new LogicWhenBossInAttackState());
-		//ListOfAILogic.Add (new LogicWhenBossInMovingState());
-
-		//ListOfAILogic.Add (new LogicTargetEnemyLess75());
-		//ListOfAILogic.Add (new LogicTargetEnemyLess50());
-		//ListOfAILogic.Add (new LogicTargetEnemyLess25());
-		
-		//ListOfAILogic.Add (new LogicTargetFriendLess75());
-		//ListOfAILogic.Add (new LogicTargetFriendLess50());
-		//ListOfAILogic.Add (new LogicTargetFriendLess25());
-
-		//ListOfAILogic.Add (new LogicTargetSelfLess75());
-		//ListOfAILogic.Add (new LogicTargetSelfLess50());
-		//ListOfAILogic.Add (new LogicTargetSelfLess25());
-
-
-		//ListOfAILogic.Add (new LogicTrueAfter10Seconds());
-		//ListOfAILogic.Add (new LogicTrueAfter20Seconds());
-		//ListOfAILogic.Add (new LogicTrueAfter30Seconds());
-
 	}
 	
 	// Update is called once per frame
 	void Update ()
 	{
 		//print ("AIMaster Update");
-		UpdateAIMaster(Time.deltaTime);
-
-		if (Input.GetKeyDown(KeyCode.F11))
-		{
-            UnityEngine.SceneManagement.SceneManager.LoadScene(0);
-		}
-
+		//UpdateAIMaster(Time.deltaTime);
 	}
 
 	void UpdateAIMaster(float dt)
 	{
-		for (int i = 0; i < ListOfAIUnits.Count; i++)
-		{
-			if (ListOfAIUnits[i].m_inUse)
-			{
-				ListOfAIUnits[i].UpdateAIUnit(dt);
-			}
-		}
 
-		// delete AI if needed.
-		for (int i = 0; i < ListOfAIUnits.Count; i++)
-		{
-			if (ListOfAIUnits[i].m_ToBeDestroyed)
-			{
-				DeleteAIUnit(i);
-			}
-		}
 	}
 
 	public AIUnit CreateAIUnit(GameObject obj)
