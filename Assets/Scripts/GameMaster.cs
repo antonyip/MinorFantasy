@@ -5,6 +5,7 @@ using System.Collections.Generic;
 public class GameMaster : MonoBehaviour {
 
     List<Unit> AllUnits = new List<Unit>();
+    bool AutoMode = false;
     // Use this for initialization
     void Start () {
 
@@ -17,6 +18,7 @@ public class GameMaster : MonoBehaviour {
         {
             Unit u = new Unit();
             u.character = character;
+            u.IsEnemyUnit = false;
             AllUnits.Add(u);
         }
         
@@ -29,10 +31,43 @@ public class GameMaster : MonoBehaviour {
         // start the que
 
 
-    }
+    } //end start
 	
 	// Update is called once per frame
-	void Update () {
-	
-	}
+	void Update ()
+    {
+        // if waiting for animation or user input..
+        if (false)
+        {
+            return;
+        }
+
+        // grab first person in que.
+        Unit currentUnit = null;
+        if (currentUnit != null)
+        {
+            if (currentUnit.IsEnemyUnit)
+            {
+                // logic is wrong, need to re-work how to pass data to the ai unit
+                currentUnit.aiBase.refAIUnit.GoThroughAILogics(); 
+            }
+            else
+            {
+                if (AutoMode)
+                {
+                    //evaulate gambits
+                    // logic is wrong, need to re-work how to pass data to the ai unit
+                    currentUnit.aiBase.refAIUnit.GoThroughAILogics();
+                }
+                else
+                {
+                    // wait for user input - have a que system so that we can "bot" user commands
+                }
+            }
+
+            // start the effects show.
+
+        } // endif currentUnit != null
+
+    } // end update
 }
