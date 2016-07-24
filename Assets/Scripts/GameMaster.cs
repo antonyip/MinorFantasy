@@ -5,7 +5,9 @@ using System.Collections.Generic;
 public class GameMaster : MonoBehaviour {
 
     List<Unit> AllUnits = new List<Unit>();
+    public List<GameObject> MonstersUnitsSprite = new List<GameObject>();
     bool AutoMode = false;
+
     // Use this for initialization
     void Start () {
 
@@ -21,8 +23,15 @@ public class GameMaster : MonoBehaviour {
             u.IsEnemyUnit = false;
             AllUnits.Add(u);
         }
-        
+
         // load enemy data
+        for (int i = 0; i < dataManager.MonsterForThisRound.Count; i++)
+        {
+            Unit u = new Unit();
+            u.character = dataManager.MonsterForThisRound[i];
+            u.IsEnemyUnit = true;
+            AllUnits.Add(u);
+        }
 
         Debug.Log("Determining Speed Que");
         // 2. start fight
