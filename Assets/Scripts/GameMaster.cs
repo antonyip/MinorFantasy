@@ -1,17 +1,29 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class GameMaster : MonoBehaviour {
 
     List<Unit> AllUnits = new List<Unit>();
     public GameObject monsterPrefab;
+    public List<GameObject> PlayerUnitsSpritePositions = new List<GameObject>();
+    public List<GameObject> PlayerUnitsSprite = new List<GameObject>();
     public List<GameObject> MonstersUnitsSpritePositions = new List<GameObject>();
     public List<GameObject> MonstersUnitsSprite = new List<GameObject>();
+    public List<GameObject> OptionButtons = new List<GameObject>();
+    public List<GameObject> PlayerButtons = new List<GameObject>();
+    public GameObject Announcer;
     bool AutoMode = false;
 
     // Use this for initialization
     void Start () {
+
+
+        // 0. setup playing field
+        OptionButtons[0].GetComponentInChildren<Text>().text = "Auto";
+        OptionButtons[1].GetComponentInChildren<Text>().text = "Tactics";
+        OptionButtons[2].GetComponentInChildren<Text>().text = "Options";
 
         Debug.Log("GameStarted");
         Debug.Log("Loading Fight Data");
