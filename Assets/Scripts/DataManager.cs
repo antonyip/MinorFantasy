@@ -13,14 +13,15 @@ public class DataManager : MonoBehaviour {
 	public List<Sprite> listOfBackgrounds;
 	public List<Sprite> listOfPlayers;
 
+    // battle selection
     public List<Team> listOfTeams = new List<Team>();
     public int selectedTeam = 0;
-
-    public List<Monster> MonsterDatabase;
-    public List<Monster> MonsterForThisRound = new List<Monster>();
+    public int selectedMap = 1;
+    public int selectedMapLevel = 1;
 
 	void Awake()
 	{
+        selectedMap = 1;
         Team t = new Team();
         Character c = new Character();
         t.SwapCharacter(0, c);

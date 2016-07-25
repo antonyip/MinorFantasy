@@ -5,6 +5,8 @@ using System.Collections.Generic;
 public class GameMaster : MonoBehaviour {
 
     List<Unit> AllUnits = new List<Unit>();
+    public GameObject monsterPrefab;
+    public List<GameObject> MonstersUnitsSpritePositions = new List<GameObject>();
     public List<GameObject> MonstersUnitsSprite = new List<GameObject>();
     bool AutoMode = false;
 
@@ -25,12 +27,28 @@ public class GameMaster : MonoBehaviour {
         }
 
         // load enemy data
-        for (int i = 0; i < dataManager.MonsterForThisRound.Count; i++)
+        //var Map = Google2u.LevelData.Instance.Rows.Find(x => x._ID == dataManager.selectedMap);
+        var Map = Google2u.LevelData.Instance.Rows.Find(x => x._ID == 1);
+        string[] MobsToSpawn = Map._Battle1.Split(',');
+
+        for (int i = 0; i < MobsToSpawn.Length; i++)
         {
+            var item = MobsToSpawn[i];
+            var MobsID = int.Parse(item);
+            var Mob = Google2u.MobData.Instance.Rows.Find(x => x._ID == MobsID);
             Unit u = new Unit();
-            u.character = dataManager.MonsterForThisRound[i];
+            u.character = new Character();
+            u.character.monsterStats = Mob;
             u.IsEnemyUnit = true;
             AllUnits.Add(u);
+
+            GameObject go = Instantiate(monsterPrefab) as GameObject;
+            go.transform.SetParent(MonstersUnitsSpritePositions[i].transform);
+            go.transform.localPosition = Vector3.zero;
+            go.transform.localScale = Vector3.one;
+            go.name = Mob._SpriteIdle;
+            go.GetComponentInChildren<SpriteAnimation>().LoadEnemyImage(Mob._SpriteIdle);
+            MonstersUnitsSprite.Add(go);
         }
 
         Debug.Log("Determining Speed Que");
