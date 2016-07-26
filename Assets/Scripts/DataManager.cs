@@ -29,6 +29,8 @@ public class DataManager : MonoBehaviour {
         t.SwapCharacter(0, pc);
         listOfTeams.Add(t);
         instance = this;
+
+        Gambits.Init();
 	}
 
 	// Use this for initialization

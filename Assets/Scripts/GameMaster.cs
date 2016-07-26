@@ -55,6 +55,17 @@ public class GameMaster : MonoBehaviour {
             u.character = new Character();
             u.character.monsterStats = Mob;
             u.IsEnemyUnit = true;
+            string skillString = u.character.monsterStats._Skills;
+            string[] mobSkills = skillString.Split(',');
+            foreach (var skillPair in mobSkills)
+            {
+                string[] skillParts = skillPair.Split(':');
+                int logic = int.Parse(skillParts[0]);
+                int skill = int.Parse(skillParts[1]);
+                u.aiActions.Add(Gambits.AllGambits[logic].Clone());
+                u.aiSkills.Add(new Skill(skill));
+            }
+            
             AllUnits.Add(u);
 
             GameObject go = Instantiate(monsterPrefab) as GameObject;
@@ -81,24 +92,37 @@ public class GameMaster : MonoBehaviour {
 
 
     } //end start
-	
+    bool animationLock = false;
+    public void ReleaseAnimationLock()
+    {
+        animationLock = false;
+    }
+
+    int UnitOrderCounter = 0;
 	// Update is called once per frame
 	void Update ()
     {
         // if waiting for animation or user input..
-        if (false)
+        if (animationLock)
         {
             return;
         }
 
         // grab first person in que.
-        Unit currentUnit = null;
+        Unit currentUnit = AllUnits[UnitOrderCounter % AllUnits.Count];
         if (currentUnit != null)
         {
+            //Debug.Log("Evalulating:" + UnitOrderCounter.ToString() + "");
+            ++UnitOrderCounter;
+            
             if (currentUnit.IsEnemyUnit)
             {
+                for (int i = 0; i < 10; i++)
+                {
+                    
+                }
                 // logic is wrong, need to re-work how to pass data to the ai unit
-                currentUnit.aiBase.refAIUnit.GoThroughAILogics(); 
+                // currentUnit.aiBase.refAIUnit.GoThroughAILogics();
             }
             else
             {
@@ -106,14 +130,14 @@ public class GameMaster : MonoBehaviour {
                 {
                     //evaulate gambits
                     // logic is wrong, need to re-work how to pass data to the ai unit
-                    currentUnit.aiBase.refAIUnit.GoThroughAILogics();
+                    //currentUnit.aiBase.refAIUnit.GoThroughAILogics();
                 }
                 else
                 {
                     // wait for user input - have a que system so that we can "bot" user commands
                 }
             }
-
+            
             // start the effects show.
 
         } // endif currentUnit != null

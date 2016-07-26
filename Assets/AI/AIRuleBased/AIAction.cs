@@ -1,24 +1,27 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
+using System;
 
-public class AIAction {
+public abstract class AIAction
+{
+    public virtual List<Unit> EvaluateThis(Unit MyUnit, List<Unit> allUnits)
+    {
+        return allUnits;
+    }
 
-	public GameObject m_GameObject {get; set;}
-	public string m_name { get; set; }
+    public virtual AIAction Clone()
+    {
+        return null;
+    }
+}
 
-	public AIAction()
-	{
-		m_name = "AIAction Name Undefined in Code";
-	}
+public static class Gambits
+{
+    public static List<AIAction> AllGambits = new List<AIAction>();
 
-	public virtual AIAction CloneSelf()
-	{
-		return new AIAction();
-	}
-
-	public virtual void DoThis()
-	{
-		// Nothing Here.
-	}
-
+    public static void Init()
+    {
+        AllGambits.Add(new Logic_Any_Enemy()); // first one is padding
+        AllGambits.Add(new Logic_Any_Enemy());
+    }
 }
