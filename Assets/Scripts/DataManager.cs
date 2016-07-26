@@ -23,8 +23,10 @@ public class DataManager : MonoBehaviour {
 	{
         selectedMap = 1;
         Team t = new Team();
-        Character c = new Character();
-        t.SwapCharacter(0, c);
+        PlayerCharacter pc = new PlayerCharacter();
+        pc.ID = 1;
+        pc.CurrentLevel = 10;
+        t.SwapCharacter(0, pc);
         listOfTeams.Add(t);
         instance = this;
 	}

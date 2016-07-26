@@ -5,9 +5,9 @@ using System;
 
 public class Team {
 
-    List<Character> listOfCharacters = new List<Character>();
+    List<PlayerCharacter> listOfCharacters = new List<PlayerCharacter>();
 
-    public List<Character> GetListOfCharacters()
+    public List<PlayerCharacter> GetListOfCharacters()
     {
         return listOfCharacters;
     }
@@ -23,13 +23,16 @@ public class Team {
 	
 	}
 
-    public void SwapCharacter(int v, Character p)
+    public void SwapCharacter(int v, PlayerCharacter p)
     {
         if (listOfCharacters.Count < 6)
         {
             for (int i = 0; i < 6; i++)
             {
-                listOfCharacters.Add(new Character());
+                PlayerCharacter pc = new PlayerCharacter();
+                pc.CurrentLevel = 1;
+                pc.ID = 1;
+                listOfCharacters.Add(pc);
             }
         }
 

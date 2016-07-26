@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System;
 
 public class Unit : MonoBehaviour
 {
@@ -20,5 +21,10 @@ public class Unit : MonoBehaviour
     void Update()
     {
 
+    }
+
+    public string GetUnitName()
+    {
+        return character.GetName();
     }
 }

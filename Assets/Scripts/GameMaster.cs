@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using System.Linq;
 
 public class GameMaster : MonoBehaviour {
 
@@ -30,10 +31,12 @@ public class GameMaster : MonoBehaviour {
         // 1. load fight data
         // load player data
         var dataManager = DataManager.instance;
-        foreach (var character in dataManager.listOfTeams[dataManager.selectedTeam].GetListOfCharacters())
+        foreach (var playerChar in dataManager.listOfTeams[dataManager.selectedTeam].GetListOfCharacters())
         {
             Unit u = new Unit();
-            u.character = character;
+            u.character = new Character();
+            u.character.playerStats = playerChar;
+            u.character.playerStats.databaseChar = Google2u.HeroesData.Instance.Rows.Find(x => x._ID == playerChar.ID);
             u.IsEnemyUnit = false;
             AllUnits.Add(u);
         }
@@ -64,6 +67,13 @@ public class GameMaster : MonoBehaviour {
         }
 
         Debug.Log("Determining Speed Que");
+        AllUnits = AllUnits.OrderBy(x => x.character.GetSpeed()).ToList();
+
+        for (int i = 0; i < AllUnits.Count; i++)
+        {
+            Debug.Log(i.ToString() + ". " + AllUnits[i].GetUnitName());
+        }
+
         // 2. start fight
         // determine order of attacks by all not null players
         // place them in a que

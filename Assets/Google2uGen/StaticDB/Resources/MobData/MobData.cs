@@ -14,6 +14,7 @@ namespace Google2u
 	[System.Serializable]
 	public class MobDataRow : IGoogle2uRow
 	{
+		public string _Name;
 		public int _ID;
 		public string _Description;
 		public int _Level;
@@ -67,8 +68,9 @@ namespace Google2u
 		public string _SoundAttack;
 		public string _Story;
 		public int _Exp;
-		public MobDataRow(string __Name, string __ID, string __Description, string __Level, string __HP, string __HPGrowth, string __MP, string __MPGrowth, string __STR, string __STRGrowth, string __DEX, string __DEXGrowth, string __INT, string __INTGrowth, string __LUK, string __LUKGrowth, string __Speed, string __Att, string __Def, string __AttGrowth, string __DefGrowth, string __MAtt, string __MAttGrowth, string __MDef, string __MDefGrowth, string __FAtt, string __FAttGrowth, string __IAtt, string __IAttGrowth, string __TAtt, string __TAttGrowth, string __FDef, string __IDef, string __TDef, string __FRes, string __IRes, string __TRes, string __FDefGrowth, string __IDefGrowth, string __TDefGrowth, string __FResGrowth, string __IResGrowth, string __TResGrowth, string __Skills, string __DropNormal, string __DropRare, string __DropLegend, string __SpriteIdle, string __SpriteAttack, string __SpriteMagic, string __SoundDeath, string __SoundAttack, string __Story, string __Exp) 
+		public MobDataRow(string __IndexName, string __Name, string __ID, string __Description, string __Level, string __HP, string __HPGrowth, string __MP, string __MPGrowth, string __STR, string __STRGrowth, string __DEX, string __DEXGrowth, string __INT, string __INTGrowth, string __LUK, string __LUKGrowth, string __Speed, string __Att, string __Def, string __AttGrowth, string __DefGrowth, string __MAtt, string __MAttGrowth, string __MDef, string __MDefGrowth, string __FAtt, string __FAttGrowth, string __IAtt, string __IAttGrowth, string __TAtt, string __TAttGrowth, string __FDef, string __IDef, string __TDef, string __FRes, string __IRes, string __TRes, string __FDefGrowth, string __IDefGrowth, string __TDefGrowth, string __FResGrowth, string __IResGrowth, string __TResGrowth, string __Skills, string __DropNormal, string __DropRare, string __DropLegend, string __SpriteIdle, string __SpriteAttack, string __SpriteMagic, string __SoundDeath, string __SoundAttack, string __Story, string __Exp) 
 		{
+			_Name = __Name.Trim();
 			{
 			int res;
 				if(int.TryParse(__ID, NumberStyles.Any, CultureInfo.InvariantCulture, out res))
@@ -376,7 +378,7 @@ namespace Google2u
 			}
 		}
 
-		public int Length { get { return 53; } }
+		public int Length { get { return 54; } }
 
 		public string this[int i]
 		{
@@ -392,162 +394,165 @@ namespace Google2u
 			switch( index )
 			{
 				case 0:
-					ret = _ID.ToString();
+					ret = _Name.ToString();
 					break;
 				case 1:
-					ret = _Description.ToString();
+					ret = _ID.ToString();
 					break;
 				case 2:
-					ret = _Level.ToString();
+					ret = _Description.ToString();
 					break;
 				case 3:
-					ret = _HP.ToString();
+					ret = _Level.ToString();
 					break;
 				case 4:
-					ret = _HPGrowth.ToString();
+					ret = _HP.ToString();
 					break;
 				case 5:
-					ret = _MP.ToString();
+					ret = _HPGrowth.ToString();
 					break;
 				case 6:
-					ret = _MPGrowth.ToString();
+					ret = _MP.ToString();
 					break;
 				case 7:
-					ret = _STR.ToString();
+					ret = _MPGrowth.ToString();
 					break;
 				case 8:
-					ret = _STRGrowth.ToString();
+					ret = _STR.ToString();
 					break;
 				case 9:
-					ret = _DEX.ToString();
+					ret = _STRGrowth.ToString();
 					break;
 				case 10:
-					ret = _DEXGrowth.ToString();
+					ret = _DEX.ToString();
 					break;
 				case 11:
-					ret = _INT.ToString();
+					ret = _DEXGrowth.ToString();
 					break;
 				case 12:
-					ret = _INTGrowth.ToString();
+					ret = _INT.ToString();
 					break;
 				case 13:
-					ret = _LUK.ToString();
+					ret = _INTGrowth.ToString();
 					break;
 				case 14:
-					ret = _LUKGrowth.ToString();
+					ret = _LUK.ToString();
 					break;
 				case 15:
-					ret = _Speed.ToString();
+					ret = _LUKGrowth.ToString();
 					break;
 				case 16:
-					ret = _Att.ToString();
+					ret = _Speed.ToString();
 					break;
 				case 17:
-					ret = _Def.ToString();
+					ret = _Att.ToString();
 					break;
 				case 18:
-					ret = _AttGrowth.ToString();
+					ret = _Def.ToString();
 					break;
 				case 19:
-					ret = _DefGrowth.ToString();
+					ret = _AttGrowth.ToString();
 					break;
 				case 20:
-					ret = _MAtt.ToString();
+					ret = _DefGrowth.ToString();
 					break;
 				case 21:
-					ret = _MAttGrowth.ToString();
+					ret = _MAtt.ToString();
 					break;
 				case 22:
-					ret = _MDef.ToString();
+					ret = _MAttGrowth.ToString();
 					break;
 				case 23:
-					ret = _MDefGrowth.ToString();
+					ret = _MDef.ToString();
 					break;
 				case 24:
-					ret = _FAtt.ToString();
+					ret = _MDefGrowth.ToString();
 					break;
 				case 25:
-					ret = _FAttGrowth.ToString();
+					ret = _FAtt.ToString();
 					break;
 				case 26:
-					ret = _IAtt.ToString();
+					ret = _FAttGrowth.ToString();
 					break;
 				case 27:
-					ret = _IAttGrowth.ToString();
+					ret = _IAtt.ToString();
 					break;
 				case 28:
-					ret = _TAtt.ToString();
+					ret = _IAttGrowth.ToString();
 					break;
 				case 29:
-					ret = _TAttGrowth.ToString();
+					ret = _TAtt.ToString();
 					break;
 				case 30:
-					ret = _FDef.ToString();
+					ret = _TAttGrowth.ToString();
 					break;
 				case 31:
-					ret = _IDef.ToString();
+					ret = _FDef.ToString();
 					break;
 				case 32:
-					ret = _TDef.ToString();
+					ret = _IDef.ToString();
 					break;
 				case 33:
-					ret = _FRes.ToString();
+					ret = _TDef.ToString();
 					break;
 				case 34:
-					ret = _IRes.ToString();
+					ret = _FRes.ToString();
 					break;
 				case 35:
-					ret = _TRes.ToString();
+					ret = _IRes.ToString();
 					break;
 				case 36:
-					ret = _FDefGrowth.ToString();
+					ret = _TRes.ToString();
 					break;
 				case 37:
-					ret = _IDefGrowth.ToString();
+					ret = _FDefGrowth.ToString();
 					break;
 				case 38:
-					ret = _TDefGrowth.ToString();
+					ret = _IDefGrowth.ToString();
 					break;
 				case 39:
-					ret = _FResGrowth.ToString();
+					ret = _TDefGrowth.ToString();
 					break;
 				case 40:
-					ret = _IResGrowth.ToString();
+					ret = _FResGrowth.ToString();
 					break;
 				case 41:
-					ret = _TResGrowth.ToString();
+					ret = _IResGrowth.ToString();
 					break;
 				case 42:
-					ret = _Skills.ToString();
+					ret = _TResGrowth.ToString();
 					break;
 				case 43:
-					ret = _DropNormal.ToString();
+					ret = _Skills.ToString();
 					break;
 				case 44:
-					ret = _DropRare.ToString();
+					ret = _DropNormal.ToString();
 					break;
 				case 45:
-					ret = _DropLegend.ToString();
+					ret = _DropRare.ToString();
 					break;
 				case 46:
-					ret = _SpriteIdle.ToString();
+					ret = _DropLegend.ToString();
 					break;
 				case 47:
-					ret = _SpriteAttack.ToString();
+					ret = _SpriteIdle.ToString();
 					break;
 				case 48:
-					ret = _SpriteMagic.ToString();
+					ret = _SpriteAttack.ToString();
 					break;
 				case 49:
-					ret = _SoundDeath.ToString();
+					ret = _SpriteMagic.ToString();
 					break;
 				case 50:
-					ret = _SoundAttack.ToString();
+					ret = _SoundDeath.ToString();
 					break;
 				case 51:
-					ret = _Story.ToString();
+					ret = _SoundAttack.ToString();
 					break;
 				case 52:
+					ret = _Story.ToString();
+					break;
+				case 53:
 					ret = _Exp.ToString();
 					break;
 			}
@@ -560,6 +565,9 @@ namespace Google2u
 			var ret = System.String.Empty;
 			switch( colID )
 			{
+				case "Name":
+					ret = _Name.ToString();
+					break;
 				case "ID":
 					ret = _ID.ToString();
 					break;
@@ -726,6 +734,7 @@ namespace Google2u
 		public override string ToString()
 		{
 			string ret = System.String.Empty;
+			ret += "{" + "Name" + " : " + _Name.ToString() + "} ";
 			ret += "{" + "ID" + " : " + _ID.ToString() + "} ";
 			ret += "{" + "Description" + " : " + _Description.ToString() + "} ";
 			ret += "{" + "Level" + " : " + _Level.ToString() + "} ";
@@ -785,10 +794,10 @@ namespace Google2u
 	public sealed class MobData : IGoogle2uDB
 	{
 		public enum rowIds {
-			DustBunny
+			M_0
 		};
 		public string [] rowNames = {
-			"DustBunny"
+			"M_0"
 		};
 		public System.Collections.Generic.List<MobDataRow> Rows = new System.Collections.Generic.List<MobDataRow>();
 
@@ -805,7 +814,7 @@ namespace Google2u
 
 		private MobData()
 		{
-			Rows.Add( new MobDataRow("DustBunny", "1", "A Pile of Dust", "1", "10", "1", "10", "1", "10", "1", "10", "1", "10", "1", "10", "1", "10", "10", "10", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1:1", "Tree_Log", "Tree_Log", "Tree_Log", "DustBunny", "DustBunny", "DustBunny", "", "", "A Pityful dust bunny", "10"));
+			Rows.Add( new MobDataRow("M_0", "DustBunny", "1", "A Pile of Dust", "1", "10", "1", "10", "1", "10", "1", "10", "1", "10", "1", "10", "1", "10", "10", "10", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1:1", "Tree_Log", "Tree_Log", "Tree_Log", "DustBunny", "DustBunny", "DustBunny", "", "", "A Pityful dust bunny", "10"));
 		}
 		public IGoogle2uRow GetGenRow(string in_RowString)
 		{
