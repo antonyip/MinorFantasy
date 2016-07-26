@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UnityEngine;
 
 public class Skill
 {
@@ -14,9 +15,21 @@ public class Skill
         dataBaseSkill = Google2u.SkillData.Instance.Rows.Find(x => x._ID == id);
     }
 
-    public void EvaluateSkillEffect(Unit currentUnit, Unit unit)
+    string skillString;
+
+    public void SubsituteTexts()
     {
-        
+        // skillString = skillString;
+    }
+
+    public void EvaluateSkillEffect(ref Unit currentUnit, ref Unit unit)
+    {
+        skillString = dataBaseSkill._SkillFomular;
+        SubsituteTexts();
+
+        // do stuffs
+        Debug.Log("smacky");
+        unit.HP -= 10;
     }
 }
 

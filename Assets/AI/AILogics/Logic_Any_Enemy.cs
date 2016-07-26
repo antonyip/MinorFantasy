@@ -5,9 +5,12 @@ using System.Text;
 
 public class Logic_Any_Enemy : AIAction
 {
-    public override List<Unit> EvaluateThis(Unit MyUnit, ref List<Unit> allUnits)
+    public override List<Unit> EvaluateThis(ref Unit MyUnit, ref List<Unit> allUnits)
     {
-        return allUnits.FindAll(x => MyUnit.IsEnemyUnit != x.IsEnemyUnit);
+        Unit u = MyUnit;
+        var allunits = allUnits.FindAll(x => u.IsEnemyUnit != x.IsEnemyUnit);
+        allunits.RemoveRange(1, allunits.Count - 1);
+        return allunits;
     }
 
 }

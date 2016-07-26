@@ -38,6 +38,7 @@ public class GameMaster : MonoBehaviour {
             u.character.playerStats = playerChar;
             u.character.playerStats.databaseChar = Google2u.HeroesData.Instance.Rows.Find(x => x._ID == playerChar.ID);
             u.IsEnemyUnit = false;
+            u.Start();
             AllUnits.Add(u);
         }
 
@@ -55,6 +56,7 @@ public class GameMaster : MonoBehaviour {
             u.character = new Character();
             u.character.monsterStats = Mob;
             u.IsEnemyUnit = true;
+            u.Start();
             string skillString = u.character.monsterStats._Skills;
             string[] mobSkills = skillString.Split(',');
             foreach (var skillPair in mobSkills)
@@ -108,40 +110,55 @@ public class GameMaster : MonoBehaviour {
             return;
         }
 
+        // Check for gameover
+        var EnemyUnits = AllUnits.FindAll(x => x.IsEnemyUnit == true);
+        bool GameOver = true;
+        bool HasWon = false;
+        bool HasLost = false;
+        foreach (var unit in EnemyUnits)
+        {
+            if (!unit.isDead)
+            {
+                GameOver = false;
+            }
+        }
+
+        if (GameOver)
+        {
+            HasWon = true;
+        }
+
+        var PlayerUnits = AllUnits.FindAll(x => x.IsEnemyUnit == false);
+        foreach (var unit in PlayerUnits)
+        {
+            if (!unit.isDead)
+            {
+                GameOver = false;
+            }
+        }
+
+        if (GameOver)
+        {
+            HasLost = true;
+        }
+
         // grab first person in que.
         Unit currentUnit = AllUnits[UnitOrderCounter % AllUnits.Count];
         if (currentUnit != null)
         {
-            //Debug.Log("Evalulating:" + UnitOrderCounter.ToString() + "");
-            ++UnitOrderCounter;
+            Debug.Log("Evalulating:" + UnitOrderCounter.ToString());
             
             if (currentUnit.IsEnemyUnit)
             {
-                for (int i = 0; i < 10; i++)
-                {
-                    if (i >= currentUnit.aiActions.Count)
-                        break;
-
-                    List<Unit> unitsAffected = currentUnit.aiActions[i].EvaluateThis(currentUnit, ref AllUnits);
-                    if (unitsAffected != null && unitsAffected.Count > 0)
-                    {
-                        foreach (var unit in unitsAffected)
-                        {
-                            currentUnit.aiSkills[i].EvaluateSkillEffect(currentUnit, unit);
-                        }
-                        break;
-                    }
-                }
-                // logic is wrong, need to re-work how to pass data to the ai unit
-                // currentUnit.aiBase.refAIUnit.GoThroughAILogics();
+                ExecuteGambits(ref currentUnit);
+                ++UnitOrderCounter;
             }
             else
             {
                 if (AutoMode)
                 {
-                    //evaulate gambits
-                    // logic is wrong, need to re-work how to pass data to the ai unit
-                    //currentUnit.aiBase.refAIUnit.GoThroughAILogics();
+                    ExecuteGambits(ref currentUnit);
+                    ++UnitOrderCounter;
                 }
                 else
                 {
@@ -154,4 +171,26 @@ public class GameMaster : MonoBehaviour {
         } // endif currentUnit != null
 
     } // end update
+
+    private void ExecuteGambits(ref Unit currentUnit)
+    {
+        //evaulate gambits
+        for (int i = 0; i < 10; i++)
+        {
+            if (i >= currentUnit.aiActions.Count)
+                break;
+
+            List<Unit> unitsAffected = currentUnit.aiActions[i].EvaluateThis(ref currentUnit, ref AllUnits);
+            if (unitsAffected != null && unitsAffected.Count > 0)
+            {
+                Debug.Log("Execute Gambit");
+                foreach (var unit in unitsAffected)
+                {
+                    var ounit = unit;
+                    currentUnit.aiSkills[i].EvaluateSkillEffect(ref currentUnit, ref ounit);
+                }
+                break;
+            }
+        }
+    }
 }

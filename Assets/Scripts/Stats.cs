@@ -46,6 +46,21 @@ public sealed class Character
         return "INVALID";
     }
 
+    internal int GetHP()
+    {
+        if (IsMonster())
+        {
+            return monsterStats._HP + monsterStats._Level * monsterStats._HPGrowth;
+        }
+
+        if (IsPlayer())
+        {
+            return playerStats.databaseChar._HP + playerStats.CurrentLevel * playerStats.databaseChar._HPGrowth;
+        }
+
+        return 0;
+    }
+
     public float GetSpeed()
     {
         if (IsMonster())
