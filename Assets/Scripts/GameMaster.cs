@@ -62,7 +62,7 @@ public class GameMaster : MonoBehaviour {
                 string[] skillParts = skillPair.Split(':');
                 int logic = int.Parse(skillParts[0]);
                 int skill = int.Parse(skillParts[1]);
-                u.aiActions.Add(Gambits.AllGambits[logic].Clone());
+                u.aiActions.Add(Gambits.GetGambit(logic));
                 u.aiSkills.Add(new Skill(skill));
             }
             
@@ -119,7 +119,18 @@ public class GameMaster : MonoBehaviour {
             {
                 for (int i = 0; i < 10; i++)
                 {
-                    
+                    if (i >= currentUnit.aiActions.Count)
+                        break;
+
+                    List<Unit> unitsAffected = currentUnit.aiActions[i].EvaluateThis(currentUnit, ref AllUnits);
+                    if (unitsAffected != null && unitsAffected.Count > 0)
+                    {
+                        foreach (var unit in unitsAffected)
+                        {
+                            currentUnit.aiSkills[i].EvaluateSkillEffect(currentUnit, unit);
+                        }
+                        break;
+                    }
                 }
                 // logic is wrong, need to re-work how to pass data to the ai unit
                 // currentUnit.aiBase.refAIUnit.GoThroughAILogics();

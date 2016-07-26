@@ -13,5 +13,10 @@ public class Skill
         this.id = skillid;
         dataBaseSkill = Google2u.SkillData.Instance.Rows.Find(x => x._ID == id);
     }
+
+    public void EvaluateSkillEffect(Unit currentUnit, Unit unit)
+    {
+        
+    }
 }
 
