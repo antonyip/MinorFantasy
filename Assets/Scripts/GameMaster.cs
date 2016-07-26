@@ -15,7 +15,7 @@ public class GameMaster : MonoBehaviour {
     public List<GameObject> OptionButtons = new List<GameObject>();
     public List<GameObject> PlayerButtons = new List<GameObject>();
     public GameObject Announcer;
-    bool AutoMode = false;
+    bool AutoMode = true;
 
     // Use this for initialization
     void Start () {
@@ -39,6 +39,10 @@ public class GameMaster : MonoBehaviour {
             u.character.playerStats.databaseChar = Google2u.HeroesData.Instance.Rows.Find(x => x._ID == playerChar.ID);
             u.IsEnemyUnit = false;
             u.Start();
+
+            u.aiActions.Add(Gambits.GetGambit(1));
+            u.aiSkills.Add(new Skill(1));
+
             AllUnits.Add(u);
         }
 
@@ -101,43 +105,29 @@ public class GameMaster : MonoBehaviour {
     }
 
     int UnitOrderCounter = 0;
-	// Update is called once per frame
-	void Update ()
+    bool HasWon = false;
+    bool HasLost = false;
+
+    // Update is called once per frame
+    void Update ()
     {
         // if waiting for animation or user input..
-        if (animationLock)
+        if (animationLock || HasWon || HasLost)
         {
             return;
         }
 
         // Check for gameover
-        var EnemyUnits = AllUnits.FindAll(x => x.IsEnemyUnit == true);
-        bool GameOver = true;
-        bool HasWon = false;
-        bool HasLost = false;
-        foreach (var unit in EnemyUnits)
-        {
-            if (!unit.isDead)
-            {
-                GameOver = false;
-            }
-        }
+        var EnemyUnits = AllUnits.FindAll(x => x.IsEnemyUnit == true && !x.isDead);
 
-        if (GameOver)
+        if (EnemyUnits.Count == 0)
         {
             HasWon = true;
         }
+        
+        var PlayerUnits = AllUnits.FindAll(x => x.IsEnemyUnit == false && !x.isDead);
 
-        var PlayerUnits = AllUnits.FindAll(x => x.IsEnemyUnit == false);
-        foreach (var unit in PlayerUnits)
-        {
-            if (!unit.isDead)
-            {
-                GameOver = false;
-            }
-        }
-
-        if (GameOver)
+        if (PlayerUnits.Count == 0)
         {
             HasLost = true;
         }
@@ -146,7 +136,7 @@ public class GameMaster : MonoBehaviour {
         Unit currentUnit = AllUnits[UnitOrderCounter % AllUnits.Count];
         if (currentUnit != null)
         {
-            Debug.Log("Evalulating:" + UnitOrderCounter.ToString());
+            Debug.Log("Turn:" + UnitOrderCounter.ToString());
             
             if (currentUnit.IsEnemyUnit)
             {
