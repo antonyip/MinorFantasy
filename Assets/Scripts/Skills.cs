@@ -22,7 +22,7 @@ public class Skill
         // skillString = skillString;
     }
 
-    public void EvaluateSkillEffect(ref Unit currentUnit, ref Unit unit)
+    public bool EvaluateSkillEffect(ref Unit currentUnit, ref Unit unit)
     {
         skillString = dataBaseSkill._SkillFomular;
         SubsituteTexts();
@@ -30,6 +30,7 @@ public class Skill
         // do stuffs
         Debug.Log("smacky");
         unit.HP -= 10;
+        return false;
     }
 }
 

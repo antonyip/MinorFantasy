@@ -123,6 +123,8 @@ public class GameMaster : MonoBehaviour {
         if (EnemyUnits.Count == 0)
         {
             HasWon = true;
+            Debug.Log("You won!");
+            return;
         }
         
         var PlayerUnits = AllUnits.FindAll(x => x.IsEnemyUnit == false && !x.isDead);
@@ -130,6 +132,8 @@ public class GameMaster : MonoBehaviour {
         if (PlayerUnits.Count == 0)
         {
             HasLost = true;
+            Debug.Log("You lost!");
+            return;
         }
 
         // grab first person in que.
@@ -177,7 +181,7 @@ public class GameMaster : MonoBehaviour {
                 foreach (var unit in unitsAffected)
                 {
                     var ounit = unit;
-                    currentUnit.aiSkills[i].EvaluateSkillEffect(ref currentUnit, ref ounit);
+                    animationLock = currentUnit.aiSkills[i].EvaluateSkillEffect(ref currentUnit, ref ounit);
                 }
                 break;
             }
