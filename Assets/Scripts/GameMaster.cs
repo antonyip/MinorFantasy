@@ -31,8 +31,9 @@ public class GameMaster : MonoBehaviour {
         // 1. load fight data
         // load player data
         var dataManager = DataManager.instance;
-        foreach (var playerChar in dataManager.listOfTeams[dataManager.selectedTeam].GetListOfCharacters())
+        for (int i = 0; i < dataManager.listOfTeams[dataManager.selectedTeam].GetListOfCharacters().Count; i++)
         {
+            var playerChar = dataManager.listOfTeams[dataManager.selectedTeam].GetListOfCharacters()[i];
             Unit u = new Unit();
             u.character = new Character();
             u.character.playerStats = playerChar;
@@ -43,13 +44,21 @@ public class GameMaster : MonoBehaviour {
             u.aiActions.Add(Gambits.GetGambit(1));
             u.aiSkills.Add(new Skill(1));
 
+            GameObject go = Instantiate(monsterPrefab) as GameObject;
+            go.transform.SetParent(PlayerUnitsSpritePositions[i].transform);
+            go.transform.localPosition = Vector3.zero;
+            go.transform.localScale = Vector3.one;
+            go.name = u.character.playerStats.databaseChar._SpriteIdle;
+            go.GetComponentInChildren<SpriteAnimation>().LoadEnemyImage(go.name);
+            PlayerUnitsSprite.Add(go);
+
             AllUnits.Add(u);
         }
 
         // load enemy data
         //var Map = Google2u.LevelData.Instance.Rows.Find(x => x._ID == dataManager.selectedMap);
-        var Map = Google2u.LevelData.Instance.Rows.Find(x => x._ID == 1);
-        string[] MobsToSpawn = Map._Battle1.Split(',');
+        var Map = Google2u.LevelData.Instance.Rows.Find(x => x._ID == 2);
+        string[] MobsToSpawn = Map._Battle2.Split(',');
 
         for (int i = 0; i < MobsToSpawn.Length; i++)
         {
