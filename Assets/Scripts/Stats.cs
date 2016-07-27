@@ -46,6 +46,62 @@ public sealed class Character
         return "INVALID";
     }
 
+    internal int GetMAtt()
+    {
+        if (IsMonster())
+        {
+            return monsterStats._MAtt + monsterStats._Level * monsterStats._MAttGrowth;
+        }
+
+        if (IsPlayer())
+        {
+            return playerStats.databaseChar._MAtt + playerStats.CurrentLevel * playerStats.databaseChar._MAttGrowth;
+        }
+        return 0;
+    }
+
+    internal int GetStr()
+    {
+        if (IsMonster())
+        {
+            return monsterStats._STR + monsterStats._Level * monsterStats._STRGrowth;
+        }
+
+        if (IsPlayer())
+        {
+            return playerStats.databaseChar._STR + playerStats.CurrentLevel * playerStats.databaseChar._STRGrowth;
+        }
+        return 0;
+    }
+
+    internal int GetPDef()
+    {
+        if (IsMonster())
+        {
+            return monsterStats._Def + monsterStats._Level * monsterStats._DefGrowth;
+        }
+
+        if (IsPlayer())
+        {
+            return playerStats.databaseChar._Def + playerStats.CurrentLevel * playerStats.databaseChar._DefGrowth;
+        }
+        return 0;
+    }
+
+    internal int GetPAtt()
+    {
+        if (IsMonster())
+        {
+            return monsterStats._Att + monsterStats._Level * monsterStats._AttGrowth;
+        }
+
+        if (IsPlayer())
+        {
+            return playerStats.databaseChar._Att + playerStats.CurrentLevel * playerStats.databaseChar._AttGrowth;
+        }
+        return 0;
+    }
+
     internal int GetHP()
     {
         if (IsMonster())

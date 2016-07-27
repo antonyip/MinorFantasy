@@ -116,10 +116,12 @@ public class GameMaster : MonoBehaviour {
     int UnitOrderCounter = 0;
     bool HasWon = false;
     bool HasLost = false;
-
+    
     // Update is called once per frame
     void Update ()
     {
+        animationLock = false;
+
         // if waiting for animation or user input..
         if (animationLock || HasWon || HasLost)
         {
@@ -181,7 +183,7 @@ public class GameMaster : MonoBehaviour {
         for (int i = 0; i < 10; i++)
         {
             if (i >= currentUnit.aiActions.Count)
-                break;
+                return;
 
             List<Unit> unitsAffected = currentUnit.aiActions[i].EvaluateThis(ref currentUnit, ref AllUnits);
             if (unitsAffected != null && unitsAffected.Count > 0)
@@ -192,7 +194,7 @@ public class GameMaster : MonoBehaviour {
                     var ounit = unit;
                     animationLock = currentUnit.aiSkills[i].EvaluateSkillEffect(ref currentUnit, ref ounit);
                 }
-                break;
+                return;
             }
         }
     }
