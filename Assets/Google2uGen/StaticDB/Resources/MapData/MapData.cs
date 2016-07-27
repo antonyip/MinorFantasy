@@ -109,7 +109,7 @@ namespace Google2u
 
 		private MapData()
 		{
-			Rows.Add( new MapDataRow("Forest", "1", "1,2", ""));
+			Rows.Add( new MapDataRow("Forest", "1", "1,2,3", ""));
 		}
 		public IGoogle2uRow GetGenRow(string in_RowString)
 		{

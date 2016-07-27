@@ -794,10 +794,10 @@ namespace Google2u
 	public sealed class MobData : IGoogle2uDB
 	{
 		public enum rowIds {
-			M_0
+			M_1, M_2, M_3, M_4, M_5, M_6, M_7, M_8, M_9
 		};
 		public string [] rowNames = {
-			"M_0"
+			"M_1", "M_2", "M_3", "M_4", "M_5", "M_6", "M_7", "M_8", "M_9"
 		};
 		public System.Collections.Generic.List<MobDataRow> Rows = new System.Collections.Generic.List<MobDataRow>();
 
@@ -814,7 +814,15 @@ namespace Google2u
 
 		private MobData()
 		{
-			Rows.Add( new MobDataRow("M_0", "DustBunny", "1", "A Pile of Dust", "1", "10", "1", "10", "1", "10", "1", "10", "1", "10", "1", "10", "1", "10", "10", "10", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1:1", "Tree_Log", "Tree_Log", "Tree_Log", "DustBunny", "DustBunny", "DustBunny", "", "", "A Pityful dust bunny", "10"));
+			Rows.Add( new MobDataRow("M_1", "DustBunny", "1", "A Pile of Dust", "1", "10", "1", "10", "1", "10", "1", "10", "1", "10", "1", "10", "1", "10", "10", "10", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1:1", "Tree_Log", "Tree_Log", "Tree_Log", "DustBunny", "DustBunny", "DustBunny", "", "", "A Pityful dust bunny", "10"));
+			Rows.Add( new MobDataRow("M_2", "RedSquare", "2", "RedSquare", "1", "10", "1", "10", "1", "10", "1", "10", "1", "10", "1", "10", "1", "10", "10", "10", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1:1", "Tree_Log", "Tree_Log", "Tree_Log", "RedSquare", "RedSquare", "RedSquare", "", "", "RedSquare", "10"));
+			Rows.Add( new MobDataRow("M_3", "BlueSquare", "3", "BlueSquare", "1", "10", "1", "10", "1", "10", "1", "10", "1", "10", "1", "10", "1", "10", "10", "10", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1:1", "Tree_Log", "Tree_Log", "Tree_Log", "BlueSquare", "BlueSquare", "BlueSquare", "", "", "BlueSquare", "10"));
+			Rows.Add( new MobDataRow("M_4", "DustBunny", "4", "A Pile of Dust", "1", "10", "1", "10", "1", "10", "1", "10", "1", "10", "1", "10", "1", "10", "10", "10", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1:1", "Tree_Log", "Tree_Log", "Tree_Log", "DustBunny", "DustBunny", "DustBunny", "", "", "A Pityful dust bunny", "10"));
+			Rows.Add( new MobDataRow("M_5", "DustBunny", "5", "A Pile of Dust", "1", "10", "1", "10", "1", "10", "1", "10", "1", "10", "1", "10", "1", "10", "10", "10", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1:1", "Tree_Log", "Tree_Log", "Tree_Log", "DustBunny", "DustBunny", "DustBunny", "", "", "A Pityful dust bunny", "10"));
+			Rows.Add( new MobDataRow("M_6", "DustBunny", "6", "A Pile of Dust", "1", "10", "1", "10", "1", "10", "1", "10", "1", "10", "1", "10", "1", "10", "10", "10", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1:1", "Tree_Log", "Tree_Log", "Tree_Log", "DustBunny", "DustBunny", "DustBunny", "", "", "A Pityful dust bunny", "10"));
+			Rows.Add( new MobDataRow("M_7", "DustBunny", "7", "A Pile of Dust", "1", "10", "1", "10", "1", "10", "1", "10", "1", "10", "1", "10", "1", "10", "10", "10", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1:1", "Tree_Log", "Tree_Log", "Tree_Log", "DustBunny", "DustBunny", "DustBunny", "", "", "A Pityful dust bunny", "10"));
+			Rows.Add( new MobDataRow("M_8", "DustBunny", "8", "A Pile of Dust", "1", "10", "1", "10", "1", "10", "1", "10", "1", "10", "1", "10", "1", "10", "10", "10", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1:1", "Tree_Log", "Tree_Log", "Tree_Log", "DustBunny", "DustBunny", "DustBunny", "", "", "A Pityful dust bunny", "10"));
+			Rows.Add( new MobDataRow("M_9", "DustBunny", "9", "A Pile of Dust", "1", "10", "1", "10", "1", "10", "1", "10", "1", "10", "1", "10", "1", "10", "10", "10", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1:1", "Tree_Log", "Tree_Log", "Tree_Log", "DustBunny", "DustBunny", "DustBunny", "", "", "A Pityful dust bunny", "10"));
 		}
 		public IGoogle2uRow GetGenRow(string in_RowString)
 		{

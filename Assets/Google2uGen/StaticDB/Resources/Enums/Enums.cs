@@ -71,10 +71,12 @@ namespace Google2u
 	public sealed class Enums : IGoogle2uDB
 	{
 		public enum rowIds {
-			NONE, AnimType_Target, AnimType_Enemy, AnimType_Ally, AnimType_Object, TargetType_All, TargetType_Equipment, TargetType_Target, AttackType_PATT, AttackType_MATT, AttackType_FATT, AttackType_IATT, AttackType_TATT, AttackType_BUFF, AttackType_DEBUFF, AttackType_OTHER
+			NONE, AnimType_MeleeTarget, AnimType_Enemy, AnimType_Ally, AnimType_Object, AnimType_RangeTarget, TargetType_Multiple, TargetType_Equipment, TargetType_Target, AttackType_PATT, AttackType_MATT, AttackType_FATT, AttackType_IATT, AttackType_TATT, AttackType_BUFF, AttackType_DEBUFF, AttackType_OTHER, Gambit_Team
+			, Gambit_Target
 		};
 		public string [] rowNames = {
-			"NONE", "AnimType_Target", "AnimType_Enemy", "AnimType_Ally", "AnimType_Object", "TargetType_All", "TargetType_Equipment", "TargetType_Target", "AttackType_PATT", "AttackType_MATT", "AttackType_FATT", "AttackType_IATT", "AttackType_TATT", "AttackType_BUFF", "AttackType_DEBUFF", "AttackType_OTHER"
+			"NONE", "AnimType_MeleeTarget", "AnimType_Enemy", "AnimType_Ally", "AnimType_Object", "AnimType_RangeTarget", "TargetType_Multiple", "TargetType_Equipment", "TargetType_Target", "AttackType_PATT", "AttackType_MATT", "AttackType_FATT", "AttackType_IATT", "AttackType_TATT", "AttackType_BUFF", "AttackType_DEBUFF", "AttackType_OTHER", "Gambit_Team"
+			, "Gambit_Target"
 		};
 		public System.Collections.Generic.List<EnumsRow> Rows = new System.Collections.Generic.List<EnumsRow>();
 
@@ -92,21 +94,24 @@ namespace Google2u
 		private Enums()
 		{
 			Rows.Add( new EnumsRow("NONE", "0"));
-			Rows.Add( new EnumsRow("AnimType_Target", "1"));
+			Rows.Add( new EnumsRow("AnimType_MeleeTarget", "1"));
 			Rows.Add( new EnumsRow("AnimType_Enemy", "2"));
 			Rows.Add( new EnumsRow("AnimType_Ally", "3"));
 			Rows.Add( new EnumsRow("AnimType_Object", "4"));
-			Rows.Add( new EnumsRow("TargetType_All", "5"));
-			Rows.Add( new EnumsRow("TargetType_Equipment", "6"));
-			Rows.Add( new EnumsRow("TargetType_Target", "7"));
-			Rows.Add( new EnumsRow("AttackType_PATT", "8"));
-			Rows.Add( new EnumsRow("AttackType_MATT", "9"));
-			Rows.Add( new EnumsRow("AttackType_FATT", "10"));
-			Rows.Add( new EnumsRow("AttackType_IATT", "11"));
-			Rows.Add( new EnumsRow("AttackType_TATT", "12"));
-			Rows.Add( new EnumsRow("AttackType_BUFF", "13"));
-			Rows.Add( new EnumsRow("AttackType_DEBUFF", "14"));
-			Rows.Add( new EnumsRow("AttackType_OTHER", "15"));
+			Rows.Add( new EnumsRow("AnimType_RangeTarget", "5"));
+			Rows.Add( new EnumsRow("TargetType_Multiple", "6"));
+			Rows.Add( new EnumsRow("TargetType_Equipment", "7"));
+			Rows.Add( new EnumsRow("TargetType_Target", "8"));
+			Rows.Add( new EnumsRow("AttackType_PATT", "9"));
+			Rows.Add( new EnumsRow("AttackType_MATT", "10"));
+			Rows.Add( new EnumsRow("AttackType_FATT", "11"));
+			Rows.Add( new EnumsRow("AttackType_IATT", "12"));
+			Rows.Add( new EnumsRow("AttackType_TATT", "13"));
+			Rows.Add( new EnumsRow("AttackType_BUFF", "14"));
+			Rows.Add( new EnumsRow("AttackType_DEBUFF", "15"));
+			Rows.Add( new EnumsRow("AttackType_OTHER", "16"));
+			Rows.Add( new EnumsRow("Gambit_Team", "17"));
+			Rows.Add( new EnumsRow("Gambit_Target", "18"));
 		}
 		public IGoogle2uRow GetGenRow(string in_RowString)
 		{

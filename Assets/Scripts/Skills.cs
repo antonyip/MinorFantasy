@@ -30,7 +30,7 @@ public class Skill
         // do stuffs
         Debug.Log("smacky");
         unit.HP -= 10;
-        return dataBaseSkill._AnimationType.Equals("Melee");
+        return dataBaseSkill._AnimationType.Contains("AnimType_MeleeTarget");
     }
 }
 

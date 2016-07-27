@@ -134,10 +134,10 @@ namespace Google2u
 	public sealed class LevelData : IGoogle2uDB
 	{
 		public enum rowIds {
-			Forest_Beginner, Forest_Advance
+			Forest_Beginner, Forest_Advance, Forest_Expert
 		};
 		public string [] rowNames = {
-			"Forest_Beginner", "Forest_Advance"
+			"Forest_Beginner", "Forest_Advance", "Forest_Expert"
 		};
 		public System.Collections.Generic.List<LevelDataRow> Rows = new System.Collections.Generic.List<LevelDataRow>();
 
@@ -156,6 +156,7 @@ namespace Google2u
 		{
 			Rows.Add( new LevelDataRow("Forest_Beginner", "1", "1", "", "", "", "", "", ""));
 			Rows.Add( new LevelDataRow("Forest_Advance", "2", "1", "1,1,1", "", "", "", "", ""));
+			Rows.Add( new LevelDataRow("Forest_Expert", "3", "1,2,3,2,3", "", "", "", "", "", ""));
 		}
 		public IGoogle2uRow GetGenRow(string in_RowString)
 		{

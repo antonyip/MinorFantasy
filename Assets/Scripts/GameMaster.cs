@@ -57,8 +57,8 @@ public class GameMaster : MonoBehaviour {
 
         // load enemy data
         //var Map = Google2u.LevelData.Instance.Rows.Find(x => x._ID == dataManager.selectedMap);
-        var Map = Google2u.LevelData.Instance.Rows.Find(x => x._ID == 2);
-        string[] MobsToSpawn = Map._Battle2.Split(',');
+        var Map = Google2u.LevelData.Instance.Rows.Find(x => x._ID == 3);
+        string[] MobsToSpawn = Map._Battle1.Split(',');
 
         for (int i = 0; i < MobsToSpawn.Length; i++)
         {

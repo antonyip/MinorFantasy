@@ -14,10 +14,14 @@ namespace Google2u
 	[System.Serializable]
 	public class GambitDataRow : IGoogle2uRow
 	{
+		public string _Name;
+		public string _Type;
 		public int _ID;
 		public string _Description;
-		public GambitDataRow(string __Name, string __ID, string __Description) 
+		public GambitDataRow(string __GamditIndex, string __Name, string __Type, string __ID, string __Description) 
 		{
+			_Name = __Name.Trim();
+			_Type = __Type.Trim();
 			{
 			int res;
 				if(int.TryParse(__ID, NumberStyles.Any, CultureInfo.InvariantCulture, out res))
@@ -28,7 +32,7 @@ namespace Google2u
 			_Description = __Description.Trim();
 		}
 
-		public int Length { get { return 2; } }
+		public int Length { get { return 4; } }
 
 		public string this[int i]
 		{
@@ -44,9 +48,15 @@ namespace Google2u
 			switch( index )
 			{
 				case 0:
-					ret = _ID.ToString();
+					ret = _Name.ToString();
 					break;
 				case 1:
+					ret = _Type.ToString();
+					break;
+				case 2:
+					ret = _ID.ToString();
+					break;
+				case 3:
 					ret = _Description.ToString();
 					break;
 			}
@@ -59,6 +69,12 @@ namespace Google2u
 			var ret = System.String.Empty;
 			switch( colID )
 			{
+				case "Name":
+					ret = _Name.ToString();
+					break;
+				case "Type":
+					ret = _Type.ToString();
+					break;
 				case "ID":
 					ret = _ID.ToString();
 					break;
@@ -72,6 +88,8 @@ namespace Google2u
 		public override string ToString()
 		{
 			string ret = System.String.Empty;
+			ret += "{" + "Name" + " : " + _Name.ToString() + "} ";
+			ret += "{" + "Type" + " : " + _Type.ToString() + "} ";
 			ret += "{" + "ID" + " : " + _ID.ToString() + "} ";
 			ret += "{" + "Description" + " : " + _Description.ToString() + "} ";
 			return ret;
@@ -80,10 +98,12 @@ namespace Google2u
 	public sealed class GambitData : IGoogle2uDB
 	{
 		public enum rowIds {
-			Any_Enemy
+			G_1, G_2, G_3, G_4, G_5, G_6, G_7, G_8, G_9, G_10, G_11, G_12, G_13, G_14, G_15, G_16, G_17, G_18
+			, G_19, G_20
 		};
 		public string [] rowNames = {
-			"Any_Enemy"
+			"G_1", "G_2", "G_3", "G_4", "G_5", "G_6", "G_7", "G_8", "G_9", "G_10", "G_11", "G_12", "G_13", "G_14", "G_15", "G_16", "G_17", "G_18"
+			, "G_19", "G_20"
 		};
 		public System.Collections.Generic.List<GambitDataRow> Rows = new System.Collections.Generic.List<GambitDataRow>();
 
@@ -100,7 +120,26 @@ namespace Google2u
 
 		private GambitData()
 		{
-			Rows.Add( new GambitDataRow("Any_Enemy", "1", "Selects an Enemy at random"));
+			Rows.Add( new GambitDataRow("G_1", "Any_Enemy", "Gambit_Target", "1", "Selects an Enemy at random"));
+			Rows.Add( new GambitDataRow("G_2", "Enemy > 75%", "Gambit_Target", "2", "Enemy > 75%"));
+			Rows.Add( new GambitDataRow("G_3", "Enemy > 50%", "Gambit_Target", "3", "Enemy > 50%"));
+			Rows.Add( new GambitDataRow("G_4", "Enemy > 25%", "Gambit_Target", "4", "Enemy > 25%"));
+			Rows.Add( new GambitDataRow("G_5", "Ally > 75%", "Gambit_Target", "5", "Ally > 75%"));
+			Rows.Add( new GambitDataRow("G_6", "Ally > 50%", "Gambit_Target", "6", "Ally > 50%"));
+			Rows.Add( new GambitDataRow("G_7", "Ally > 25%", "Gambit_Target", "7", "Ally > 25%"));
+			Rows.Add( new GambitDataRow("G_8", "Any_Ally", "Gambit_Target", "8", "Any_Ally"));
+			Rows.Add( new GambitDataRow("G_9", "Enemy Team", "Gambit_Team", "9", "Enemy Team"));
+			Rows.Add( new GambitDataRow("G_10", "Ally Team", "Gambit_Team", "10", "Ally Team"));
+			Rows.Add( new GambitDataRow("G_11", "Burnt Ally", "Gambit_Target", "11", "Burnt Ally"));
+			Rows.Add( new GambitDataRow("G_12", "Frozen Ally", "Gambit_Target", "12", "Frozen Ally"));
+			Rows.Add( new GambitDataRow("G_13", "Shocked Ally", "Gambit_Target", "13", "Shocked Ally"));
+			Rows.Add( new GambitDataRow("G_14", "Burnt Enemy", "Gambit_Target", "14", "Burnt Enemy"));
+			Rows.Add( new GambitDataRow("G_15", "Frozen Enemy", "Gambit_Target", "15", "Frozen Enemy"));
+			Rows.Add( new GambitDataRow("G_16", "Shocked Enemy", "Gambit_Target", "16", "Shocked Enemy"));
+			Rows.Add( new GambitDataRow("G_17", "Do Once Per Battle", "Gambit_Team", "17", "Do Once Per Battle"));
+			Rows.Add( new GambitDataRow("G_18", "Every Other Turn", "Gambit_Team", "18", "Every Other Turn"));
+			Rows.Add( new GambitDataRow("G_19", "Every 5 turns", "Gambit_Team", "19", "Every 5 turns"));
+			Rows.Add( new GambitDataRow("G_20", "Every Turn", "Gambit_Team", "20", "Every Turn"));
 		}
 		public IGoogle2uRow GetGenRow(string in_RowString)
 		{
