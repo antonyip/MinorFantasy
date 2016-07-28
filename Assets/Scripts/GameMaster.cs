@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using System.Linq;
+using DG.Tweening;
 
 public class GameMaster : MonoBehaviour {
 
@@ -197,6 +198,7 @@ public class GameMaster : MonoBehaviour {
                 foreach (var unit in unitsAffected)
                 {
                     var ounit = unit;
+                    ounit.sprite.transform.DOPunchPosition(new Vector3(Random.Range(-25,25), Random.Range(15, 15), 0), 0.7f);
                     AnimationLock = currentUnit.aiSkills[i].EvaluateSkillEffect(ref currentUnit, ref ounit);
                 }
                 return;
