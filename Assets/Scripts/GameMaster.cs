@@ -50,6 +50,7 @@ public class GameMaster : MonoBehaviour {
             go.transform.localScale = Vector3.one;
             go.name = u.character.playerStats.databaseChar._SpriteIdle;
             go.GetComponentInChildren<SpriteAnimation>().LoadEnemyImage(go.name);
+            u.sprite = go;
             PlayerUnitsSprite.Add(go);
 
             AllUnits.Add(u);
@@ -79,9 +80,7 @@ public class GameMaster : MonoBehaviour {
                 int skill = int.Parse(skillParts[1]);
                 u.aiActions.Add(Gambits.GetGambit(logic));
                 u.aiSkills.Add(new Skill(skill));
-            }
-            
-            AllUnits.Add(u);
+            }           
 
             GameObject go = Instantiate(monsterPrefab) as GameObject;
             go.transform.SetParent(MonstersUnitsSpritePositions[i].transform);
@@ -89,7 +88,10 @@ public class GameMaster : MonoBehaviour {
             go.transform.localScale = Vector3.one;
             go.name = Mob._SpriteIdle;
             go.GetComponentInChildren<SpriteAnimation>().LoadEnemyImage(Mob._SpriteIdle);
+            u.sprite = go;
             MonstersUnitsSprite.Add(go);
+
+            AllUnits.Add(u);
         }
 
         Debug.Log("Determining Speed Que");
@@ -107,24 +109,26 @@ public class GameMaster : MonoBehaviour {
 
 
     } //end start
-    bool animationLock = false;
+    public static bool AnimationLock = false;
     public void ReleaseAnimationLock()
     {
-        animationLock = false;
+        AnimationLock = false;
     }
 
     int UnitOrderCounter = 0;
     bool HasWon = false;
     bool HasLost = false;
-    
+    bool GameNotStarted = true;
     // Update is called once per frame
     void Update ()
     {
-        animationLock = false;
-
         // if waiting for animation or user input..
-        if (animationLock || HasWon || HasLost)
+        if (AnimationLock || HasWon || HasLost || GameNotStarted)
         {
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                GameNotStarted = false;
+            }
             return;
         }
 
@@ -188,11 +192,12 @@ public class GameMaster : MonoBehaviour {
             List<Unit> unitsAffected = currentUnit.aiActions[i].EvaluateThis(ref currentUnit, ref AllUnits);
             if (unitsAffected != null && unitsAffected.Count > 0)
             {
+                currentUnit.sprite.GetComponentInChildren<SpriteAnimation>().LoadEnemyAttack("Swordman_Casting");
                 Debug.Log("Execute Gambit");
                 foreach (var unit in unitsAffected)
                 {
                     var ounit = unit;
-                    animationLock = currentUnit.aiSkills[i].EvaluateSkillEffect(ref currentUnit, ref ounit);
+                    AnimationLock = currentUnit.aiSkills[i].EvaluateSkillEffect(ref currentUnit, ref ounit);
                 }
                 return;
             }
