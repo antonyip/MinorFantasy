@@ -16,6 +16,7 @@ namespace Google2u
 	{
 		public string _Name;
 		public int _ID;
+		public string _Gender;
 		public string _Description;
 		public int _HP;
 		public int _HPGrowth;
@@ -57,9 +58,6 @@ namespace Google2u
 		public int _IResGrowth;
 		public int _TResGrowth;
 		public string _Skills;
-		public string _DropNormal;
-		public string _DropRare;
-		public string _DropLegend;
 		public string _SpriteIdle;
 		public string _SpriteAttack;
 		public string _SpriteMagic;
@@ -68,7 +66,7 @@ namespace Google2u
 		public int _Energy;
 		public int _EnergyGrowth;
 		public string _Story;
-		public HeroesDataRow(string __IndexName, string __Name, string __ID, string __Description, string __HP, string __HPGrowth, string __MP, string __MPGrowth, string __STR, string __STRGrowth, string __DEX, string __DEXGrowth, string __INT, string __INTGrowth, string __LUK, string __LUKGrowth, string __Speed, string __Att, string __Def, string __AttGrowth, string __DefGrowth, string __MAtt, string __MAttGrowth, string __MDef, string __MDefGrowth, string __FAtt, string __FAttGrowth, string __IAtt, string __IAttGrowth, string __TAtt, string __TAttGrowth, string __FDef, string __IDef, string __TDef, string __FRes, string __IRes, string __TRes, string __FDefGrowth, string __IDefGrowth, string __TDefGrowth, string __FResGrowth, string __IResGrowth, string __TResGrowth, string __Skills, string __DropNormal, string __DropRare, string __DropLegend, string __SpriteIdle, string __SpriteAttack, string __SpriteMagic, string __SoundDeath, string __SoundAttack, string __Energy, string __EnergyGrowth, string __Story) 
+		public HeroesDataRow(string __IndexName, string __Name, string __ID, string __Gender, string __Description, string __HP, string __HPGrowth, string __MP, string __MPGrowth, string __STR, string __STRGrowth, string __DEX, string __DEXGrowth, string __INT, string __INTGrowth, string __LUK, string __LUKGrowth, string __Speed, string __Att, string __Def, string __AttGrowth, string __DefGrowth, string __MAtt, string __MAttGrowth, string __MDef, string __MDefGrowth, string __FAtt, string __FAttGrowth, string __IAtt, string __IAttGrowth, string __TAtt, string __TAttGrowth, string __FDef, string __IDef, string __TDef, string __FRes, string __IRes, string __TRes, string __FDefGrowth, string __IDefGrowth, string __TDefGrowth, string __FResGrowth, string __IResGrowth, string __TResGrowth, string __Skills, string __SpriteIdle, string __SpriteAttack, string __SpriteMagic, string __SoundDeath, string __SoundAttack, string __Energy, string __EnergyGrowth, string __Story) 
 		{
 			_Name = __Name.Trim();
 			{
@@ -78,6 +76,7 @@ namespace Google2u
 				else
 					Debug.LogError("Failed To Convert _ID string: "+ __ID +" to int");
 			}
+			_Gender = __Gender.Trim();
 			_Description = __Description.Trim();
 			{
 			int res;
@@ -353,9 +352,6 @@ namespace Google2u
 					Debug.LogError("Failed To Convert _TResGrowth string: "+ __TResGrowth +" to int");
 			}
 			_Skills = __Skills.Trim();
-			_DropNormal = __DropNormal.Trim();
-			_DropRare = __DropRare.Trim();
-			_DropLegend = __DropLegend.Trim();
 			_SpriteIdle = __SpriteIdle.Trim();
 			_SpriteAttack = __SpriteAttack.Trim();
 			_SpriteMagic = __SpriteMagic.Trim();
@@ -378,7 +374,7 @@ namespace Google2u
 			_Story = __Story.Trim();
 		}
 
-		public int Length { get { return 54; } }
+		public int Length { get { return 52; } }
 
 		public string this[int i]
 		{
@@ -400,159 +396,153 @@ namespace Google2u
 					ret = _ID.ToString();
 					break;
 				case 2:
-					ret = _Description.ToString();
+					ret = _Gender.ToString();
 					break;
 				case 3:
-					ret = _HP.ToString();
+					ret = _Description.ToString();
 					break;
 				case 4:
-					ret = _HPGrowth.ToString();
+					ret = _HP.ToString();
 					break;
 				case 5:
-					ret = _MP.ToString();
+					ret = _HPGrowth.ToString();
 					break;
 				case 6:
-					ret = _MPGrowth.ToString();
+					ret = _MP.ToString();
 					break;
 				case 7:
-					ret = _STR.ToString();
+					ret = _MPGrowth.ToString();
 					break;
 				case 8:
-					ret = _STRGrowth.ToString();
+					ret = _STR.ToString();
 					break;
 				case 9:
-					ret = _DEX.ToString();
+					ret = _STRGrowth.ToString();
 					break;
 				case 10:
-					ret = _DEXGrowth.ToString();
+					ret = _DEX.ToString();
 					break;
 				case 11:
-					ret = _INT.ToString();
+					ret = _DEXGrowth.ToString();
 					break;
 				case 12:
-					ret = _INTGrowth.ToString();
+					ret = _INT.ToString();
 					break;
 				case 13:
-					ret = _LUK.ToString();
+					ret = _INTGrowth.ToString();
 					break;
 				case 14:
-					ret = _LUKGrowth.ToString();
+					ret = _LUK.ToString();
 					break;
 				case 15:
-					ret = _Speed.ToString();
+					ret = _LUKGrowth.ToString();
 					break;
 				case 16:
-					ret = _Att.ToString();
+					ret = _Speed.ToString();
 					break;
 				case 17:
-					ret = _Def.ToString();
+					ret = _Att.ToString();
 					break;
 				case 18:
-					ret = _AttGrowth.ToString();
+					ret = _Def.ToString();
 					break;
 				case 19:
-					ret = _DefGrowth.ToString();
+					ret = _AttGrowth.ToString();
 					break;
 				case 20:
-					ret = _MAtt.ToString();
+					ret = _DefGrowth.ToString();
 					break;
 				case 21:
-					ret = _MAttGrowth.ToString();
+					ret = _MAtt.ToString();
 					break;
 				case 22:
-					ret = _MDef.ToString();
+					ret = _MAttGrowth.ToString();
 					break;
 				case 23:
-					ret = _MDefGrowth.ToString();
+					ret = _MDef.ToString();
 					break;
 				case 24:
-					ret = _FAtt.ToString();
+					ret = _MDefGrowth.ToString();
 					break;
 				case 25:
-					ret = _FAttGrowth.ToString();
+					ret = _FAtt.ToString();
 					break;
 				case 26:
-					ret = _IAtt.ToString();
+					ret = _FAttGrowth.ToString();
 					break;
 				case 27:
-					ret = _IAttGrowth.ToString();
+					ret = _IAtt.ToString();
 					break;
 				case 28:
-					ret = _TAtt.ToString();
+					ret = _IAttGrowth.ToString();
 					break;
 				case 29:
-					ret = _TAttGrowth.ToString();
+					ret = _TAtt.ToString();
 					break;
 				case 30:
-					ret = _FDef.ToString();
+					ret = _TAttGrowth.ToString();
 					break;
 				case 31:
-					ret = _IDef.ToString();
+					ret = _FDef.ToString();
 					break;
 				case 32:
-					ret = _TDef.ToString();
+					ret = _IDef.ToString();
 					break;
 				case 33:
-					ret = _FRes.ToString();
+					ret = _TDef.ToString();
 					break;
 				case 34:
-					ret = _IRes.ToString();
+					ret = _FRes.ToString();
 					break;
 				case 35:
-					ret = _TRes.ToString();
+					ret = _IRes.ToString();
 					break;
 				case 36:
-					ret = _FDefGrowth.ToString();
+					ret = _TRes.ToString();
 					break;
 				case 37:
-					ret = _IDefGrowth.ToString();
+					ret = _FDefGrowth.ToString();
 					break;
 				case 38:
-					ret = _TDefGrowth.ToString();
+					ret = _IDefGrowth.ToString();
 					break;
 				case 39:
-					ret = _FResGrowth.ToString();
+					ret = _TDefGrowth.ToString();
 					break;
 				case 40:
-					ret = _IResGrowth.ToString();
+					ret = _FResGrowth.ToString();
 					break;
 				case 41:
-					ret = _TResGrowth.ToString();
+					ret = _IResGrowth.ToString();
 					break;
 				case 42:
-					ret = _Skills.ToString();
+					ret = _TResGrowth.ToString();
 					break;
 				case 43:
-					ret = _DropNormal.ToString();
+					ret = _Skills.ToString();
 					break;
 				case 44:
-					ret = _DropRare.ToString();
-					break;
-				case 45:
-					ret = _DropLegend.ToString();
-					break;
-				case 46:
 					ret = _SpriteIdle.ToString();
 					break;
-				case 47:
+				case 45:
 					ret = _SpriteAttack.ToString();
 					break;
-				case 48:
+				case 46:
 					ret = _SpriteMagic.ToString();
 					break;
-				case 49:
+				case 47:
 					ret = _SoundDeath.ToString();
 					break;
-				case 50:
+				case 48:
 					ret = _SoundAttack.ToString();
 					break;
-				case 51:
+				case 49:
 					ret = _Energy.ToString();
 					break;
-				case 52:
+				case 50:
 					ret = _EnergyGrowth.ToString();
 					break;
-				case 53:
+				case 51:
 					ret = _Story.ToString();
 					break;
 			}
@@ -570,6 +560,9 @@ namespace Google2u
 					break;
 				case "ID":
 					ret = _ID.ToString();
+					break;
+				case "Gender":
+					ret = _Gender.ToString();
 					break;
 				case "Description":
 					ret = _Description.ToString();
@@ -694,15 +687,6 @@ namespace Google2u
 				case "Skills":
 					ret = _Skills.ToString();
 					break;
-				case "DropNormal":
-					ret = _DropNormal.ToString();
-					break;
-				case "DropRare":
-					ret = _DropRare.ToString();
-					break;
-				case "DropLegend":
-					ret = _DropLegend.ToString();
-					break;
 				case "SpriteIdle":
 					ret = _SpriteIdle.ToString();
 					break;
@@ -736,6 +720,7 @@ namespace Google2u
 			string ret = System.String.Empty;
 			ret += "{" + "Name" + " : " + _Name.ToString() + "} ";
 			ret += "{" + "ID" + " : " + _ID.ToString() + "} ";
+			ret += "{" + "Gender" + " : " + _Gender.ToString() + "} ";
 			ret += "{" + "Description" + " : " + _Description.ToString() + "} ";
 			ret += "{" + "HP" + " : " + _HP.ToString() + "} ";
 			ret += "{" + "HPGrowth" + " : " + _HPGrowth.ToString() + "} ";
@@ -777,9 +762,6 @@ namespace Google2u
 			ret += "{" + "IResGrowth" + " : " + _IResGrowth.ToString() + "} ";
 			ret += "{" + "TResGrowth" + " : " + _TResGrowth.ToString() + "} ";
 			ret += "{" + "Skills" + " : " + _Skills.ToString() + "} ";
-			ret += "{" + "DropNormal" + " : " + _DropNormal.ToString() + "} ";
-			ret += "{" + "DropRare" + " : " + _DropRare.ToString() + "} ";
-			ret += "{" + "DropLegend" + " : " + _DropLegend.ToString() + "} ";
 			ret += "{" + "SpriteIdle" + " : " + _SpriteIdle.ToString() + "} ";
 			ret += "{" + "SpriteAttack" + " : " + _SpriteAttack.ToString() + "} ";
 			ret += "{" + "SpriteMagic" + " : " + _SpriteMagic.ToString() + "} ";
@@ -794,10 +776,10 @@ namespace Google2u
 	public sealed class HeroesData : IGoogle2uDB
 	{
 		public enum rowIds {
-			H_0, H_1
+			H_0, H_1, H_2, H_3, H_4, H_5, H_6, H_7, H_8, H_9, H_10, H_11, H_12, H_13, H_14, H_15
 		};
 		public string [] rowNames = {
-			"H_0", "H_1"
+			"H_0", "H_1", "H_2", "H_3", "H_4", "H_5", "H_6", "H_7", "H_8", "H_9", "H_10", "H_11", "H_12", "H_13", "H_14", "H_15"
 		};
 		public System.Collections.Generic.List<HeroesDataRow> Rows = new System.Collections.Generic.List<HeroesDataRow>();
 
@@ -814,8 +796,22 @@ namespace Google2u
 
 		private HeroesData()
 		{
-			Rows.Add( new HeroesDataRow("H_0", "Swordman", "1", "", "10", "10", "10", "10", "10", "10", "10", "10", "10", "10", "10", "10", "10", "10", "10", "10", "10", "10", "10", "10", "10", "10", "10", "10", "10", "10", "10", "10", "10", "10", "10", "10", "10", "10", "10", "10", "10", "10", "10", "0", "", "", "", "Swordman_Idle", "Swordman_Casting", "Swordman_Casting", "", "", "200", "10", ""));
-			Rows.Add( new HeroesDataRow("H_1", "Bowman", "2", "", "10", "10", "10", "10", "10", "10", "10", "10", "10", "10", "10", "10", "10", "10", "10", "10", "10", "10", "10", "10", "10", "10", "10", "10", "10", "10", "10", "10", "10", "10", "10", "10", "10", "10", "10", "10", "10", "10", "10", "0", "", "", "", "", "", "", "", "", "200", "10", ""));
+			Rows.Add( new HeroesDataRow("H_0", "Sword Man", "1", "M", "", "1050", "100", "500", "10", "150", "5", "120", "4", "110", "2", "130", "3", "100", "100", "100", "10", "10", "60", "10", "60", "10", "50", "10", "50", "10", "50", "10", "50", "50", "50", "50", "50", "50", "10", "10", "10", "10", "10", "10", "0", "Swordman_Idle", "Swordman_Casting", "Swordman_Casting", "", "", "50", "10", ""));
+			Rows.Add( new HeroesDataRow("H_1", "Sword Woman", "2", "F", "", "950", "100", "500", "10", "140", "5", "120", "4", "120", "2", "130", "3", "100", "100", "100", "10", "10", "80", "10", "80", "10", "60", "10", "50", "10", "50", "10", "60", "50", "50", "50", "50", "50", "10", "10", "10", "10", "10", "10", "0", "Swordman_Idle", "Swordman_Casting", "Swordman_Casting", "", "", "50", "10", ""));
+			Rows.Add( new HeroesDataRow("H_2", "Cleric", "3", "F", "", "1000", "100", "1200", "20", "100", "2", "100", "3", "140", "5", "130", "4", "90", "70", "100", "10", "10", "60", "10", "100", "20", "100", "10", "100", "10", "100", "10", "100", "100", "100", "100", "100", "100", "10", "10", "10", "10", "10", "10", "", "", "", "", "", "", "50", "10", ""));
+			Rows.Add( new HeroesDataRow("H_3", "Healer", "4", "M", "", "1000", "100", "1200", "20", "90", "2", "90", "3", "150", "5", "140", "4", "90", "70", "100", "10", "10", "60", "10", "100", "20", "100", "10", "100", "10", "100", "10", "100", "100", "100", "100", "100", "100", "10", "10", "10", "10", "10", "10", "", "", "", "", "", "", "50", "10", ""));
+			Rows.Add( new HeroesDataRow("H_4", "Monk", "5", "M", "", "1250", "100", "1250", "20", "110", "2", "100", "4", "140", "5", "130", "3", "90", "50", "40", "10", "10", "70", "10", "90", "20", "100", "10", "100", "10", "100", "10", "100", "100", "100", "100", "100", "100", "10", "10", "10", "10", "10", "10", "", "", "", "", "", "", "50", "10", ""));
+			Rows.Add( new HeroesDataRow("H_5", "Nun", "6", "F", "", "1150", "100", "1350", "20", "100", "2", "110", "4", "130", "5", "120", "3", "90", "40", "50", "10", "10", "80", "10", "100", "20", "100", "10", "100", "10", "100", "10", "100", "100", "100", "100", "100", "100", "10", "10", "10", "10", "10", "10", "", "", "", "", "", "", "50", "10", ""));
+			Rows.Add( new HeroesDataRow("H_6", "Spear Man", "7", "M", "", "800", "80", "800", "80", "50", "5", "50", "5", "70", "4", "50", "5", "100", "90", "110", "10", "10", "75", "15", "75", "15", "75", "10", "75", "10", "75", "10", "80", "80", "80", "80", "80", "80", "10", "10", "10", "10", "10", "10", "", "", "", "", "", "", "50", "10", ""));
+			Rows.Add( new HeroesDataRow("H_7", "Spear Woman", "8", "F", "", "800", "80", "800", "80", "50", "5", "50", "5", "50", "5", "70", "4", "100", "110", "90", "10", "10", "75", "15", "75", "15", "75", "10", "75", "10", "75", "10", "80", "80", "80", "80", "80", "80", "10", "10", "10", "10", "10", "10", "", "", "", "", "", "", "50", "10", ""));
+			Rows.Add( new HeroesDataRow("H_8", "Dart Thrower", "9", "M", "", "950", "100", "1050", "40", "120", "3", "150", "5", "120", "2", "100", "4", "110", "100", "100", "10", "10", "70", "10", "70", "10", "50", "10", "60", "10", "40", "10", "80", "80", "80", "80", "80", "80", "10", "10", "10", "10", "10", "10", "", "", "", "", "", "", "50", "10", ""));
+			Rows.Add( new HeroesDataRow("H_9", "Archer", "10", "F", "", "900", "100", "1250", "40", "130", "3", "150", "5", "130", "2", "90", "4", "110", "100", "100", "10", "10", "70", "10", "70", "10", "60", "10", "50", "10", "40", "10", "80", "80", "80", "80", "80", "80", "10", "10", "10", "10", "10", "10", "", "", "", "", "", "", "50", "10", ""));
+			Rows.Add( new HeroesDataRow("H_10", "Ice Wizard", "11", "M", "", "800", "80", "1050", "55", "100", "2", "110", "4", "150", "5", "135", "3", "85", "40", "70", "10", "10", "80", "10", "100", "15", "100", "10", "120", "15", "100", "10", "100", "100", "100", "100", "100", "100", "10", "12", "10", "10", "12", "10", "", "", "", "", "", "", "50", "10", ""));
+			Rows.Add( new HeroesDataRow("H_11", "Ice Mage", "12", "F", "", "700", "85", "1150", "50", "90", "2", "110", "4", "150", "5", "135", "3", "85", "40", "70", "10", "10", "80", "10", "100", "15", "100", "10", "120", "15", "100", "10", "100", "100", "100", "100", "100", "100", "10", "12", "10", "10", "12", "10", "", "", "", "", "", "", "50", "10", ""));
+			Rows.Add( new HeroesDataRow("H_12", "Wizard of Flame", "13", "M", "", "800", "80", "1050", "50", "100", "2", "110", "4", "145", "5", "155", "3", "90", "40", "70", "10", "10", "80", "10", "100", "15", "120", "15", "100", "10", "100", "10", "100", "100", "100", "100", "100", "100", "12", "10", "10", "12", "10", "10", "", "", "", "", "", "", "50", "10", ""));
+			Rows.Add( new HeroesDataRow("H_13", "Pyrotechic", "14", "F", "", "700", "80", "1150", "50", "90", "2", "110", "4", "150", "5", "135", "3", "90", "40", "70", "10", "10", "80", "10", "100", "15", "120", "15", "100", "10", "100", "10", "100", "100", "100", "100", "100", "100", "12", "10", "10", "12", "10", "10", "", "", "", "", "", "", "50", "10", ""));
+			Rows.Add( new HeroesDataRow("H_14", "Thunder Summoneer", "15", "M", "", "800", "80", "1050", "55", "100", "2", "110", "4", "150", "5", "135", "3", "80", "40", "70", "10", "10", "80", "10", "100", "15", "100", "10", "100", "10", "120", "15", "100", "100", "100", "100", "100", "100", "10", "10", "12", "10", "10", "12", "", "", "", "", "", "", "50", "10", ""));
+			Rows.Add( new HeroesDataRow("H_15", "Lightning", "16", "F", "", "700", "85", "1150", "50", "90", "2", "110", "4", "160", "5", "125", "3", "80", "40", "70", "10", "10", "80", "10", "100", "15", "100", "10", "100", "10", "120", "15", "100", "100", "100", "100", "100", "100", "10", "10", "12", "10", "10", "12", "", "", "", "", "", "", "50", "10", ""));
 		}
 		public IGoogle2uRow GetGenRow(string in_RowString)
 		{

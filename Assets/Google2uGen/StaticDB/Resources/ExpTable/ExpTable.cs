@@ -16,7 +16,8 @@ namespace Google2u
 	{
 		public int _Level;
 		public int _ExpNeeded;
-		public ExpTableRow(string __Name, string __Level, string __ExpNeeded) 
+		public int _TotalExp;
+		public ExpTableRow(string __Name, string __Level, string __ExpNeeded, string __TotalExp) 
 		{
 			{
 			int res;
@@ -32,9 +33,16 @@ namespace Google2u
 				else
 					Debug.LogError("Failed To Convert _ExpNeeded string: "+ __ExpNeeded +" to int");
 			}
+			{
+			int res;
+				if(int.TryParse(__TotalExp, NumberStyles.Any, CultureInfo.InvariantCulture, out res))
+					_TotalExp = res;
+				else
+					Debug.LogError("Failed To Convert _TotalExp string: "+ __TotalExp +" to int");
+			}
 		}
 
-		public int Length { get { return 2; } }
+		public int Length { get { return 3; } }
 
 		public string this[int i]
 		{
@@ -55,6 +63,9 @@ namespace Google2u
 				case 1:
 					ret = _ExpNeeded.ToString();
 					break;
+				case 2:
+					ret = _TotalExp.ToString();
+					break;
 			}
 
 			return ret;
@@ -71,6 +82,9 @@ namespace Google2u
 				case "ExpNeeded":
 					ret = _ExpNeeded.ToString();
 					break;
+				case "TotalExp":
+					ret = _TotalExp.ToString();
+					break;
 			}
 
 			return ret;
@@ -80,6 +94,7 @@ namespace Google2u
 			string ret = System.String.Empty;
 			ret += "{" + "Level" + " : " + _Level.ToString() + "} ";
 			ret += "{" + "ExpNeeded" + " : " + _ExpNeeded.ToString() + "} ";
+			ret += "{" + "TotalExp" + " : " + _TotalExp.ToString() + "} ";
 			return ret;
 		}
 	}
@@ -116,106 +131,106 @@ namespace Google2u
 
 		private ExpTable()
 		{
-			Rows.Add( new ExpTableRow("EXP_1", "1", "1"));
-			Rows.Add( new ExpTableRow("EXP_2", "2", "4"));
-			Rows.Add( new ExpTableRow("EXP_3", "3", "9"));
-			Rows.Add( new ExpTableRow("EXP_4", "4", "16"));
-			Rows.Add( new ExpTableRow("EXP_5", "5", "25"));
-			Rows.Add( new ExpTableRow("EXP_6", "6", "36"));
-			Rows.Add( new ExpTableRow("EXP_7", "7", "49"));
-			Rows.Add( new ExpTableRow("EXP_8", "8", "64"));
-			Rows.Add( new ExpTableRow("EXP_9", "9", "81"));
-			Rows.Add( new ExpTableRow("EXP_10", "10", "100"));
-			Rows.Add( new ExpTableRow("EXP_11", "11", "121"));
-			Rows.Add( new ExpTableRow("EXP_12", "12", "144"));
-			Rows.Add( new ExpTableRow("EXP_13", "13", "169"));
-			Rows.Add( new ExpTableRow("EXP_14", "14", "196"));
-			Rows.Add( new ExpTableRow("EXP_15", "15", "225"));
-			Rows.Add( new ExpTableRow("EXP_16", "16", "256"));
-			Rows.Add( new ExpTableRow("EXP_17", "17", "289"));
-			Rows.Add( new ExpTableRow("EXP_18", "18", "324"));
-			Rows.Add( new ExpTableRow("EXP_19", "19", "361"));
-			Rows.Add( new ExpTableRow("EXP_20", "20", "400"));
-			Rows.Add( new ExpTableRow("EXP_21", "21", "441"));
-			Rows.Add( new ExpTableRow("EXP_22", "22", "484"));
-			Rows.Add( new ExpTableRow("EXP_23", "23", "529"));
-			Rows.Add( new ExpTableRow("EXP_24", "24", "576"));
-			Rows.Add( new ExpTableRow("EXP_25", "25", "625"));
-			Rows.Add( new ExpTableRow("EXP_26", "26", "676"));
-			Rows.Add( new ExpTableRow("EXP_27", "27", "729"));
-			Rows.Add( new ExpTableRow("EXP_28", "28", "784"));
-			Rows.Add( new ExpTableRow("EXP_29", "29", "841"));
-			Rows.Add( new ExpTableRow("EXP_30", "30", "900"));
-			Rows.Add( new ExpTableRow("EXP_31", "31", "961"));
-			Rows.Add( new ExpTableRow("EXP_32", "32", "1024"));
-			Rows.Add( new ExpTableRow("EXP_33", "33", "1089"));
-			Rows.Add( new ExpTableRow("EXP_34", "34", "1156"));
-			Rows.Add( new ExpTableRow("EXP_35", "35", "1225"));
-			Rows.Add( new ExpTableRow("EXP_36", "36", "1296"));
-			Rows.Add( new ExpTableRow("EXP_37", "37", "1369"));
-			Rows.Add( new ExpTableRow("EXP_38", "38", "1444"));
-			Rows.Add( new ExpTableRow("EXP_39", "39", "1521"));
-			Rows.Add( new ExpTableRow("EXP_40", "40", "1600"));
-			Rows.Add( new ExpTableRow("EXP_41", "41", "1681"));
-			Rows.Add( new ExpTableRow("EXP_42", "42", "1764"));
-			Rows.Add( new ExpTableRow("EXP_43", "43", "1849"));
-			Rows.Add( new ExpTableRow("EXP_44", "44", "1936"));
-			Rows.Add( new ExpTableRow("EXP_45", "45", "2025"));
-			Rows.Add( new ExpTableRow("EXP_46", "46", "2116"));
-			Rows.Add( new ExpTableRow("EXP_47", "47", "2209"));
-			Rows.Add( new ExpTableRow("EXP_48", "48", "2304"));
-			Rows.Add( new ExpTableRow("EXP_49", "49", "2401"));
-			Rows.Add( new ExpTableRow("EXP_50", "50", "2500"));
-			Rows.Add( new ExpTableRow("EXP_51", "51", "2601"));
-			Rows.Add( new ExpTableRow("EXP_52", "52", "2704"));
-			Rows.Add( new ExpTableRow("EXP_53", "53", "2809"));
-			Rows.Add( new ExpTableRow("EXP_54", "54", "2916"));
-			Rows.Add( new ExpTableRow("EXP_55", "55", "3025"));
-			Rows.Add( new ExpTableRow("EXP_56", "56", "3136"));
-			Rows.Add( new ExpTableRow("EXP_57", "57", "3249"));
-			Rows.Add( new ExpTableRow("EXP_58", "58", "3364"));
-			Rows.Add( new ExpTableRow("EXP_59", "59", "3481"));
-			Rows.Add( new ExpTableRow("EXP_60", "60", "3600"));
-			Rows.Add( new ExpTableRow("EXP_61", "61", "3721"));
-			Rows.Add( new ExpTableRow("EXP_62", "62", "3844"));
-			Rows.Add( new ExpTableRow("EXP_63", "63", "3969"));
-			Rows.Add( new ExpTableRow("EXP_64", "64", "4096"));
-			Rows.Add( new ExpTableRow("EXP_65", "65", "4225"));
-			Rows.Add( new ExpTableRow("EXP_66", "66", "4356"));
-			Rows.Add( new ExpTableRow("EXP_67", "67", "4489"));
-			Rows.Add( new ExpTableRow("EXP_68", "68", "4624"));
-			Rows.Add( new ExpTableRow("EXP_69", "69", "4761"));
-			Rows.Add( new ExpTableRow("EXP_70", "70", "4900"));
-			Rows.Add( new ExpTableRow("EXP_71", "71", "5041"));
-			Rows.Add( new ExpTableRow("EXP_72", "72", "5184"));
-			Rows.Add( new ExpTableRow("EXP_73", "73", "5329"));
-			Rows.Add( new ExpTableRow("EXP_74", "74", "5476"));
-			Rows.Add( new ExpTableRow("EXP_75", "75", "5625"));
-			Rows.Add( new ExpTableRow("EXP_76", "76", "5776"));
-			Rows.Add( new ExpTableRow("EXP_77", "77", "5929"));
-			Rows.Add( new ExpTableRow("EXP_78", "78", "6084"));
-			Rows.Add( new ExpTableRow("EXP_79", "79", "6241"));
-			Rows.Add( new ExpTableRow("EXP_80", "80", "6400"));
-			Rows.Add( new ExpTableRow("EXP_81", "81", "6561"));
-			Rows.Add( new ExpTableRow("EXP_82", "82", "6724"));
-			Rows.Add( new ExpTableRow("EXP_83", "83", "6889"));
-			Rows.Add( new ExpTableRow("EXP_84", "84", "7056"));
-			Rows.Add( new ExpTableRow("EXP_85", "85", "7225"));
-			Rows.Add( new ExpTableRow("EXP_86", "86", "7396"));
-			Rows.Add( new ExpTableRow("EXP_87", "87", "7569"));
-			Rows.Add( new ExpTableRow("EXP_88", "88", "7744"));
-			Rows.Add( new ExpTableRow("EXP_89", "89", "7921"));
-			Rows.Add( new ExpTableRow("EXP_90", "90", "8100"));
-			Rows.Add( new ExpTableRow("EXP_91", "91", "8281"));
-			Rows.Add( new ExpTableRow("EXP_92", "92", "8464"));
-			Rows.Add( new ExpTableRow("EXP_93", "93", "8649"));
-			Rows.Add( new ExpTableRow("EXP_94", "94", "8836"));
-			Rows.Add( new ExpTableRow("EXP_95", "95", "9025"));
-			Rows.Add( new ExpTableRow("EXP_96", "96", "9216"));
-			Rows.Add( new ExpTableRow("EXP_97", "97", "9409"));
-			Rows.Add( new ExpTableRow("EXP_98", "98", "9604"));
-			Rows.Add( new ExpTableRow("EXP_99", "99", "9801"));
-			Rows.Add( new ExpTableRow("EXP_100", "100", "10000"));
+			Rows.Add( new ExpTableRow("EXP_1", "1", "10", "10"));
+			Rows.Add( new ExpTableRow("EXP_2", "2", "40", "50"));
+			Rows.Add( new ExpTableRow("EXP_3", "3", "90", "140"));
+			Rows.Add( new ExpTableRow("EXP_4", "4", "160", "300"));
+			Rows.Add( new ExpTableRow("EXP_5", "5", "250", "550"));
+			Rows.Add( new ExpTableRow("EXP_6", "6", "360", "910"));
+			Rows.Add( new ExpTableRow("EXP_7", "7", "490", "1400"));
+			Rows.Add( new ExpTableRow("EXP_8", "8", "640", "2040"));
+			Rows.Add( new ExpTableRow("EXP_9", "9", "810", "2850"));
+			Rows.Add( new ExpTableRow("EXP_10", "10", "1000", "3850"));
+			Rows.Add( new ExpTableRow("EXP_11", "11", "1210", "5060"));
+			Rows.Add( new ExpTableRow("EXP_12", "12", "1440", "6500"));
+			Rows.Add( new ExpTableRow("EXP_13", "13", "1690", "8190"));
+			Rows.Add( new ExpTableRow("EXP_14", "14", "1960", "10150"));
+			Rows.Add( new ExpTableRow("EXP_15", "15", "2250", "12400"));
+			Rows.Add( new ExpTableRow("EXP_16", "16", "2560", "14960"));
+			Rows.Add( new ExpTableRow("EXP_17", "17", "2890", "17850"));
+			Rows.Add( new ExpTableRow("EXP_18", "18", "3240", "21090"));
+			Rows.Add( new ExpTableRow("EXP_19", "19", "3610", "24700"));
+			Rows.Add( new ExpTableRow("EXP_20", "20", "4000", "28700"));
+			Rows.Add( new ExpTableRow("EXP_21", "21", "4410", "33110"));
+			Rows.Add( new ExpTableRow("EXP_22", "22", "4840", "37950"));
+			Rows.Add( new ExpTableRow("EXP_23", "23", "5290", "43240"));
+			Rows.Add( new ExpTableRow("EXP_24", "24", "5760", "49000"));
+			Rows.Add( new ExpTableRow("EXP_25", "25", "6250", "55250"));
+			Rows.Add( new ExpTableRow("EXP_26", "26", "6760", "62010"));
+			Rows.Add( new ExpTableRow("EXP_27", "27", "7290", "69300"));
+			Rows.Add( new ExpTableRow("EXP_28", "28", "7840", "77140"));
+			Rows.Add( new ExpTableRow("EXP_29", "29", "8410", "85550"));
+			Rows.Add( new ExpTableRow("EXP_30", "30", "9000", "94550"));
+			Rows.Add( new ExpTableRow("EXP_31", "31", "9610", "104160"));
+			Rows.Add( new ExpTableRow("EXP_32", "32", "10240", "114400"));
+			Rows.Add( new ExpTableRow("EXP_33", "33", "10890", "125290"));
+			Rows.Add( new ExpTableRow("EXP_34", "34", "11560", "136850"));
+			Rows.Add( new ExpTableRow("EXP_35", "35", "12250", "149100"));
+			Rows.Add( new ExpTableRow("EXP_36", "36", "12960", "162060"));
+			Rows.Add( new ExpTableRow("EXP_37", "37", "13690", "175750"));
+			Rows.Add( new ExpTableRow("EXP_38", "38", "14440", "190190"));
+			Rows.Add( new ExpTableRow("EXP_39", "39", "15210", "205400"));
+			Rows.Add( new ExpTableRow("EXP_40", "40", "16000", "221400"));
+			Rows.Add( new ExpTableRow("EXP_41", "41", "16810", "238210"));
+			Rows.Add( new ExpTableRow("EXP_42", "42", "17640", "255850"));
+			Rows.Add( new ExpTableRow("EXP_43", "43", "18490", "274340"));
+			Rows.Add( new ExpTableRow("EXP_44", "44", "19360", "293700"));
+			Rows.Add( new ExpTableRow("EXP_45", "45", "20250", "313950"));
+			Rows.Add( new ExpTableRow("EXP_46", "46", "21160", "335110"));
+			Rows.Add( new ExpTableRow("EXP_47", "47", "22090", "357200"));
+			Rows.Add( new ExpTableRow("EXP_48", "48", "23040", "380240"));
+			Rows.Add( new ExpTableRow("EXP_49", "49", "24010", "404250"));
+			Rows.Add( new ExpTableRow("EXP_50", "50", "25000", "429250"));
+			Rows.Add( new ExpTableRow("EXP_51", "51", "26010", "455260"));
+			Rows.Add( new ExpTableRow("EXP_52", "52", "27040", "482300"));
+			Rows.Add( new ExpTableRow("EXP_53", "53", "28090", "510390"));
+			Rows.Add( new ExpTableRow("EXP_54", "54", "29160", "539550"));
+			Rows.Add( new ExpTableRow("EXP_55", "55", "30250", "569800"));
+			Rows.Add( new ExpTableRow("EXP_56", "56", "31360", "601160"));
+			Rows.Add( new ExpTableRow("EXP_57", "57", "32490", "633650"));
+			Rows.Add( new ExpTableRow("EXP_58", "58", "33640", "667290"));
+			Rows.Add( new ExpTableRow("EXP_59", "59", "34810", "702100"));
+			Rows.Add( new ExpTableRow("EXP_60", "60", "36000", "738100"));
+			Rows.Add( new ExpTableRow("EXP_61", "61", "37210", "775310"));
+			Rows.Add( new ExpTableRow("EXP_62", "62", "38440", "813750"));
+			Rows.Add( new ExpTableRow("EXP_63", "63", "39690", "853440"));
+			Rows.Add( new ExpTableRow("EXP_64", "64", "40960", "894400"));
+			Rows.Add( new ExpTableRow("EXP_65", "65", "42250", "936650"));
+			Rows.Add( new ExpTableRow("EXP_66", "66", "43560", "980210"));
+			Rows.Add( new ExpTableRow("EXP_67", "67", "44890", "1025100"));
+			Rows.Add( new ExpTableRow("EXP_68", "68", "46240", "1071340"));
+			Rows.Add( new ExpTableRow("EXP_69", "69", "47610", "1118950"));
+			Rows.Add( new ExpTableRow("EXP_70", "70", "49000", "1167950"));
+			Rows.Add( new ExpTableRow("EXP_71", "71", "50410", "1218360"));
+			Rows.Add( new ExpTableRow("EXP_72", "72", "51840", "1270200"));
+			Rows.Add( new ExpTableRow("EXP_73", "73", "53290", "1323490"));
+			Rows.Add( new ExpTableRow("EXP_74", "74", "54760", "1378250"));
+			Rows.Add( new ExpTableRow("EXP_75", "75", "56250", "1434500"));
+			Rows.Add( new ExpTableRow("EXP_76", "76", "57760", "1492260"));
+			Rows.Add( new ExpTableRow("EXP_77", "77", "59290", "1551550"));
+			Rows.Add( new ExpTableRow("EXP_78", "78", "60840", "1612390"));
+			Rows.Add( new ExpTableRow("EXP_79", "79", "62410", "1674800"));
+			Rows.Add( new ExpTableRow("EXP_80", "80", "64000", "1738800"));
+			Rows.Add( new ExpTableRow("EXP_81", "81", "65610", "1804410"));
+			Rows.Add( new ExpTableRow("EXP_82", "82", "67240", "1871650"));
+			Rows.Add( new ExpTableRow("EXP_83", "83", "68890", "1940540"));
+			Rows.Add( new ExpTableRow("EXP_84", "84", "70560", "2011100"));
+			Rows.Add( new ExpTableRow("EXP_85", "85", "72250", "2083350"));
+			Rows.Add( new ExpTableRow("EXP_86", "86", "73960", "2157310"));
+			Rows.Add( new ExpTableRow("EXP_87", "87", "75690", "2233000"));
+			Rows.Add( new ExpTableRow("EXP_88", "88", "77440", "2310440"));
+			Rows.Add( new ExpTableRow("EXP_89", "89", "79210", "2389650"));
+			Rows.Add( new ExpTableRow("EXP_90", "90", "81000", "2470650"));
+			Rows.Add( new ExpTableRow("EXP_91", "91", "82810", "2553460"));
+			Rows.Add( new ExpTableRow("EXP_92", "92", "84640", "2638100"));
+			Rows.Add( new ExpTableRow("EXP_93", "93", "86490", "2724590"));
+			Rows.Add( new ExpTableRow("EXP_94", "94", "88360", "2812950"));
+			Rows.Add( new ExpTableRow("EXP_95", "95", "90250", "2903200"));
+			Rows.Add( new ExpTableRow("EXP_96", "96", "92160", "2995360"));
+			Rows.Add( new ExpTableRow("EXP_97", "97", "94090", "3089450"));
+			Rows.Add( new ExpTableRow("EXP_98", "98", "96040", "3185490"));
+			Rows.Add( new ExpTableRow("EXP_99", "99", "98010", "3283500"));
+			Rows.Add( new ExpTableRow("EXP_100", "100", "100000", "3383500"));
 		}
 		public IGoogle2uRow GetGenRow(string in_RowString)
 		{
