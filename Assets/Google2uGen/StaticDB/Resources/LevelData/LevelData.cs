@@ -14,6 +14,7 @@ namespace Google2u
 	[System.Serializable]
 	public class LevelDataRow : IGoogle2uRow
 	{
+		public string _Name;
 		public int _ID;
 		public string _Battle1;
 		public string _Battle2;
@@ -22,8 +23,9 @@ namespace Google2u
 		public string _Battle5;
 		public string _Loot;
 		public string _Description;
-		public LevelDataRow(string __Name, string __ID, string __Battle1, string __Battle2, string __Battle3, string __Battle4, string __Battle5, string __Loot, string __Description) 
+		public LevelDataRow(string __NameIndex, string __Name, string __ID, string __Battle1, string __Battle2, string __Battle3, string __Battle4, string __Battle5, string __Loot, string __Description) 
 		{
+			_Name = __Name.Trim();
 			{
 			int res;
 				if(int.TryParse(__ID, NumberStyles.Any, CultureInfo.InvariantCulture, out res))
@@ -40,7 +42,7 @@ namespace Google2u
 			_Description = __Description.Trim();
 		}
 
-		public int Length { get { return 8; } }
+		public int Length { get { return 9; } }
 
 		public string this[int i]
 		{
@@ -56,27 +58,30 @@ namespace Google2u
 			switch( index )
 			{
 				case 0:
-					ret = _ID.ToString();
+					ret = _Name.ToString();
 					break;
 				case 1:
-					ret = _Battle1.ToString();
+					ret = _ID.ToString();
 					break;
 				case 2:
-					ret = _Battle2.ToString();
+					ret = _Battle1.ToString();
 					break;
 				case 3:
-					ret = _Battle3.ToString();
+					ret = _Battle2.ToString();
 					break;
 				case 4:
-					ret = _Battle4.ToString();
+					ret = _Battle3.ToString();
 					break;
 				case 5:
-					ret = _Battle5.ToString();
+					ret = _Battle4.ToString();
 					break;
 				case 6:
-					ret = _Loot.ToString();
+					ret = _Battle5.ToString();
 					break;
 				case 7:
+					ret = _Loot.ToString();
+					break;
+				case 8:
 					ret = _Description.ToString();
 					break;
 			}
@@ -89,6 +94,9 @@ namespace Google2u
 			var ret = System.String.Empty;
 			switch( colID )
 			{
+				case "Name":
+					ret = _Name.ToString();
+					break;
 				case "ID":
 					ret = _ID.ToString();
 					break;
@@ -120,6 +128,7 @@ namespace Google2u
 		public override string ToString()
 		{
 			string ret = System.String.Empty;
+			ret += "{" + "Name" + " : " + _Name.ToString() + "} ";
 			ret += "{" + "ID" + " : " + _ID.ToString() + "} ";
 			ret += "{" + "Battle1" + " : " + _Battle1.ToString() + "} ";
 			ret += "{" + "Battle2" + " : " + _Battle2.ToString() + "} ";
@@ -134,10 +143,10 @@ namespace Google2u
 	public sealed class LevelData : IGoogle2uDB
 	{
 		public enum rowIds {
-			Forest_Beginner, Forest_Advance, Forest_Expert
+			L_1, L_2, L_3
 		};
 		public string [] rowNames = {
-			"Forest_Beginner", "Forest_Advance", "Forest_Expert"
+			"L_1", "L_2", "L_3"
 		};
 		public System.Collections.Generic.List<LevelDataRow> Rows = new System.Collections.Generic.List<LevelDataRow>();
 
@@ -154,9 +163,9 @@ namespace Google2u
 
 		private LevelData()
 		{
-			Rows.Add( new LevelDataRow("Forest_Beginner", "1", "1", "", "", "", "", "", ""));
-			Rows.Add( new LevelDataRow("Forest_Advance", "2", "1", "1,1,1", "", "", "", "", ""));
-			Rows.Add( new LevelDataRow("Forest_Expert", "3", "1,2,3,2,3", "", "", "", "", "", ""));
+			Rows.Add( new LevelDataRow("L_1", "Forest_Beginner", "1", "1", "", "", "", "", "", ""));
+			Rows.Add( new LevelDataRow("L_2", "Forest_Advance", "2", "1", "1,1,1", "", "", "", "", ""));
+			Rows.Add( new LevelDataRow("L_3", "Forest_Expert", "3", "1,2,3,2,3", "", "", "", "", "", ""));
 		}
 		public IGoogle2uRow GetGenRow(string in_RowString)
 		{

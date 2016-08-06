@@ -26,14 +26,22 @@ namespace Google2u
 		public string _SpriteIcon;
 		public string _SkillFomular;
 		public int _Turns;
+		public int _Hits;
 		public int _HPFlat;
 		public int _HPPercent;
 		public int _MPFlat;
 		public int _MPPercent;
+		public int _Energy;
+		public int _ShieldPercent;
+		public int _ShieldFlat;
 		public int _AttFlat;
 		public int _AttPercent;
 		public int _DefFlat;
 		public int _DefPercent;
+		public int _MAttFlat;
+		public int _MAttPercent;
+		public int _MDefFlat;
+		public int _MDefPercent;
 		public int _STRFlat;
 		public int _STRPercent;
 		public int _DEXFlat;
@@ -48,11 +56,10 @@ namespace Google2u
 		public int _ExpPercent;
 		public int _DropFlat;
 		public int _DropPercent;
-		public int _Energy;
 		public int _Completion;
 		public int _Quality;
 		public int _Steps;
-		public SkillDataRow(string __SkillIndex, string __Name, string __ID, string __Description, string __Level, string __AttackType, string __TargetType, string __AnimationType, string __SoundFile, string __SpriteAnimation, string __SpriteIcon, string __SkillFomular, string __Turns, string __HPFlat, string __HPPercent, string __MPFlat, string __MPPercent, string __AttFlat, string __AttPercent, string __DefFlat, string __DefPercent, string __STRFlat, string __STRPercent, string __DEXFlat, string __DEXPercent, string __INTFlat, string __INTPercent, string __LUKFlat, string __LUKPercent, string __SpeedFlat, string __SpeedPercent, string __ExpFlat, string __ExpPercent, string __DropFlat, string __DropPercent, string __Energy, string __Completion, string __Quality, string __Steps) 
+		public SkillDataRow(string __SkillIndex, string __Name, string __ID, string __Description, string __Level, string __AttackType, string __TargetType, string __AnimationType, string __SoundFile, string __SpriteAnimation, string __SpriteIcon, string __SkillFomular, string __Turns, string __Hits, string __HPFlat, string __HPPercent, string __MPFlat, string __MPPercent, string __Energy, string __ShieldPercent, string __ShieldFlat, string __AttFlat, string __AttPercent, string __DefFlat, string __DefPercent, string __MAttFlat, string __MAttPercent, string __MDefFlat, string __MDefPercent, string __STRFlat, string __STRPercent, string __DEXFlat, string __DEXPercent, string __INTFlat, string __INTPercent, string __LUKFlat, string __LUKPercent, string __SpeedFlat, string __SpeedPercent, string __ExpFlat, string __ExpPercent, string __DropFlat, string __DropPercent, string __Completion, string __Quality, string __Steps) 
 		{
 			_Name = __Name.Trim();
 			{
@@ -86,6 +93,13 @@ namespace Google2u
 			}
 			{
 			int res;
+				if(int.TryParse(__Hits, NumberStyles.Any, CultureInfo.InvariantCulture, out res))
+					_Hits = res;
+				else
+					Debug.LogError("Failed To Convert _Hits string: "+ __Hits +" to int");
+			}
+			{
+			int res;
 				if(int.TryParse(__HPFlat, NumberStyles.Any, CultureInfo.InvariantCulture, out res))
 					_HPFlat = res;
 				else
@@ -114,6 +128,27 @@ namespace Google2u
 			}
 			{
 			int res;
+				if(int.TryParse(__Energy, NumberStyles.Any, CultureInfo.InvariantCulture, out res))
+					_Energy = res;
+				else
+					Debug.LogError("Failed To Convert _Energy string: "+ __Energy +" to int");
+			}
+			{
+			int res;
+				if(int.TryParse(__ShieldPercent, NumberStyles.Any, CultureInfo.InvariantCulture, out res))
+					_ShieldPercent = res;
+				else
+					Debug.LogError("Failed To Convert _ShieldPercent string: "+ __ShieldPercent +" to int");
+			}
+			{
+			int res;
+				if(int.TryParse(__ShieldFlat, NumberStyles.Any, CultureInfo.InvariantCulture, out res))
+					_ShieldFlat = res;
+				else
+					Debug.LogError("Failed To Convert _ShieldFlat string: "+ __ShieldFlat +" to int");
+			}
+			{
+			int res;
 				if(int.TryParse(__AttFlat, NumberStyles.Any, CultureInfo.InvariantCulture, out res))
 					_AttFlat = res;
 				else
@@ -139,6 +174,34 @@ namespace Google2u
 					_DefPercent = res;
 				else
 					Debug.LogError("Failed To Convert _DefPercent string: "+ __DefPercent +" to int");
+			}
+			{
+			int res;
+				if(int.TryParse(__MAttFlat, NumberStyles.Any, CultureInfo.InvariantCulture, out res))
+					_MAttFlat = res;
+				else
+					Debug.LogError("Failed To Convert _MAttFlat string: "+ __MAttFlat +" to int");
+			}
+			{
+			int res;
+				if(int.TryParse(__MAttPercent, NumberStyles.Any, CultureInfo.InvariantCulture, out res))
+					_MAttPercent = res;
+				else
+					Debug.LogError("Failed To Convert _MAttPercent string: "+ __MAttPercent +" to int");
+			}
+			{
+			int res;
+				if(int.TryParse(__MDefFlat, NumberStyles.Any, CultureInfo.InvariantCulture, out res))
+					_MDefFlat = res;
+				else
+					Debug.LogError("Failed To Convert _MDefFlat string: "+ __MDefFlat +" to int");
+			}
+			{
+			int res;
+				if(int.TryParse(__MDefPercent, NumberStyles.Any, CultureInfo.InvariantCulture, out res))
+					_MDefPercent = res;
+				else
+					Debug.LogError("Failed To Convert _MDefPercent string: "+ __MDefPercent +" to int");
 			}
 			{
 			int res;
@@ -240,13 +303,6 @@ namespace Google2u
 			}
 			{
 			int res;
-				if(int.TryParse(__Energy, NumberStyles.Any, CultureInfo.InvariantCulture, out res))
-					_Energy = res;
-				else
-					Debug.LogError("Failed To Convert _Energy string: "+ __Energy +" to int");
-			}
-			{
-			int res;
 				if(int.TryParse(__Completion, NumberStyles.Any, CultureInfo.InvariantCulture, out res))
 					_Completion = res;
 				else
@@ -268,7 +324,7 @@ namespace Google2u
 			}
 		}
 
-		public int Length { get { return 38; } }
+		public int Length { get { return 45; } }
 
 		public string this[int i]
 		{
@@ -320,81 +376,102 @@ namespace Google2u
 					ret = _Turns.ToString();
 					break;
 				case 12:
-					ret = _HPFlat.ToString();
+					ret = _Hits.ToString();
 					break;
 				case 13:
-					ret = _HPPercent.ToString();
+					ret = _HPFlat.ToString();
 					break;
 				case 14:
-					ret = _MPFlat.ToString();
+					ret = _HPPercent.ToString();
 					break;
 				case 15:
-					ret = _MPPercent.ToString();
+					ret = _MPFlat.ToString();
 					break;
 				case 16:
-					ret = _AttFlat.ToString();
+					ret = _MPPercent.ToString();
 					break;
 				case 17:
-					ret = _AttPercent.ToString();
-					break;
-				case 18:
-					ret = _DefFlat.ToString();
-					break;
-				case 19:
-					ret = _DefPercent.ToString();
-					break;
-				case 20:
-					ret = _STRFlat.ToString();
-					break;
-				case 21:
-					ret = _STRPercent.ToString();
-					break;
-				case 22:
-					ret = _DEXFlat.ToString();
-					break;
-				case 23:
-					ret = _DEXPercent.ToString();
-					break;
-				case 24:
-					ret = _INTFlat.ToString();
-					break;
-				case 25:
-					ret = _INTPercent.ToString();
-					break;
-				case 26:
-					ret = _LUKFlat.ToString();
-					break;
-				case 27:
-					ret = _LUKPercent.ToString();
-					break;
-				case 28:
-					ret = _SpeedFlat.ToString();
-					break;
-				case 29:
-					ret = _SpeedPercent.ToString();
-					break;
-				case 30:
-					ret = _ExpFlat.ToString();
-					break;
-				case 31:
-					ret = _ExpPercent.ToString();
-					break;
-				case 32:
-					ret = _DropFlat.ToString();
-					break;
-				case 33:
-					ret = _DropPercent.ToString();
-					break;
-				case 34:
 					ret = _Energy.ToString();
 					break;
+				case 18:
+					ret = _ShieldPercent.ToString();
+					break;
+				case 19:
+					ret = _ShieldFlat.ToString();
+					break;
+				case 20:
+					ret = _AttFlat.ToString();
+					break;
+				case 21:
+					ret = _AttPercent.ToString();
+					break;
+				case 22:
+					ret = _DefFlat.ToString();
+					break;
+				case 23:
+					ret = _DefPercent.ToString();
+					break;
+				case 24:
+					ret = _MAttFlat.ToString();
+					break;
+				case 25:
+					ret = _MAttPercent.ToString();
+					break;
+				case 26:
+					ret = _MDefFlat.ToString();
+					break;
+				case 27:
+					ret = _MDefPercent.ToString();
+					break;
+				case 28:
+					ret = _STRFlat.ToString();
+					break;
+				case 29:
+					ret = _STRPercent.ToString();
+					break;
+				case 30:
+					ret = _DEXFlat.ToString();
+					break;
+				case 31:
+					ret = _DEXPercent.ToString();
+					break;
+				case 32:
+					ret = _INTFlat.ToString();
+					break;
+				case 33:
+					ret = _INTPercent.ToString();
+					break;
+				case 34:
+					ret = _LUKFlat.ToString();
+					break;
 				case 35:
-					ret = _Completion.ToString();
+					ret = _LUKPercent.ToString();
 					break;
 				case 36:
-					ret = _Quality.ToString();
+					ret = _SpeedFlat.ToString();
 					break;
 				case 37:
+					ret = _SpeedPercent.ToString();
+					break;
+				case 38:
+					ret = _ExpFlat.ToString();
+					break;
+				case 39:
+					ret = _ExpPercent.ToString();
+					break;
+				case 40:
+					ret = _DropFlat.ToString();
+					break;
+				case 41:
+					ret = _DropPercent.ToString();
+					break;
+				case 42:
+					ret = _Completion.ToString();
+					break;
+				case 43:
+					ret = _Quality.ToString();
+					break;
+				case 44:
 					ret = _Steps.ToString();
 					break;
 			}
@@ -443,6 +520,9 @@ namespace Google2u
 				case "Turns":
 					ret = _Turns.ToString();
 					break;
+				case "Hits":
+					ret = _Hits.ToString();
+					break;
 				case "HPFlat":
 					ret = _HPFlat.ToString();
 					break;
@@ -455,6 +535,15 @@ namespace Google2u
 				case "MPPercent":
 					ret = _MPPercent.ToString();
 					break;
+				case "Energy":
+					ret = _Energy.ToString();
+					break;
+				case "ShieldPercent":
+					ret = _ShieldPercent.ToString();
+					break;
+				case "ShieldFlat":
+					ret = _ShieldFlat.ToString();
+					break;
 				case "AttFlat":
 					ret = _AttFlat.ToString();
 					break;
@@ -466,6 +555,18 @@ namespace Google2u
 					break;
 				case "DefPercent":
 					ret = _DefPercent.ToString();
+					break;
+				case "MAttFlat":
+					ret = _MAttFlat.ToString();
+					break;
+				case "MAttPercent":
+					ret = _MAttPercent.ToString();
+					break;
+				case "MDefFlat":
+					ret = _MDefFlat.ToString();
+					break;
+				case "MDefPercent":
+					ret = _MDefPercent.ToString();
 					break;
 				case "STRFlat":
 					ret = _STRFlat.ToString();
@@ -509,9 +610,6 @@ namespace Google2u
 				case "DropPercent":
 					ret = _DropPercent.ToString();
 					break;
-				case "Energy":
-					ret = _Energy.ToString();
-					break;
 				case "Completion":
 					ret = _Completion.ToString();
 					break;
@@ -540,14 +638,22 @@ namespace Google2u
 			ret += "{" + "SpriteIcon" + " : " + _SpriteIcon.ToString() + "} ";
 			ret += "{" + "SkillFomular" + " : " + _SkillFomular.ToString() + "} ";
 			ret += "{" + "Turns" + " : " + _Turns.ToString() + "} ";
+			ret += "{" + "Hits" + " : " + _Hits.ToString() + "} ";
 			ret += "{" + "HPFlat" + " : " + _HPFlat.ToString() + "} ";
 			ret += "{" + "HPPercent" + " : " + _HPPercent.ToString() + "} ";
 			ret += "{" + "MPFlat" + " : " + _MPFlat.ToString() + "} ";
 			ret += "{" + "MPPercent" + " : " + _MPPercent.ToString() + "} ";
+			ret += "{" + "Energy" + " : " + _Energy.ToString() + "} ";
+			ret += "{" + "ShieldPercent" + " : " + _ShieldPercent.ToString() + "} ";
+			ret += "{" + "ShieldFlat" + " : " + _ShieldFlat.ToString() + "} ";
 			ret += "{" + "AttFlat" + " : " + _AttFlat.ToString() + "} ";
 			ret += "{" + "AttPercent" + " : " + _AttPercent.ToString() + "} ";
 			ret += "{" + "DefFlat" + " : " + _DefFlat.ToString() + "} ";
 			ret += "{" + "DefPercent" + " : " + _DefPercent.ToString() + "} ";
+			ret += "{" + "MAttFlat" + " : " + _MAttFlat.ToString() + "} ";
+			ret += "{" + "MAttPercent" + " : " + _MAttPercent.ToString() + "} ";
+			ret += "{" + "MDefFlat" + " : " + _MDefFlat.ToString() + "} ";
+			ret += "{" + "MDefPercent" + " : " + _MDefPercent.ToString() + "} ";
 			ret += "{" + "STRFlat" + " : " + _STRFlat.ToString() + "} ";
 			ret += "{" + "STRPercent" + " : " + _STRPercent.ToString() + "} ";
 			ret += "{" + "DEXFlat" + " : " + _DEXFlat.ToString() + "} ";
@@ -562,7 +668,6 @@ namespace Google2u
 			ret += "{" + "ExpPercent" + " : " + _ExpPercent.ToString() + "} ";
 			ret += "{" + "DropFlat" + " : " + _DropFlat.ToString() + "} ";
 			ret += "{" + "DropPercent" + " : " + _DropPercent.ToString() + "} ";
-			ret += "{" + "Energy" + " : " + _Energy.ToString() + "} ";
 			ret += "{" + "Completion" + " : " + _Completion.ToString() + "} ";
 			ret += "{" + "Quality" + " : " + _Quality.ToString() + "} ";
 			ret += "{" + "Steps" + " : " + _Steps.ToString() + "} ";
@@ -573,11 +678,13 @@ namespace Google2u
 	{
 		public enum rowIds {
 			S_1, S_2, S_3, S_4, S_5, S_6, S_7, S_8, S_9, S_10, S_11, S_12, S_13, S_14, S_15, S_16, S_17, S_18
-			, S_19, S_20, S_21
+			, S_19, S_20, S_21, S_22, S_23, S_24, S_25, S_26, S_27, S_28, S_29, S_30, S_31, S_32, S_33, S_34, S_35, S_36, S_37, S_38
+			, S_39, S_40, S_41, S_42
 		};
 		public string [] rowNames = {
 			"S_1", "S_2", "S_3", "S_4", "S_5", "S_6", "S_7", "S_8", "S_9", "S_10", "S_11", "S_12", "S_13", "S_14", "S_15", "S_16", "S_17", "S_18"
-			, "S_19", "S_20", "S_21"
+			, "S_19", "S_20", "S_21", "S_22", "S_23", "S_24", "S_25", "S_26", "S_27", "S_28", "S_29", "S_30", "S_31", "S_32", "S_33", "S_34", "S_35", "S_36", "S_37", "S_38"
+			, "S_39", "S_40", "S_41", "S_42"
 		};
 		public System.Collections.Generic.List<SkillDataRow> Rows = new System.Collections.Generic.List<SkillDataRow>();
 
@@ -594,27 +701,48 @@ namespace Google2u
 
 		private SkillData()
 		{
-			Rows.Add( new SkillDataRow("S_1", "Attack (Melee)", "1", "Attack an enemy with a melee weapon", "1", "AttackType_PATT", "TargetType_Target", "AnimType_MeleeTarget", "NONE", "NONE", "NONE", "{PSTR}+{PPATT}-{EPDEF}", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"));
-			Rows.Add( new SkillDataRow("S_2", "Attack (Range)", "2", "Attack an enemy with a ranged weapon", "1", "AttackType_PATT", "TargetType_Target", "AnimType_RangeTarget", "NONE", "NONE", "NONE", "{PSTR}+{PPATT}-{EPDEF}", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"));
-			Rows.Add( new SkillDataRow("S_3", "Magic Bolt", "3", "Attack an enemy with a Magic bolt", "1", "AttackType_MATT", "TargetType_Target", "AnimType_RangeTarget", "NONE", "NONE", "NONE", "{PINT}+{PMATT}-{EMDEF}", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"));
-			Rows.Add( new SkillDataRow("S_4", "Heal", "4", "iploremsum...", "1", "AttackType_MATT", "TargetType_Target", "AnimType_RangeTarget", "NONE", "NONE", "NONE", "0-200", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"));
-			Rows.Add( new SkillDataRow("S_5", "Protect", "5", "iploremsum...", "1", "AttackType_BUFF", "TargetType_Multiple", "AnimType_Ally", "NONE", "NONE", "NONE", "0", "5", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"));
-			Rows.Add( new SkillDataRow("S_6", "dummyskill", "6", "iploremsum...", "1", "AttackType_BUFF", "TargetType_Multiple", "AnimType_Ally", "NONE", "NONE", "NONE", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"));
-			Rows.Add( new SkillDataRow("S_7", "dummyskill", "7", "iploremsum...", "1", "AttackType_BUFF", "TargetType_Multiple", "AnimType_Ally", "NONE", "NONE", "NONE", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"));
-			Rows.Add( new SkillDataRow("S_8", "dummyskill", "8", "iploremsum...", "1", "AttackType_BUFF", "TargetType_Multiple", "AnimType_Ally", "NONE", "NONE", "NONE", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"));
-			Rows.Add( new SkillDataRow("S_9", "dummyskill", "9", "iploremsum...", "1", "AttackType_BUFF", "TargetType_Multiple", "AnimType_Ally", "NONE", "NONE", "NONE", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"));
-			Rows.Add( new SkillDataRow("S_10", "dummyskill", "10", "iploremsum...", "1", "AttackType_BUFF", "TargetType_Multiple", "AnimType_Ally", "NONE", "NONE", "NONE", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"));
-			Rows.Add( new SkillDataRow("S_11", "dummyskill", "11", "iploremsum...", "1", "AttackType_BUFF", "TargetType_Multiple", "AnimType_Ally", "NONE", "NONE", "NONE", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"));
-			Rows.Add( new SkillDataRow("S_12", "dummyskill", "12", "iploremsum...", "1", "AttackType_BUFF", "TargetType_Multiple", "AnimType_Ally", "NONE", "NONE", "NONE", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"));
-			Rows.Add( new SkillDataRow("S_13", "dummyskill", "13", "iploremsum...", "1", "AttackType_BUFF", "TargetType_Multiple", "AnimType_Ally", "NONE", "NONE", "NONE", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"));
-			Rows.Add( new SkillDataRow("S_14", "dummyskill", "14", "iploremsum...", "1", "AttackType_BUFF", "TargetType_Multiple", "AnimType_Ally", "NONE", "NONE", "NONE", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"));
-			Rows.Add( new SkillDataRow("S_15", "dummyskill", "15", "iploremsum...", "1", "AttackType_BUFF", "TargetType_Multiple", "AnimType_Ally", "NONE", "NONE", "NONE", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"));
-			Rows.Add( new SkillDataRow("S_16", "dummyskill", "16", "iploremsum...", "1", "AttackType_BUFF", "TargetType_Multiple", "AnimType_Ally", "NONE", "NONE", "NONE", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"));
-			Rows.Add( new SkillDataRow("S_17", "dummyskill", "17", "iploremsum...", "1", "AttackType_BUFF", "TargetType_Multiple", "AnimType_Ally", "NONE", "NONE", "NONE", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"));
-			Rows.Add( new SkillDataRow("S_18", "dummyskill", "18", "iploremsum...", "1", "AttackType_BUFF", "TargetType_Multiple", "AnimType_Ally", "NONE", "NONE", "NONE", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"));
-			Rows.Add( new SkillDataRow("S_19", "dummyskill", "19", "iploremsum...", "1", "AttackType_BUFF", "TargetType_Multiple", "AnimType_Ally", "NONE", "NONE", "NONE", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"));
-			Rows.Add( new SkillDataRow("S_20", "dummyskill", "20", "iploremsum...", "1", "AttackType_BUFF", "TargetType_Multiple", "AnimType_Ally", "NONE", "NONE", "NONE", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"));
-			Rows.Add( new SkillDataRow("S_21", "dummyskill", "21", "iploremsum...", "1", "AttackType_BUFF", "TargetType_Multiple", "AnimType_Ally", "NONE", "NONE", "NONE", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"));
+			Rows.Add( new SkillDataRow("S_1", "Attack (Melee)", "1", "Attack an enemy with a melee weapon", "1", "AttackType_PATT", "TargetType_Target", "AnimType_MeleeTarget", "NONE", "NONE", "NONE", "{PSTR}+{PPATT}-{EPDEF}", "0", "1", "0", "0", "0", "0", "1", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"));
+			Rows.Add( new SkillDataRow("S_2", "Attack (Range)", "2", "Attack an enemy with a ranged weapon", "1", "AttackType_PATT", "TargetType_Target", "AnimType_RangeTarget", "NONE", "NONE", "NONE", "{PSTR}+{PPATT}-{EPDEF}", "0", "1", "0", "0", "0", "0", "1", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"));
+			Rows.Add( new SkillDataRow("S_3", "Magic Bolt", "3", "Attack an enemy with a Magic bolt", "1", "AttackType_MATT", "TargetType_Target", "AnimType_RangeTarget", "NONE", "NONE", "NONE", "{PINT}+{PMATT}-{EMDEF}", "0", "1", "0", "0", "10", "0", "1", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"));
+			Rows.Add( new SkillDataRow("S_4", "Heal", "4", "Heals a Target", "2", "AttackType_MATT", "TargetType_Target", "AnimType_RangeTarget", "NONE", "NONE", "NONE", "0-{PINT}-{PMATT}-{PMDEF}", "0", "1", "0", "0", "50", "0", "1", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"));
+			Rows.Add( new SkillDataRow("S_5", "Protect", "5", "Shields a Target", "1", "AttackType_BUFF", "TargetType_Target", "AnimType_RangeTarget", "NONE", "NONE", "NONE", "0-0", "5", "1", "0", "0", "200", "0", "1", "100", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"));
+			Rows.Add( new SkillDataRow("S_6", "Fire Sword", "6", "Attacks an enemy with a fire sword", "9", "AttackType_PATT", "TargetType_Target", "AnimType_MeleeTarget", "NONE", "NONE", "NONE", "{PSTR}+{PPATT}+{PMATT}+{PFATT}-{EPDEF}-{EMDEF}+{EFDEF}", "0", "1", "0", "0", "50", "0", "1", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"));
+			Rows.Add( new SkillDataRow("S_7", "Guard Position", "7", "Physical Defence Doubled!", "6", "AttackType_BUFF", "TargetType_Target", "AnimType_Self", "NONE", "NONE", "NONE", "0-0", "0", "1", "0", "0", "50", "0", "1", "0", "0", "0", "0", "0", "200", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"));
+			Rows.Add( new SkillDataRow("S_8", "Berserk", "8", "Attack Doubled, Defence Halfed", "45", "AttackType_BUFF", "TargetType_Target", "AnimType_Self", "NONE", "NONE", "NONE", "0-0", "0", "1", "0", "0", "200", "0", "1", "0", "0", "0", "200", "0", "50", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"));
+			Rows.Add( new SkillDataRow("S_9", "Blood Sacrifice", "9", "Passes HP to an Ally", "32", "AttackType_BUFF", "TargetType_Target", "AnimType_RangeTarget", "NONE", "NONE", "NONE", "0-{PSTR}-{PPATT}-{PMATT}", "0", "1", "0", "50", "0", "0", "1", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"));
+			Rows.Add( new SkillDataRow("S_10", "Heal All", "10", "Heals all allies", "28", "AttackType_BUFF", "TargetType_Multiple", "AnimType_Ally", "NONE", "NONE", "NONE", "0-{PINT}", "0", "1", "0", "0", "250", "0", "1", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"));
+			Rows.Add( new SkillDataRow("S_11", "Regeneration", "11", "Heals a Target Over Time", "4", "AttackType_BUFF", "TargetType_Target", "AnimType_RangeTarget", "NONE", "NONE", "NONE", "(0-{PINT}-{PMATT}-{PMDEF})/3", "5", "1", "0", "0", "80", "0", "1", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"));
+			Rows.Add( new SkillDataRow("S_12", "Sacrifice", "12", "Heals all allies to full by sacrificing life", "48", "AttackType_BUFF", "TargetType_Multiple", "AnimType_Ally", "NONE", "NONE", "NONE", "0-9999", "0", "1", "0", "100", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"));
+			Rows.Add( new SkillDataRow("S_13", "Shell", "13", "Doubles Mdef of allies", "28", "AttackType_BUFF", "TargetType_Multiple", "AnimType_Ally", "NONE", "NONE", "NONE", "0", "5", "1", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "200", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"));
+			Rows.Add( new SkillDataRow("S_14", "Dispel", "14", "Removes all Buffs", "41", "AttackType_BUFF", "TargetType_Target", "AnimType_RangeTarget", "NONE", "NONE", "NONE", "{SPECIAL}{REMOVEBUFFS}", "0", "1", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"));
+			Rows.Add( new SkillDataRow("S_15", "PowerShot (T)", "15", "iploremsum...", "1", "AttackType_PATT", "TargetType_Target", "AnimType_RangeTarget", "NONE", "NONE", "NONE", "0", "0", "1", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"));
+			Rows.Add( new SkillDataRow("S_16", "PowerShot (F)", "16", "iploremsum...", "1", "AttackType_PATT", "TargetType_Target", "AnimType_RangeTarget", "NONE", "NONE", "NONE", "0", "0", "1", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"));
+			Rows.Add( new SkillDataRow("S_17", "PowerShot (I)", "17", "iploremsum...", "1", "AttackType_PATT", "TargetType_Target", "AnimType_RangeTarget", "NONE", "NONE", "NONE", "0", "0", "1", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"));
+			Rows.Add( new SkillDataRow("S_18", "dummyskill", "18", "iploremsum...", "1", "AttackType_BUFF", "TargetType_Multiple", "AnimType_Ally", "NONE", "NONE", "NONE", "0", "0", "1", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"));
+			Rows.Add( new SkillDataRow("S_19", "dummyskill", "19", "iploremsum...", "1", "AttackType_BUFF", "TargetType_Multiple", "AnimType_Ally", "NONE", "NONE", "NONE", "0", "0", "1", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"));
+			Rows.Add( new SkillDataRow("S_20", "dummyskill", "20", "iploremsum...", "1", "AttackType_BUFF", "TargetType_Multiple", "AnimType_Ally", "NONE", "NONE", "NONE", "0", "0", "1", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"));
+			Rows.Add( new SkillDataRow("S_21", "dummyskill", "21", "iploremsum...", "1", "AttackType_BUFF", "TargetType_Multiple", "AnimType_Ally", "NONE", "NONE", "NONE", "0", "0", "1", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"));
+			Rows.Add( new SkillDataRow("S_22", "dummyskill", "21", "iploremsum...", "1", "AttackType_BUFF", "TargetType_Multiple", "AnimType_Ally", "NONE", "NONE", "NONE", "0", "0", "1", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"));
+			Rows.Add( new SkillDataRow("S_23", "dummyskill", "21", "iploremsum...", "1", "AttackType_BUFF", "TargetType_Multiple", "AnimType_Ally", "NONE", "NONE", "NONE", "0", "0", "1", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"));
+			Rows.Add( new SkillDataRow("S_24", "dummyskill", "21", "iploremsum...", "1", "AttackType_BUFF", "TargetType_Multiple", "AnimType_Ally", "NONE", "NONE", "NONE", "0", "0", "1", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"));
+			Rows.Add( new SkillDataRow("S_25", "dummyskill", "21", "iploremsum...", "1", "AttackType_BUFF", "TargetType_Multiple", "AnimType_Ally", "NONE", "NONE", "NONE", "0", "0", "1", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"));
+			Rows.Add( new SkillDataRow("S_26", "dummyskill", "21", "iploremsum...", "1", "AttackType_BUFF", "TargetType_Multiple", "AnimType_Ally", "NONE", "NONE", "NONE", "0", "0", "1", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"));
+			Rows.Add( new SkillDataRow("S_27", "dummyskill", "21", "iploremsum...", "1", "AttackType_BUFF", "TargetType_Multiple", "AnimType_Ally", "NONE", "NONE", "NONE", "0", "0", "1", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"));
+			Rows.Add( new SkillDataRow("S_28", "dummyskill", "21", "iploremsum...", "1", "AttackType_BUFF", "TargetType_Multiple", "AnimType_Ally", "NONE", "NONE", "NONE", "0", "0", "1", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"));
+			Rows.Add( new SkillDataRow("S_29", "dummyskill", "21", "iploremsum...", "1", "AttackType_BUFF", "TargetType_Multiple", "AnimType_Ally", "NONE", "NONE", "NONE", "0", "0", "1", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"));
+			Rows.Add( new SkillDataRow("S_30", "dummyskill", "21", "iploremsum...", "1", "AttackType_BUFF", "TargetType_Multiple", "AnimType_Ally", "NONE", "NONE", "NONE", "0", "0", "1", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"));
+			Rows.Add( new SkillDataRow("S_31", "dummyskill", "21", "iploremsum...", "1", "AttackType_BUFF", "TargetType_Multiple", "AnimType_Ally", "NONE", "NONE", "NONE", "0", "0", "1", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"));
+			Rows.Add( new SkillDataRow("S_32", "dummyskill", "21", "iploremsum...", "1", "AttackType_BUFF", "TargetType_Multiple", "AnimType_Ally", "NONE", "NONE", "NONE", "0", "0", "1", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"));
+			Rows.Add( new SkillDataRow("S_33", "dummyskill", "21", "iploremsum...", "1", "AttackType_BUFF", "TargetType_Multiple", "AnimType_Ally", "NONE", "NONE", "NONE", "0", "0", "1", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"));
+			Rows.Add( new SkillDataRow("S_34", "dummyskill", "21", "iploremsum...", "1", "AttackType_BUFF", "TargetType_Multiple", "AnimType_Ally", "NONE", "NONE", "NONE", "0", "0", "1", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"));
+			Rows.Add( new SkillDataRow("S_35", "dummyskill", "21", "iploremsum...", "1", "AttackType_BUFF", "TargetType_Multiple", "AnimType_Ally", "NONE", "NONE", "NONE", "0", "0", "1", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"));
+			Rows.Add( new SkillDataRow("S_36", "dummyskill", "21", "iploremsum...", "1", "AttackType_BUFF", "TargetType_Multiple", "AnimType_Ally", "NONE", "NONE", "NONE", "0", "0", "1", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"));
+			Rows.Add( new SkillDataRow("S_37", "dummyskill", "21", "iploremsum...", "1", "AttackType_BUFF", "TargetType_Multiple", "AnimType_Ally", "NONE", "NONE", "NONE", "0", "0", "1", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"));
+			Rows.Add( new SkillDataRow("S_38", "dummyskill", "21", "iploremsum...", "1", "AttackType_BUFF", "TargetType_Multiple", "AnimType_Ally", "NONE", "NONE", "NONE", "0", "0", "1", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"));
+			Rows.Add( new SkillDataRow("S_39", "dummyskill", "21", "iploremsum...", "1", "AttackType_BUFF", "TargetType_Multiple", "AnimType_Ally", "NONE", "NONE", "NONE", "0", "0", "1", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"));
+			Rows.Add( new SkillDataRow("S_40", "dummyskill", "21", "iploremsum...", "1", "AttackType_BUFF", "TargetType_Multiple", "AnimType_Ally", "NONE", "NONE", "NONE", "0", "0", "1", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"));
+			Rows.Add( new SkillDataRow("S_41", "dummyskill", "21", "iploremsum...", "1", "AttackType_BUFF", "TargetType_Multiple", "AnimType_Ally", "NONE", "NONE", "NONE", "0", "0", "1", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"));
+			Rows.Add( new SkillDataRow("S_42", "dummyskill", "21", "iploremsum...", "1", "AttackType_BUFF", "TargetType_Multiple", "AnimType_Ally", "NONE", "NONE", "NONE", "0", "0", "1", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"));
 		}
 		public IGoogle2uRow GetGenRow(string in_RowString)
 		{
