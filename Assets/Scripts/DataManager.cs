@@ -16,18 +16,19 @@ public class DataManager : MonoBehaviour {
     // battle selection
     public List<Team> listOfTeams = new List<Team>();
     public int selectedTeam = 0;
-    public int selectedMap = 1;
-    public int selectedMapLevel = 1;
+    public int selectedMap = 0;
+    public int selectedMapLevel = 0;
 
 	void Awake()
 	{
-        selectedMap = 1;
+        selectedMap = 0;
         Team t = new Team();
         PlayerCharacter pc = new PlayerCharacter();
         pc.ID = 1;
         pc.CurrentLevel = 10;
         t.SwapCharacter(0, pc);
         listOfTeams.Add(t);
+        Debug.Log("InitDataManager");
         instance = this;
 	}
 

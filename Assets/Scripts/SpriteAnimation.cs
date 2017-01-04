@@ -45,7 +45,7 @@ public class SpriteAnimation : MonoBehaviour
                         LoadEnemyImage(oldSprite);
                         Attacking = false;
                         counter = 0;
-                        GameMaster.AnimationLock = false;
+                        GameMaster.instance.AnimationLock = false;
                         return;
                     }
                     GetComponent<Image>().sprite = sprites[counter];

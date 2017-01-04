@@ -30,7 +30,7 @@ public class LevelData
 	public void LoadLevel(int level)
 	{
 
-		LevelsRow ldata = Levels.Instance.GetRow("level"+level.ToString());
+		//LevelsRow ldata = Levels.Instance.GetRow("level"+level.ToString());
 		//level = ldata._idint;
 		//levelData = ldata._leveldata;
 		//levelName = ldata._name;
@@ -48,17 +48,10 @@ public class LevelData
 	// used for external levels
 	public void LoadLevel(string s)
 	{
-		if (s.Length != 49)
-		{
-			Debug.Log("LevelData::String Length not right");
-			return;
-		}
-		else
-		{
-			Debug.Log("LevelData: " + s);
-			levelName = "LevelEditor";
-			level = 99;
-			levelData = s;
-		}
+        Debug.Assert(s.Length == 49);
+		Debug.Log("LevelData: " + s);
+		levelName = "LevelEditor";
+		level = 99;
+		levelData = s;
 	}
 }

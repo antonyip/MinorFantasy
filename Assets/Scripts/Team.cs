@@ -30,8 +30,7 @@ public class Team {
             for (int i = 0; i < 6; i++)
             {
                 PlayerCharacter pc = new PlayerCharacter();
-                pc.CurrentLevel = 1;
-                pc.ID = 1;
+                pc.ID = 0;
                 listOfCharacters.Add(pc);
             }
         }

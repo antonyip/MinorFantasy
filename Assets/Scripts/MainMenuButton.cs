@@ -14,7 +14,7 @@ public class MainMenuButton : MonoBehaviour
 
 	public void OnButtonClick()
 	{
-		SceneManager.instance.NextSceneName = "MainMenu";
+        SceneManager.instance.NextSceneName = "MapScene";
 	}
 
 	public void RegisterAccount()
@@ -66,7 +66,7 @@ public class MainMenuButton : MonoBehaviour
 
 	public void Continue()
 	{
-		SceneManager.instance.NextSceneName = "LevelSelect";
+		SceneManager.instance.NextSceneName = "MapScene";
 	}
 
 	public void Logout()

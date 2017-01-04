@@ -7,6 +7,7 @@ using DG.Tweening;
 
 public class GameMaster : MonoBehaviour {
 
+    public static GameMaster instance;
     List<Unit> AllUnits = new List<Unit>();
     public GameObject monsterPrefab;
     public List<GameObject> PlayerUnitsSpritePositions = new List<GameObject>();
@@ -16,7 +17,14 @@ public class GameMaster : MonoBehaviour {
     public List<GameObject> OptionButtons = new List<GameObject>();
     public List<GameObject> PlayerButtons = new List<GameObject>();
     public GameObject Announcer;
+    public GameObject StartGamePopup;
+    public GameObject VictoryPopup;
     bool AutoMode = true;
+
+    void Awake()
+    {
+        instance = this;
+    }
 
     // Use this for initialization
     void Start () {
@@ -32,9 +40,18 @@ public class GameMaster : MonoBehaviour {
         // 1. load fight data
         // load player data
         var dataManager = DataManager.instance;
+        Debug.Assert(dataManager != null);
+        Debug.Assert(dataManager.listOfTeams != null);
+        Debug.Assert(dataManager.listOfTeams[dataManager.selectedTeam] != null);
+
         for (int i = 0; i < dataManager.listOfTeams[dataManager.selectedTeam].GetListOfCharacters().Count; i++)
         {
             var playerChar = dataManager.listOfTeams[dataManager.selectedTeam].GetListOfCharacters()[i];
+
+            // skip id 0 as it is an empty spot
+            if (playerChar.ID == 0)
+                continue;
+            
             Unit u = new Unit();
             u.character = new Character();
             u.character.playerStats = playerChar;
@@ -110,10 +127,23 @@ public class GameMaster : MonoBehaviour {
 
 
     } //end start
-    public static bool AnimationLock = false;
+    public bool BypassAnimationLock = false;
+    public bool AnimationLock = false;
     public void ReleaseAnimationLock()
     {
         AnimationLock = false;
+    }
+
+    public void BackToMenu()
+    {
+        SceneManager.instance.NextSceneName = "MainMenu";
+    }
+
+    // start Game button clicked from UI
+    public void ButtonStartGameClicked()
+    {
+        GameNotStarted = false;
+        StartGamePopup.SetActive(false);
     }
 
     int UnitOrderCounter = 0;
@@ -124,7 +154,7 @@ public class GameMaster : MonoBehaviour {
     void Update ()
     {
         // if waiting for animation or user input..
-        if (AnimationLock || HasWon || HasLost || GameNotStarted)
+        if ((AnimationLock && !BypassAnimationLock) || HasWon || HasLost || GameNotStarted)
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
@@ -140,6 +170,7 @@ public class GameMaster : MonoBehaviour {
         {
             HasWon = true;
             Debug.Log("You won!");
+            VictoryPopup.SetActive(true);
             return;
         }
         
@@ -149,6 +180,7 @@ public class GameMaster : MonoBehaviour {
         {
             HasLost = true;
             Debug.Log("You lost!");
+            VictoryPopup.SetActive(true);
             return;
         }
 
@@ -193,6 +225,7 @@ public class GameMaster : MonoBehaviour {
             List<Unit> unitsAffected = currentUnit.aiActions[i].EvaluateThis(ref currentUnit, ref AllUnits);
             if (unitsAffected != null && unitsAffected.Count > 0)
             {
+                // to do - change this to the proper animation
                 currentUnit.sprite.GetComponentInChildren<SpriteAnimation>().LoadEnemyAttack("Swordman_Casting");
                 Debug.Log("Execute Gambit");
                 foreach (var unit in unitsAffected)
