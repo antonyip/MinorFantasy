@@ -11,6 +11,7 @@ public class Director : MonoBehaviour {
 	{
 		if (instance == null)
 		{
+            Screen.SetResolution(450, 800, false);
 			instance = this;
 			Managers = Instantiate(ManagersPrefab);
             Managers.SetActive(true);
@@ -18,6 +19,7 @@ public class Director : MonoBehaviour {
 			Managers.transform.SetParent(this.transform);
 			Managers.transform.localPosition = Vector3.zero;
 			Managers.transform.localScale = Vector3.one;
+
 		}
 		else
 		{
