@@ -61,12 +61,14 @@ namespace Google2u
 		public string _SpriteIdle;
 		public string _SpriteAttack;
 		public string _SpriteMagic;
+		public string _SpriteFace;
+		public string _HeroClass;
 		public string _SoundDeath;
 		public string _SoundAttack;
 		public int _Energy;
 		public int _EnergyGrowth;
 		public string _Story;
-		public HeroesDataRow(string __IndexName, string __Name, string __ID, string __Gender, string __Description, string __HP, string __HPGrowth, string __MP, string __MPGrowth, string __STR, string __STRGrowth, string __DEX, string __DEXGrowth, string __INT, string __INTGrowth, string __LUK, string __LUKGrowth, string __Speed, string __Att, string __Def, string __AttGrowth, string __DefGrowth, string __MAtt, string __MAttGrowth, string __MDef, string __MDefGrowth, string __FAtt, string __FAttGrowth, string __IAtt, string __IAttGrowth, string __TAtt, string __TAttGrowth, string __FDef, string __IDef, string __TDef, string __FRes, string __IRes, string __TRes, string __FDefGrowth, string __IDefGrowth, string __TDefGrowth, string __FResGrowth, string __IResGrowth, string __TResGrowth, string __Skills, string __SpriteIdle, string __SpriteAttack, string __SpriteMagic, string __SoundDeath, string __SoundAttack, string __Energy, string __EnergyGrowth, string __Story) 
+		public HeroesDataRow(string __IndexName, string __Name, string __ID, string __Gender, string __Description, string __HP, string __HPGrowth, string __MP, string __MPGrowth, string __STR, string __STRGrowth, string __DEX, string __DEXGrowth, string __INT, string __INTGrowth, string __LUK, string __LUKGrowth, string __Speed, string __Att, string __Def, string __AttGrowth, string __DefGrowth, string __MAtt, string __MAttGrowth, string __MDef, string __MDefGrowth, string __FAtt, string __FAttGrowth, string __IAtt, string __IAttGrowth, string __TAtt, string __TAttGrowth, string __FDef, string __IDef, string __TDef, string __FRes, string __IRes, string __TRes, string __FDefGrowth, string __IDefGrowth, string __TDefGrowth, string __FResGrowth, string __IResGrowth, string __TResGrowth, string __Skills, string __SpriteIdle, string __SpriteAttack, string __SpriteMagic, string __SpriteFace, string __HeroClass, string __SoundDeath, string __SoundAttack, string __Energy, string __EnergyGrowth, string __Story) 
 		{
 			_Name = __Name.Trim();
 			{
@@ -355,6 +357,8 @@ namespace Google2u
 			_SpriteIdle = __SpriteIdle.Trim();
 			_SpriteAttack = __SpriteAttack.Trim();
 			_SpriteMagic = __SpriteMagic.Trim();
+			_SpriteFace = __SpriteFace.Trim();
+			_HeroClass = __HeroClass.Trim();
 			_SoundDeath = __SoundDeath.Trim();
 			_SoundAttack = __SoundAttack.Trim();
 			{
@@ -374,7 +378,7 @@ namespace Google2u
 			_Story = __Story.Trim();
 		}
 
-		public int Length { get { return 52; } }
+		public int Length { get { return 54; } }
 
 		public string this[int i]
 		{
@@ -531,18 +535,24 @@ namespace Google2u
 					ret = _SpriteMagic.ToString();
 					break;
 				case 47:
-					ret = _SoundDeath.ToString();
+					ret = _SpriteFace.ToString();
 					break;
 				case 48:
-					ret = _SoundAttack.ToString();
+					ret = _HeroClass.ToString();
 					break;
 				case 49:
-					ret = _Energy.ToString();
+					ret = _SoundDeath.ToString();
 					break;
 				case 50:
-					ret = _EnergyGrowth.ToString();
+					ret = _SoundAttack.ToString();
 					break;
 				case 51:
+					ret = _Energy.ToString();
+					break;
+				case 52:
+					ret = _EnergyGrowth.ToString();
+					break;
+				case 53:
 					ret = _Story.ToString();
 					break;
 			}
@@ -696,6 +706,12 @@ namespace Google2u
 				case "SpriteMagic":
 					ret = _SpriteMagic.ToString();
 					break;
+				case "SpriteFace":
+					ret = _SpriteFace.ToString();
+					break;
+				case "HeroClass":
+					ret = _HeroClass.ToString();
+					break;
 				case "SoundDeath":
 					ret = _SoundDeath.ToString();
 					break;
@@ -765,6 +781,8 @@ namespace Google2u
 			ret += "{" + "SpriteIdle" + " : " + _SpriteIdle.ToString() + "} ";
 			ret += "{" + "SpriteAttack" + " : " + _SpriteAttack.ToString() + "} ";
 			ret += "{" + "SpriteMagic" + " : " + _SpriteMagic.ToString() + "} ";
+			ret += "{" + "SpriteFace" + " : " + _SpriteFace.ToString() + "} ";
+			ret += "{" + "HeroClass" + " : " + _HeroClass.ToString() + "} ";
 			ret += "{" + "SoundDeath" + " : " + _SoundDeath.ToString() + "} ";
 			ret += "{" + "SoundAttack" + " : " + _SoundAttack.ToString() + "} ";
 			ret += "{" + "Energy" + " : " + _Energy.ToString() + "} ";
@@ -776,10 +794,10 @@ namespace Google2u
 	public sealed class HeroesData : IGoogle2uDB
 	{
 		public enum rowIds {
-			H_1, H_2, H_3, H_4, H_5, H_6, H_7, H_8, H_9, H_10, H_11, H_12, H_13, H_14, H_15, H_16
+			H_0, H_1, H_2, H_3, H_4, H_5, H_6, H_7, H_8, H_9, H_10, H_11, H_12, H_13, H_14, H_15, H_16
 		};
 		public string [] rowNames = {
-			"H_1", "H_2", "H_3", "H_4", "H_5", "H_6", "H_7", "H_8", "H_9", "H_10", "H_11", "H_12", "H_13", "H_14", "H_15", "H_16"
+			"H_0", "H_1", "H_2", "H_3", "H_4", "H_5", "H_6", "H_7", "H_8", "H_9", "H_10", "H_11", "H_12", "H_13", "H_14", "H_15", "H_16"
 		};
 		public System.Collections.Generic.List<HeroesDataRow> Rows = new System.Collections.Generic.List<HeroesDataRow>();
 
@@ -796,23 +814,23 @@ namespace Google2u
 
 		private HeroesData()
 		{
-            Rows.Add( new HeroesDataRow("H_0", "No Hero", "0", "M", "", "1050", "100", "500", "10", "150", "5", "120", "4", "110", "2", "130", "3", "100", "100", "100", "10", "10", "60", "10", "60", "10", "50", "10", "50", "10", "50", "10", "50", "50", "50", "50", "50", "50", "10", "10", "10", "10", "10", "10", "0", "Swordman_Idle", "Swordman_Casting", "Swordman_Casting", "", "", "50", "10", ""));
-			Rows.Add( new HeroesDataRow("H_1", "Sword Man", "1", "M", "", "1050", "100", "500", "10", "150", "5", "120", "4", "110", "2", "130", "3", "100", "100", "100", "10", "10", "60", "10", "60", "10", "50", "10", "50", "10", "50", "10", "50", "50", "50", "50", "50", "50", "10", "10", "10", "10", "10", "10", "0", "Swordman_Idle", "Swordman_Casting", "Swordman_Casting", "", "", "50", "10", ""));
-			Rows.Add( new HeroesDataRow("H_2", "Sword Woman", "2", "F", "", "950", "100", "500", "10", "140", "5", "120", "4", "120", "2", "130", "3", "100", "100", "100", "10", "10", "80", "10", "80", "10", "60", "10", "50", "10", "50", "10", "60", "50", "50", "50", "50", "50", "10", "10", "10", "10", "10", "10", "0", "Swordman_Idle", "Swordman_Casting", "Swordman_Casting", "", "", "50", "10", ""));
-			Rows.Add( new HeroesDataRow("H_3", "Cleric", "3", "F", "", "1000", "100", "1200", "20", "100", "2", "100", "3", "140", "5", "130", "4", "90", "70", "100", "10", "10", "60", "10", "100", "20", "100", "10", "100", "10", "100", "10", "100", "100", "100", "100", "100", "100", "10", "10", "10", "10", "10", "10", "", "", "", "", "", "", "50", "10", ""));
-			Rows.Add( new HeroesDataRow("H_4", "Healer", "4", "M", "", "1000", "100", "1200", "20", "90", "2", "90", "3", "150", "5", "140", "4", "90", "70", "100", "10", "10", "60", "10", "100", "20", "100", "10", "100", "10", "100", "10", "100", "100", "100", "100", "100", "100", "10", "10", "10", "10", "10", "10", "", "", "", "", "", "", "50", "10", ""));
-			Rows.Add( new HeroesDataRow("H_5", "Monk", "5", "M", "", "1250", "100", "1250", "20", "110", "2", "100", "4", "140", "5", "130", "3", "90", "50", "40", "10", "10", "70", "10", "90", "20", "100", "10", "100", "10", "100", "10", "100", "100", "100", "100", "100", "100", "10", "10", "10", "10", "10", "10", "", "", "", "", "", "", "50", "10", ""));
-			Rows.Add( new HeroesDataRow("H_6", "Nun", "6", "F", "", "1150", "100", "1350", "20", "100", "2", "110", "4", "130", "5", "120", "3", "90", "40", "50", "10", "10", "80", "10", "100", "20", "100", "10", "100", "10", "100", "10", "100", "100", "100", "100", "100", "100", "10", "10", "10", "10", "10", "10", "", "", "", "", "", "", "50", "10", ""));
-			Rows.Add( new HeroesDataRow("H_7", "Spear Man", "7", "M", "", "800", "80", "800", "80", "50", "5", "50", "5", "70", "4", "50", "5", "100", "90", "110", "10", "10", "75", "15", "75", "15", "75", "10", "75", "10", "75", "10", "80", "80", "80", "80", "80", "80", "10", "10", "10", "10", "10", "10", "", "", "", "", "", "", "50", "10", ""));
-			Rows.Add( new HeroesDataRow("H_8", "Spear Woman", "8", "F", "", "800", "80", "800", "80", "50", "5", "50", "5", "50", "5", "70", "4", "100", "110", "90", "10", "10", "75", "15", "75", "15", "75", "10", "75", "10", "75", "10", "80", "80", "80", "80", "80", "80", "10", "10", "10", "10", "10", "10", "", "", "", "", "", "", "50", "10", ""));
-			Rows.Add( new HeroesDataRow("H_9", "Dart Thrower", "9", "M", "", "950", "100", "1050", "40", "120", "3", "150", "5", "120", "2", "100", "4", "110", "100", "100", "10", "10", "70", "10", "70", "10", "50", "10", "60", "10", "40", "10", "80", "80", "80", "80", "80", "80", "10", "10", "10", "10", "10", "10", "", "", "", "", "", "", "50", "10", ""));
-			Rows.Add( new HeroesDataRow("H_10", "Archer", "10", "F", "", "900", "100", "1250", "40", "130", "3", "150", "5", "130", "2", "90", "4", "110", "100", "100", "10", "10", "70", "10", "70", "10", "60", "10", "50", "10", "40", "10", "80", "80", "80", "80", "80", "80", "10", "10", "10", "10", "10", "10", "", "", "", "", "", "", "50", "10", ""));
-			Rows.Add( new HeroesDataRow("H_11", "Ice Wizard", "11", "M", "", "800", "80", "1050", "55", "100", "2", "110", "4", "150", "5", "135", "3", "85", "40", "70", "10", "10", "80", "10", "100", "15", "100", "10", "120", "15", "100", "10", "100", "100", "100", "100", "100", "100", "10", "12", "10", "10", "12", "10", "", "", "", "", "", "", "50", "10", ""));
-			Rows.Add( new HeroesDataRow("H_12", "Ice Mage", "12", "F", "", "700", "85", "1150", "50", "90", "2", "110", "4", "150", "5", "135", "3", "85", "40", "70", "10", "10", "80", "10", "100", "15", "100", "10", "120", "15", "100", "10", "100", "100", "100", "100", "100", "100", "10", "12", "10", "10", "12", "10", "", "", "", "", "", "", "50", "10", ""));
-			Rows.Add( new HeroesDataRow("H_13", "Wizard of Flame", "13", "M", "", "800", "80", "1050", "50", "100", "2", "110", "4", "145", "5", "155", "3", "90", "40", "70", "10", "10", "80", "10", "100", "15", "120", "15", "100", "10", "100", "10", "100", "100", "100", "100", "100", "100", "12", "10", "10", "12", "10", "10", "", "", "", "", "", "", "50", "10", ""));
-			Rows.Add( new HeroesDataRow("H_14", "Pyrotechic", "14", "F", "", "700", "80", "1150", "50", "90", "2", "110", "4", "150", "5", "135", "3", "90", "40", "70", "10", "10", "80", "10", "100", "15", "120", "15", "100", "10", "100", "10", "100", "100", "100", "100", "100", "100", "12", "10", "10", "12", "10", "10", "", "", "", "", "", "", "50", "10", ""));
-			Rows.Add( new HeroesDataRow("H_15", "Thunder Summoneer", "15", "M", "", "800", "80", "1050", "55", "100", "2", "110", "4", "150", "5", "135", "3", "80", "40", "70", "10", "10", "80", "10", "100", "15", "100", "10", "100", "10", "120", "15", "100", "100", "100", "100", "100", "100", "10", "10", "12", "10", "10", "12", "", "", "", "", "", "", "50", "10", ""));
-			Rows.Add( new HeroesDataRow("H_16", "Lightning", "16", "F", "", "700", "85", "1150", "50", "90", "2", "110", "4", "160", "5", "125", "3", "80", "40", "70", "10", "10", "80", "10", "100", "15", "100", "10", "100", "10", "120", "15", "100", "100", "100", "100", "100", "100", "10", "10", "12", "10", "10", "12", "", "", "", "", "", "", "50", "10", ""));
+			Rows.Add( new HeroesDataRow("H_0", "No Hero", "0", "M", "No Hero", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "0", "NONE", "NONE", "NONE", "NONE", "NONE", "NONE", "NONE", "1", "1", ""));
+			Rows.Add( new HeroesDataRow("H_1", "Sword Man", "1", "M", "", "1050", "100", "500", "10", "150", "5", "120", "4", "110", "2", "130", "3", "100", "100", "100", "10", "10", "60", "10", "60", "10", "50", "10", "50", "10", "50", "10", "50", "50", "50", "50", "50", "50", "10", "10", "10", "10", "10", "10", "0", "Swordman_Idle", "Swordman_Casting", "Swordman_Casting", "Swordman_Casting", "TANK", "NONE", "NONE", "50", "10", ""));
+			Rows.Add( new HeroesDataRow("H_2", "Sword Woman", "2", "F", "", "950", "100", "500", "10", "140", "5", "120", "4", "120", "2", "130", "3", "100", "100", "100", "10", "10", "80", "10", "80", "10", "60", "10", "50", "10", "50", "10", "60", "50", "50", "50", "50", "50", "10", "10", "10", "10", "10", "10", "0", "Swordman_Idle", "Swordman_Casting", "Swordman_Casting", "Swordman_Casting", "TANK", "NONE", "NONE", "50", "10", ""));
+			Rows.Add( new HeroesDataRow("H_3", "Cleric", "3", "F", "", "1000", "100", "1200", "20", "100", "2", "100", "3", "140", "5", "130", "4", "90", "70", "100", "10", "10", "60", "10", "100", "20", "100", "10", "100", "10", "100", "10", "100", "100", "100", "100", "100", "100", "10", "10", "10", "10", "10", "10", "0", "Swordman_Idle", "Swordman_Casting", "Swordman_Casting", "Swordman_Casting", "HEAL", "NONE", "NONE", "50", "10", ""));
+			Rows.Add( new HeroesDataRow("H_4", "Healer", "4", "M", "", "1000", "100", "1200", "20", "90", "2", "90", "3", "150", "5", "140", "4", "90", "70", "100", "10", "10", "60", "10", "100", "20", "100", "10", "100", "10", "100", "10", "100", "100", "100", "100", "100", "100", "10", "10", "10", "10", "10", "10", "0", "Swordman_Idle", "Swordman_Casting", "Swordman_Casting", "Swordman_Casting", "HEAL", "NONE", "NONE", "50", "10", ""));
+			Rows.Add( new HeroesDataRow("H_5", "Monk", "5", "M", "", "1250", "100", "1250", "20", "110", "2", "100", "4", "140", "5", "130", "3", "90", "50", "40", "10", "10", "70", "10", "90", "20", "100", "10", "100", "10", "100", "10", "100", "100", "100", "100", "100", "100", "10", "10", "10", "10", "10", "10", "0", "Swordman_Idle", "Swordman_Casting", "Swordman_Casting", "Swordman_Casting", "HEAL", "NONE", "NONE", "50", "10", ""));
+			Rows.Add( new HeroesDataRow("H_6", "Nun", "6", "F", "", "1150", "100", "1350", "20", "100", "2", "110", "4", "130", "5", "120", "3", "90", "40", "50", "10", "10", "80", "10", "100", "20", "100", "10", "100", "10", "100", "10", "100", "100", "100", "100", "100", "100", "10", "10", "10", "10", "10", "10", "0", "Swordman_Idle", "Swordman_Casting", "Swordman_Casting", "Swordman_Casting", "HEAL", "NONE", "NONE", "50", "10", ""));
+			Rows.Add( new HeroesDataRow("H_7", "Spear Man", "7", "M", "", "800", "80", "800", "80", "50", "5", "50", "5", "70", "4", "50", "5", "100", "90", "110", "10", "10", "75", "15", "75", "15", "75", "10", "75", "10", "75", "10", "80", "80", "80", "80", "80", "80", "10", "10", "10", "10", "10", "10", "0", "Swordman_Idle", "Swordman_Casting", "Swordman_Casting", "Swordman_Casting", "DPS", "NONE", "NONE", "50", "10", ""));
+			Rows.Add( new HeroesDataRow("H_8", "Spear Woman", "8", "F", "", "800", "80", "800", "80", "50", "5", "50", "5", "50", "5", "70", "4", "100", "110", "90", "10", "10", "75", "15", "75", "15", "75", "10", "75", "10", "75", "10", "80", "80", "80", "80", "80", "80", "10", "10", "10", "10", "10", "10", "0", "Swordman_Idle", "Swordman_Casting", "Swordman_Casting", "Swordman_Casting", "DPS", "NONE", "NONE", "50", "10", ""));
+			Rows.Add( new HeroesDataRow("H_9", "Dart Thrower", "9", "M", "", "950", "100", "1050", "40", "120", "3", "150", "5", "120", "2", "100", "4", "110", "100", "100", "10", "10", "70", "10", "70", "10", "50", "10", "60", "10", "40", "10", "80", "80", "80", "80", "80", "80", "10", "10", "10", "10", "10", "10", "0", "Swordman_Idle", "Swordman_Casting", "Swordman_Casting", "Swordman_Casting", "DPS", "NONE", "NONE", "50", "10", ""));
+			Rows.Add( new HeroesDataRow("H_10", "Archer", "10", "F", "", "900", "100", "1250", "40", "130", "3", "150", "5", "130", "2", "90", "4", "110", "100", "100", "10", "10", "70", "10", "70", "10", "60", "10", "50", "10", "40", "10", "80", "80", "80", "80", "80", "80", "10", "10", "10", "10", "10", "10", "0", "Swordman_Idle", "Swordman_Casting", "Swordman_Casting", "Swordman_Casting", "DPS", "NONE", "NONE", "50", "10", ""));
+			Rows.Add( new HeroesDataRow("H_11", "Ice Wizard", "11", "M", "", "800", "80", "1050", "55", "100", "2", "110", "4", "150", "5", "135", "3", "85", "40", "70", "10", "10", "80", "10", "100", "15", "100", "10", "120", "15", "100", "10", "100", "100", "100", "100", "100", "100", "10", "12", "10", "10", "12", "10", "0", "Swordman_Idle", "Swordman_Casting", "Swordman_Casting", "Swordman_Casting", "DPS", "NONE", "NONE", "50", "10", ""));
+			Rows.Add( new HeroesDataRow("H_12", "Ice Mage", "12", "F", "", "700", "85", "1150", "50", "90", "2", "110", "4", "150", "5", "135", "3", "85", "40", "70", "10", "10", "80", "10", "100", "15", "100", "10", "120", "15", "100", "10", "100", "100", "100", "100", "100", "100", "10", "12", "10", "10", "12", "10", "0", "Swordman_Idle", "Swordman_Casting", "Swordman_Casting", "Swordman_Casting", "MAGE", "NONE", "NONE", "50", "10", ""));
+			Rows.Add( new HeroesDataRow("H_13", "Wizard of Flame", "13", "M", "", "800", "80", "1050", "50", "100", "2", "110", "4", "145", "5", "155", "3", "90", "40", "70", "10", "10", "80", "10", "100", "15", "120", "15", "100", "10", "100", "10", "100", "100", "100", "100", "100", "100", "12", "10", "10", "12", "10", "10", "0", "Swordman_Idle", "Swordman_Casting", "Swordman_Casting", "Swordman_Casting", "MAGE", "NONE", "NONE", "50", "10", ""));
+			Rows.Add( new HeroesDataRow("H_14", "Pyrotechic", "14", "F", "", "700", "80", "1150", "50", "90", "2", "110", "4", "150", "5", "135", "3", "90", "40", "70", "10", "10", "80", "10", "100", "15", "120", "15", "100", "10", "100", "10", "100", "100", "100", "100", "100", "100", "12", "10", "10", "12", "10", "10", "0", "Swordman_Idle", "Swordman_Casting", "Swordman_Casting", "Swordman_Casting", "MAGE", "NONE", "NONE", "50", "10", ""));
+			Rows.Add( new HeroesDataRow("H_15", "Thunder Summoneer", "15", "M", "", "800", "80", "1050", "55", "100", "2", "110", "4", "150", "5", "135", "3", "80", "40", "70", "10", "10", "80", "10", "100", "15", "100", "10", "100", "10", "120", "15", "100", "100", "100", "100", "100", "100", "10", "10", "12", "10", "10", "12", "0", "Swordman_Idle", "Swordman_Casting", "Swordman_Casting", "Swordman_Casting", "MAGE", "NONE", "NONE", "50", "10", ""));
+			Rows.Add( new HeroesDataRow("H_16", "Lightning", "16", "F", "", "700", "85", "1150", "50", "90", "2", "110", "4", "160", "5", "125", "3", "80", "40", "70", "10", "10", "80", "10", "100", "15", "100", "10", "100", "10", "120", "15", "100", "100", "100", "100", "100", "100", "10", "10", "12", "10", "10", "12", "0", "Swordman_Idle", "Swordman_Casting", "Swordman_Casting", "Swordman_Casting", "MAGE", "NONE", "NONE", "50", "10", ""));
 		}
 		public IGoogle2uRow GetGenRow(string in_RowString)
 		{
