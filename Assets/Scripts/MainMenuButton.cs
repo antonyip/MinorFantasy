@@ -15,6 +15,7 @@ public class MainMenuButton : MonoBehaviour
 	public void OnButtonClick()
 	{
         SceneManager.instance.NextSceneName = "MapScene";
+        DataManager.instance.LoadUser("BYPASSUSER");
 	}
 
 	public void RegisterAccount()
@@ -60,8 +61,8 @@ public class MainMenuButton : MonoBehaviour
 
 	public void GoToLevelEditor()
 	{
-		SceneManager.CurrentGameMode = SceneManager.GameMode.EditorMode;
-		SceneManager.instance.NextSceneName = "GameLevel";
+		//SceneManager.CurrentGameMode = SceneManager.GameMode.EditorMode;
+		//SceneManager.instance.NextSceneName = "GameLevel";
 	}
 
 	public void Continue()

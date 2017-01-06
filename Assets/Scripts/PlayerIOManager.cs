@@ -53,6 +53,9 @@ public class PlayerIOManager : MonoBehaviour {
 		cbFunctionFailure = callbackFunctionFailure;
 		Debug.Log("LoginSimple");
 		PlayerIO.QuickConnect.SimpleConnect(gameID,username,password,null,OnConnect,OnConnectFailure);
+
+        // Load the Userdata
+        DataManager.instance.LoadUser(_username);
 	}
 
 	public void Register(string _username, string _password, string _email, Action callbackFunctionSuccess, Action<string> callbackFunctionFailure)

@@ -6,12 +6,38 @@ using DG.Tweening;
 
 public class PreBattleSceneManagerScript : MonoBehaviour {
 
-    public List<GameObject> CurrentTeam;
+    public static PreBattleSceneManagerScript instance;
+    public enum PreBattleMode
+    {
+        NONE,
+        TACTICS,
+        SWAP,
+    };
+
+    public List<GameObject> CurrentTeamButtons;
     public List<GameObject> TeamButtons;
     public GameObject MainTeamContainer;
+    public PreBattleMode enPreBattleMode;
+
+    public GameObject ReserveButtonPrefab;
+    public GameObject ReserveButtonContainer;
+    public List<GameObject> ReserveHeroes = new List<GameObject>();
+
+    public GameObject TacticsScreen;
+
+    // IDEA handle energy in teams?
+
+    void Awake()
+    {
+        instance = this;
+    }
 
 	// Use this for initialization
 	void Start () {
+
+        // hack for userdata to be avail on this screen
+        if (DataManager.LOADEDUSER == false)
+            DataManager.instance.LoadUser("BYPASSUSER");
 
         for (int i = 0; i < TeamButtons.Count; i++)
         {
@@ -19,20 +45,45 @@ public class PreBattleSceneManagerScript : MonoBehaviour {
         }
 
         var dataManager = DataManager.instance;
-        for (int i = 0; i < dataManager.listOfTeams[dataManager.selectedTeam].GetListOfCharacters().Count; i++)
+        int ButtonCounter = 0;
+        for (int i = 0; i < DataManager.MAXTEAM; i++)
         {
-            var playerChar = dataManager.listOfTeams[dataManager.selectedTeam].GetListOfCharacters()[i];
+            for (int j = 0; j < DataManager.MAXUNITPERTEAM; j++)
+            {
+                var playerChar = dataManager.listOfTeams[i].GetListOfCharacters()[j];
 
-            // skip id 0 as it is an empty spot
-            if (playerChar.ID == 0)
-                continue;
+                // todo change face to spriteface
+                Debug.Assert(playerChar.databaseChar != null);
 
-            // todo change face
-            // todo handle swapping mechanics of teams
-            // remember to handle different team members
-            // IDEA handle energy in teams?
+                // hack for now because no art and database no update
+                if (string.IsNullOrEmpty(playerChar.databaseChar._SpriteIdle) == true)
+                {
+                    ++ButtonCounter;
+                    continue;
+                }
+
+                Debug.Assert(string.IsNullOrEmpty(playerChar.databaseChar._SpriteIdle) == false);
+                var sprites = Resources.LoadAll<Sprite>(playerChar.databaseChar._SpriteIdle);
+                //GetComponent<Image>().sprite = sprites[0];
+                //GetComponent<Image>().SetNativeSize();
+
+                CurrentTeamButtons[ButtonCounter].GetComponent<TeamHeroButtonScript>().FaceImage.sprite = sprites[0];
+                CurrentTeamButtons[ButtonCounter].GetComponent<TeamHeroButtonScript>().ClassImage.sprite = sprites[0];
+                // todo handle swapping mechanics of teams
+                // remember to handle different team members
+                ++ButtonCounter;
+            } // end j loop
+        } // end i loop
+
+        // generate reserve list
+        for (int i = 0; i < dataManager.listOfPlayerCharacters.Count; i++)
+        {
+            GameObject NewReserveButton = Instantiate(ReserveButtonPrefab) as GameObject;
+            NewReserveButton.GetComponentInChildren<ReserveHeroButtonScript>().SetupGUI(i);
+            NewReserveButton.transform.SetParent(ReserveButtonContainer.transform);
+            NewReserveButton.transform.localScale = Vector3.one;
         }
-	}
+	} // end start
 
     public void SelectTeam(int i)
     {
@@ -49,5 +100,32 @@ public class PreBattleSceneManagerScript : MonoBehaviour {
     public void ToBattleScene()
     {
         SceneManager.instance.NextSceneName = "BattleScene";
+    }
+
+    public void SetTactics()
+    {
+        enPreBattleMode = PreBattleMode.TACTICS;
+    }
+
+    public void SwapHeroes()
+    {
+        if (enPreBattleMode == PreBattleMode.SWAP)
+        {
+            enPreBattleMode = PreBattleMode.NONE;
+        }
+        else
+        {
+            enPreBattleMode = PreBattleMode.SWAP;
+        }
+    }
+
+    public void TeamHeroButtonClicked(int id)
+    {
+        // if (enPreBattleMode == PreBattleMode.TACTICS)
+        {
+            TacticsScreen.SetActive(true);
+            TacticsScreen.GetComponent<TacticsScreenScript>().Setup(id);
+
+        }
     }
 }

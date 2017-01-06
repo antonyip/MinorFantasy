@@ -16,6 +16,8 @@ public class GameMaster : MonoBehaviour {
     public List<GameObject> MonstersUnitsSprite = new List<GameObject>();
     public List<GameObject> OptionButtons = new List<GameObject>();
     public List<GameObject> PlayerButtons = new List<GameObject>();
+
+    // gamelists
     public GameObject Announcer;
     public GameObject StartGamePopup;
     public GameObject VictoryPopup;
