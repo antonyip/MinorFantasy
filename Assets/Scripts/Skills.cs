@@ -35,7 +35,7 @@ public class Skill
         SubsituteTexts(ref currentUnit, ref unit);
         int result = (int)ep.Evaluate(skillString);
         // do stuffs
-        Debug.LogWarning(string.Format("{0} hits {1} for {2} ({3})", currentUnit.GetUnitName(), unit.GetUnitName(), result, skillString));
+        Debug.Log(string.Format("{0} hits {1} for {2} ({3})", currentUnit.GetUnitName(), unit.GetUnitName(), result, skillString));
         unit.HP -= 10;
         return dataBaseSkill._AnimationType.Contains("AnimType_MeleeTarget");
     }

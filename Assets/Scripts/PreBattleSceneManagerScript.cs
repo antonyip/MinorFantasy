@@ -36,8 +36,7 @@ public class PreBattleSceneManagerScript : MonoBehaviour {
 	void Start () {
 
         // hack for userdata to be avail on this screen
-        if (DataManager.LOADEDUSER == false)
-            DataManager.instance.LoadUser("BYPASSUSER");
+        DataManager.instance.LoadUser("BYPASSUSER");
 
         for (int i = 0; i < TeamButtons.Count; i++)
         {
@@ -63,12 +62,13 @@ public class PreBattleSceneManagerScript : MonoBehaviour {
                 }
 
                 Debug.Assert(string.IsNullOrEmpty(playerChar.databaseChar._SpriteIdle) == false);
-                var sprites = Resources.LoadAll<Sprite>(playerChar.databaseChar._SpriteIdle);
+                var sprites = Resources.LoadAll<Sprite>(playerChar.databaseChar._SpriteFace);
+                var spritesClass = Resources.Load<Sprite>("ICON_"+playerChar.databaseChar._HeroClass);
                 //GetComponent<Image>().sprite = sprites[0];
                 //GetComponent<Image>().SetNativeSize();
 
                 CurrentTeamButtons[ButtonCounter].GetComponent<TeamHeroButtonScript>().FaceImage.sprite = sprites[0];
-                CurrentTeamButtons[ButtonCounter].GetComponent<TeamHeroButtonScript>().ClassImage.sprite = sprites[0];
+                CurrentTeamButtons[ButtonCounter].GetComponent<TeamHeroButtonScript>().ClassImage.sprite = spritesClass;
                 // todo handle swapping mechanics of teams
                 // remember to handle different team members
                 ++ButtonCounter;
@@ -76,6 +76,12 @@ public class PreBattleSceneManagerScript : MonoBehaviour {
         } // end i loop
 
         // generate reserve list
+        while(ReserveButtonContainer.transform.childCount > 0)
+        {
+            Debug.Log("Destorying");
+            Destroy(ReserveButtonContainer.transform.GetChild(0));
+        }
+        
         for (int i = 0; i < dataManager.listOfPlayerCharacters.Count; i++)
         {
             GameObject NewReserveButton = Instantiate(ReserveButtonPrefab) as GameObject;

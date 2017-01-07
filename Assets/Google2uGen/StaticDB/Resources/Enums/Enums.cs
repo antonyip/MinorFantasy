@@ -72,11 +72,11 @@ namespace Google2u
 	{
 		public enum rowIds {
 			NONE, AnimType_MeleeTarget, AnimType_Enemy, AnimType_Ally, AnimType_Object, AnimType_RangeTarget, AnimType_Self, TargetType_Multiple, TargetType_Equipment, TargetType_Target, AttackType_PATT, AttackType_MATT, AttackType_FATT, AttackType_IATT, AttackType_TATT, AttackType_BUFF, AttackType_DEBUFF, AttackType_OTHER
-			, Gambit_Team, Gambit_Target, TANK, DPS, MAGE, HEAL
+			, Gambit_Team, Gambit_Target, TANK, DPS, MAGE, HEAL, BOSS
 		};
 		public string [] rowNames = {
 			"NONE", "AnimType_MeleeTarget", "AnimType_Enemy", "AnimType_Ally", "AnimType_Object", "AnimType_RangeTarget", "AnimType_Self", "TargetType_Multiple", "TargetType_Equipment", "TargetType_Target", "AttackType_PATT", "AttackType_MATT", "AttackType_FATT", "AttackType_IATT", "AttackType_TATT", "AttackType_BUFF", "AttackType_DEBUFF", "AttackType_OTHER"
-			, "Gambit_Team", "Gambit_Target", "TANK", "DPS", "MAGE", "HEAL"
+			, "Gambit_Team", "Gambit_Target", "TANK", "DPS", "MAGE", "HEAL", "BOSS"
 		};
 		public System.Collections.Generic.List<EnumsRow> Rows = new System.Collections.Generic.List<EnumsRow>();
 
@@ -117,6 +117,7 @@ namespace Google2u
 			Rows.Add( new EnumsRow("DPS", "21"));
 			Rows.Add( new EnumsRow("MAGE", "22"));
 			Rows.Add( new EnumsRow("HEAL", "23"));
+			Rows.Add( new EnumsRow("BOSS", "24"));
 		}
 		public IGoogle2uRow GetGenRow(string in_RowString)
 		{
