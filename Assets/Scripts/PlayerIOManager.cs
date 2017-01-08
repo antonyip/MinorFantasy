@@ -179,4 +179,9 @@ public class PlayerIOManager : MonoBehaviour {
 	{
 		Debug.Log(_error.Message);
 	}
+
+    public void BypassLogin()
+    {
+        _loggedin = true;
+    }
 }

@@ -25,7 +25,6 @@ public class DataManager : MonoBehaviour
     // battle selection
     public List<Team> listOfTeams = new List<Team>();
     public int selectedTeam = 0;
-    public int selectedMap = 0;
     public int selectedMapLevel = 0;
 
     public List<PlayerCharacter> listOfPlayerCharacters = new List<PlayerCharacter>();
@@ -53,7 +52,7 @@ public class DataManager : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-
+        selectedMapLevel = 1;
     }
 
     // Update is called once per frame

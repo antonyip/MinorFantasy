@@ -31,6 +31,7 @@ public class GameMaster : MonoBehaviour {
     // Use this for initialization
     void Start () {
 
+        DataManager.instance.LoadUser("BYPASSUSERFORDEBUG");
 
         // 0. setup playing field
         OptionButtons[0].GetComponentInChildren<Text>().text = "Auto";
@@ -70,6 +71,7 @@ public class GameMaster : MonoBehaviour {
             go.transform.localScale = Vector3.one;
             go.name = u.character.playerStats.databaseChar._SpriteIdle;
             go.GetComponentInChildren<SpriteAnimation>().LoadEnemyImage(go.name);
+
             u.sprite = go;
             PlayerUnitsSprite.Add(go);
 
@@ -77,7 +79,7 @@ public class GameMaster : MonoBehaviour {
         }
 
         // load enemy data
-        var Map = Google2u.LevelData.Instance.Rows.Find(x => x._ID == dataManager.selectedMap);
+        var Map = Google2u.LevelData.Instance.Rows.Find(x => x._ID == dataManager.selectedMapLevel);
         //var Map = Google2u.LevelData.Instance.Rows.Find(x => x._ID == 3);
         string[] MobsToSpawn = Map._Battle1.Split(',');
 
@@ -100,14 +102,17 @@ public class GameMaster : MonoBehaviour {
                 int skill = int.Parse(skillParts[1]);
                 u.aiActions.Add(Gambits.GetGambit(logic));
                 u.aiSkills.Add(new Skill(skill));
-            }           
+            }
 
-            GameObject go = Instantiate(monsterPrefab) as GameObject;
+            string modelName = "DustBunny";
+            GameObject go = Instantiate(Resources.Load("EnemyPrefabs/" + modelName)) as GameObject;
+            //GameObject go = Instantiate(monsterPrefab) as GameObject;
             go.transform.SetParent(MonstersUnitsSpritePositions[i].transform);
             go.transform.localPosition = Vector3.zero;
-            go.transform.localScale = Vector3.one;
-            go.name = Mob._SpriteIdle;
-            go.GetComponentInChildren<SpriteAnimation>().LoadEnemyImage(Mob._SpriteIdle);
+            go.transform.localScale = Vector3.one * 100;
+            go.name = Mob._SpriteIdle; 
+            //go.GetComponentInChildren<SpriteAnimation>().LoadEnemyImage(Mob._SpriteIdle);
+
             u.sprite = go;
             MonstersUnitsSprite.Add(go);
 
