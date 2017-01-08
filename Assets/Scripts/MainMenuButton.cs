@@ -24,6 +24,16 @@ public class MainMenuButton : MonoBehaviour
         MainMenu.SetActive(true);
     }
 
+    public void GoCreditsScreen()
+    {
+        SceneManager.instance.NextSceneName = "Credits";
+    }
+
+    public void GoMainMenu()
+    {
+        SceneManager.instance.NextSceneName = "MainMenu";
+    }
+
 	public void RegisterAccount()
 	{
 
