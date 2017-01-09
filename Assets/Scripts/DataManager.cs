@@ -42,10 +42,14 @@ public class DataManager : MonoBehaviour
 
     // datamanager data
     public bool LOADEDUSER = false;
+    public int selectedTeam = 0;
+    public int selectedMapLevel = 0;
+
     public LevelData selectedLevel;
     public SummonPageSetting SummonPageSettings = SummonPageSetting.NONE;
     public PreBattlePage PreBattlePageSettings = PreBattlePage.NONE;
     public UserData userData;
+
 
     public List<LevelData> listOfLevels;
     public List<Sprite> listOfFloorTiles;
@@ -53,13 +57,23 @@ public class DataManager : MonoBehaviour
     public List<Sprite> listOfPlayers;
 
     // battle selection
-    public List<Team> listOfTeams = new List<Team>();
-    public int selectedTeam = 0;
-    public int selectedMapLevel = 0;
-
-    public List<PlayerCharacter> listOfPlayerCharacters = new List<PlayerCharacter>();
 
 
+    void GenerateEmptyTeamStructure()
+    {
+        for (int i = 0; i < MAXTEAM; i++)
+        {
+            Team t = new Team();
+            for (int j = 0; j < MAXUNITPERTEAM; j++)
+            {
+                PlayerCharacter pc = new PlayerCharacter();
+                pc.ID = 0;
+                pc.databaseChar = Google2u.HeroesData.Instance.Rows.Find(x => x._ID == pc.ID);
+                t.SwapCharacter(j, pc);
+            }
+            userData.listOfTeams.Add(t);
+        }
+    }
 
     void Awake()
     {
@@ -67,21 +81,7 @@ public class DataManager : MonoBehaviour
 
         if (instance == null)
         {
-            for (int i = 0; i < MAXTEAM; i++)
-            {
-                Team t = new Team();
-                for (int j = 0; j < MAXUNITPERTEAM; j++)
-                {
-                    PlayerCharacter pc = new PlayerCharacter();
-                    pc.ID = 0;
-                    pc.databaseChar = Google2u.HeroesData.Instance.Rows.Find(x => x._ID == pc.ID);
-                    t.SwapCharacter(j, pc);
-                }
-                listOfTeams.Add(t);
-            }
-
             instance = this;
-
             StartHacks();
         }
         else
@@ -115,8 +115,11 @@ public class DataManager : MonoBehaviour
 
     public void LoadUser(string UniqueUserName)
     {
-        if (DataManager.instance.LOADEDUSER == false)
+        if (LOADEDUSER == false)
         {
+            userData = new UserData();
+            GenerateEmptyTeamStructure();
+
             Debug.Log("Loading UserData from our database::TODO");
             // insert unique pc for first 5.
             PlayerCharacter pc;
@@ -125,7 +128,7 @@ public class DataManager : MonoBehaviour
                 pc = new PlayerCharacter();
                 pc.ID = i * 2;
                 pc.databaseChar = Google2u.HeroesData.Instance.Rows.Find(x => x._ID == pc.ID);
-                listOfPlayerCharacters.Add(pc);
+                userData.listOfPlayerCharacters.Add(pc);
             }
 
             // insert random for last 15
@@ -134,25 +137,22 @@ public class DataManager : MonoBehaviour
                 pc = new PlayerCharacter();
                 pc.ID = 1;
                 pc.databaseChar = Google2u.HeroesData.Instance.Rows.Find(x => x._ID == pc.ID);
-                listOfPlayerCharacters.Add(pc);
+                userData.listOfPlayerCharacters.Add(pc);
             }
 
             // insert random special character for last pc
             pc = new PlayerCharacter();
             pc.ID = 12;
             pc.databaseChar = Google2u.HeroesData.Instance.Rows.Find(x => x._ID == pc.ID);
-            listOfPlayerCharacters.Add(pc);
+            userData.listOfPlayerCharacters.Add(pc);
 
 
-            listOfTeams[0].SwapCharacter(0, listOfPlayerCharacters[0]);
-            listOfTeams[0].SwapCharacter(1, listOfPlayerCharacters[1]);
-            listOfTeams[0].SwapCharacter(2, listOfPlayerCharacters[2]);
-            listOfTeams[0].SwapCharacter(3, listOfPlayerCharacters[4]);
-            listOfTeams[0].SwapCharacter(4, listOfPlayerCharacters[3]);
-            listOfTeams[0].SwapCharacter(5, listOfPlayerCharacters[20]);
-
-            // HACK TO GENERATE USERDATA
-            userData = new UserData();
+            userData.listOfTeams[0].SwapCharacter(0, userData.listOfPlayerCharacters[0]);
+            userData.listOfTeams[0].SwapCharacter(1, userData.listOfPlayerCharacters[1]);
+            userData.listOfTeams[0].SwapCharacter(2, userData.listOfPlayerCharacters[2]);
+            userData.listOfTeams[0].SwapCharacter(3, userData.listOfPlayerCharacters[4]);
+            userData.listOfTeams[0].SwapCharacter(4, userData.listOfPlayerCharacters[3]);
+            userData.listOfTeams[0].SwapCharacter(5, userData.listOfPlayerCharacters[20]);
 
             LOADEDUSER = true;
         }

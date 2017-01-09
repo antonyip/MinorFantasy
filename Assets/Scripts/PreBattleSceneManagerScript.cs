@@ -49,7 +49,9 @@ public class PreBattleSceneManagerScript : MonoBehaviour {
         {
             for (int j = 0; j < DataManager.MAXUNITPERTEAM; j++)
             {
-                var playerChar = dataManager.listOfTeams[i].GetListOfCharacters()[j];
+                Debug.Assert(dataManager.userData != null);
+                Debug.Assert(dataManager.userData.listOfTeams != null);
+                var playerChar = dataManager.userData.listOfTeams[i].GetListOfCharacters()[j];
 
                 // todo change face to spriteface
                 Debug.Assert(playerChar.databaseChar != null);
@@ -82,7 +84,7 @@ public class PreBattleSceneManagerScript : MonoBehaviour {
             Destroy(ReserveButtonContainer.transform.GetChild(0));
         }
         
-        for (int i = 0; i < dataManager.listOfPlayerCharacters.Count; i++)
+        for (int i = 0; i < dataManager.userData.listOfPlayerCharacters.Count; i++)
         {
             GameObject NewReserveButton = Instantiate(ReserveButtonPrefab) as GameObject;
             NewReserveButton.GetComponentInChildren<ReserveHeroButtonScript>().SetupGUI(i);
@@ -122,7 +124,7 @@ public class PreBattleSceneManagerScript : MonoBehaviour {
     {
         if (enPreBattleMode == PreBattleMode.SWAP)
         {
-            enPreBattleMode = PreBattleMode.NONE;
+            enPreBattleMode = PreBattleMode.TACTICS;
         }
         else
         {
@@ -132,11 +134,20 @@ public class PreBattleSceneManagerScript : MonoBehaviour {
 
     public void TeamHeroButtonClicked(int id)
     {
-        // if (enPreBattleMode == PreBattleMode.TACTICS)
+        if (enPreBattleMode == PreBattleMode.TACTICS)
         {
             TacticsScreen.SetActive(true);
             TacticsScreen.GetComponent<TacticsScreenScript>().Setup(id);
 
+        }
+    }
+
+    public void ReservedHeroButtonClicked(int id)
+    {
+        if (enPreBattleMode == PreBattleMode.TACTICS)
+        {
+            TacticsScreen.SetActive(true);
+            TacticsScreen.GetComponent<TacticsScreenScript>().Setup(id);
         }
     }
 }

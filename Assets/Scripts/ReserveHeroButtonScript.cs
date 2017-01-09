@@ -20,12 +20,13 @@ public class ReserveHeroButtonScript : MonoBehaviour {
     {
         Debug.Log("setting up reserve: " + pos);
         POS = pos;
-        ID = DataManager.instance.listOfPlayerCharacters[pos].ID;
+        ID = DataManager.instance.userData.listOfPlayerCharacters[pos].ID;
     }
 
     public void OnClick()
     {
         Debug.Log("Reserve Button Clicked: " +POS + " -- "+ ID);
+        PreBattleSceneManagerScript.instance.ReservedHeroButtonClicked(ID);
     }
 
 }

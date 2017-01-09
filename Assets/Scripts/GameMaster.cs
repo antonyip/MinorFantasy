@@ -44,12 +44,12 @@ public class GameMaster : MonoBehaviour {
         // load player data
         var dataManager = DataManager.instance;
         Debug.Assert(dataManager != null);
-        Debug.Assert(dataManager.listOfTeams != null);
-        Debug.Assert(dataManager.listOfTeams[dataManager.selectedTeam] != null);
+        Debug.Assert(dataManager.userData.listOfTeams != null);
+        Debug.Assert(dataManager.userData.listOfTeams[dataManager.selectedTeam] != null);
 
-        for (int i = 0; i < dataManager.listOfTeams[dataManager.selectedTeam].GetListOfCharacters().Count; i++)
+        for (int i = 0; i < dataManager.userData.listOfTeams[dataManager.selectedTeam].GetListOfCharacters().Count; i++)
         {
-            var playerChar = dataManager.listOfTeams[dataManager.selectedTeam].GetListOfCharacters()[i];
+            var playerChar = dataManager.userData.listOfTeams[dataManager.selectedTeam].GetListOfCharacters()[i];
 
             // skip id 0 as it is an empty spot
             if (playerChar.ID == 0)
@@ -80,7 +80,6 @@ public class GameMaster : MonoBehaviour {
 
         // load enemy data
         var Map = Google2u.LevelData.Instance.Rows.Find(x => x._ID == dataManager.selectedMapLevel);
-        //var Map = Google2u.LevelData.Instance.Rows.Find(x => x._ID == 3);
         string[] MobsToSpawn = Map._Battle1.Split(',');
 
         for (int i = 0; i < MobsToSpawn.Length; i++)
@@ -163,10 +162,6 @@ public class GameMaster : MonoBehaviour {
         // if waiting for animation or user input..
         if ((AnimationLock && !BypassAnimationLock) || HasWon || HasLost || GameNotStarted)
         {
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                GameNotStarted = false;
-            }
             return;
         }
 
@@ -238,7 +233,7 @@ public class GameMaster : MonoBehaviour {
                 foreach (var unit in unitsAffected)
                 {
                     var ounit = unit;
-                    ounit.sprite.transform.DOPunchPosition(new Vector3(Random.Range(-25,25), Random.Range(15, 15), 0), 0.7f);
+                    ounit.sprite.transform.DOPunchPosition(new Vector3(Random.Range(-25,25), Random.Range(15, 15), 0), DataManager.LONGANIMATION);
                     AnimationLock = currentUnit.aiSkills[i].EvaluateSkillEffect(ref currentUnit, ref ounit);
                 }
                 return;
