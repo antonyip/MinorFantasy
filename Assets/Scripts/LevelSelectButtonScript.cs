@@ -25,7 +25,9 @@ public class LevelSelectButtonScript : MonoBehaviour {
         DataManager.instance.selectedMapLevel = levelSelected;
         //Debug.Assert(DataManager.instance.selectedLevel != null);
 		//DataManager.instance.selectedLevel.LoadLevel(levelSelected);
+        DataManager.instance.PreBattlePageSettings = PreBattlePage.PREBATTLE;
 		SceneManager.instance.NextSceneName = "PreBattleScene";
+
 		//SceneManager.CurrentGameMode = SceneManager.GameMode.GameMode;
 	}
 

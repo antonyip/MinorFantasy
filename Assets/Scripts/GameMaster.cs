@@ -31,7 +31,7 @@ public class GameMaster : MonoBehaviour {
     // Use this for initialization
     void Start () {
 
-        DataManager.instance.LoadUser("BYPASSUSERFORDEBUG");
+        DataManager.instance.LoadUser(DataManager.BYPASSUSERLOAD);
 
         // 0. setup playing field
         OptionButtons[0].GetComponentInChildren<Text>().text = "Auto";

@@ -22,7 +22,7 @@ public class SwipeContainerScript : MonoBehaviour {
 		{
 			index -= 1;
 			//transform.localPosition = new Vector3(-index * 1550, 0, 0);
-			transform.DOLocalMoveX(-index * 1550, 0.5f);
+			transform.DOLocalMoveX(-index * 1550, DataManager.NORMALANIMATION);
 		}
 	}
 
@@ -33,7 +33,7 @@ public class SwipeContainerScript : MonoBehaviour {
 		{
 			index += 1;
 			//transform.localPosition = new Vector3(-index * 1550, 0, 0);
-			transform.DOLocalMoveX(-index * 1550, 0.5f);
+			transform.DOLocalMoveX(-index * 1550, DataManager.NORMALANIMATION);
 		}
 	}
 }

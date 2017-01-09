@@ -18,7 +18,7 @@ public class MainMenuButton : MonoBehaviour
 	public void OnButtonClick()
 	{
         //SceneManager.instance.NextSceneName = "MapScene";
-        DataManager.instance.LoadUser("BYPASSUSER");
+        DataManager.instance.LoadUser(DataManager.BYPASSUSERLOAD);
         PlayerIOManager.instance.BypassLogin();
         LoginMenu.SetActive(false);
         MainMenu.SetActive(true);
@@ -32,6 +32,36 @@ public class MainMenuButton : MonoBehaviour
     public void GoMainMenu()
     {
         SceneManager.instance.NextSceneName = "MainMenu";
+    }
+
+    public void GoSummonPageHeroes()
+    {
+        SceneManager.instance.NextSceneName = "SummonScene";
+        DataManager.instance.SummonPageSettings = SummonPageSetting.HEROES;
+    }
+
+    public void GoSummonPageCrafting()
+    {
+        SceneManager.instance.NextSceneName = "SummonScene";
+        DataManager.instance.SummonPageSettings = SummonPageSetting.CRAFTING;
+    }
+
+    public void GoSummonPageEquipment()
+    {
+        SceneManager.instance.NextSceneName = "SummonScene";
+        DataManager.instance.SummonPageSettings = SummonPageSetting.EQUIPMENT;
+    }
+
+    public void GoSummonPageGambits()
+    {
+        SceneManager.instance.NextSceneName = "SummonScene";
+        DataManager.instance.SummonPageSettings = SummonPageSetting.GAMBITS;
+    }
+
+    public void GoManageHeroes()
+    {
+        SceneManager.instance.NextSceneName = "PreBattleScene";
+        DataManager.instance.PreBattlePageSettings = PreBattlePage.MANAGEHEROES;
     }
 
 	public void RegisterAccount()

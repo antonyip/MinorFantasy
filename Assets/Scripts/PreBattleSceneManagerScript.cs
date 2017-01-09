@@ -36,7 +36,7 @@ public class PreBattleSceneManagerScript : MonoBehaviour {
 	void Start () {
 
         // hack for userdata to be avail on this screen
-        DataManager.instance.LoadUser("BYPASSUSER");
+        DataManager.instance.LoadUser(DataManager.BYPASSUSERLOAD);
 
         for (int i = 0; i < TeamButtons.Count; i++)
         {
@@ -91,11 +91,16 @@ public class PreBattleSceneManagerScript : MonoBehaviour {
         }
 	} // end start
 
+    void OnEnable()
+    {
+
+    }
+
     public void SelectTeam(int i)
     {
         Debug.Log(i + " team selected!");
         DataManager.instance.selectedTeam = i;
-        MainTeamContainer.transform.transform.DOLocalMoveX(i * -1550, 0.5f);
+        MainTeamContainer.transform.transform.DOLocalMoveX(i * -1550, DataManager.NORMALANIMATION);
     }
 	
 	// Update is called once per frame

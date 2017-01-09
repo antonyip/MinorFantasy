@@ -3,19 +3,49 @@ using System.Collections;
 using System.Collections.Generic;
 using Google2u;
 
+public enum SummonPageSetting
+{
+    NONE,
+    HEROES,
+    GAMBITS,
+    CRAFTING,
+    EQUIPMENT,
+};
+
+public enum PreBattlePage
+{
+    NONE,
+    MANAGEHEROES,
+    PREBATTLE,
+}
+
 public class DataManager : MonoBehaviour
 {
 
     // consts
     public const int MAXTEAM = 5;
     public const int MAXUNITPERTEAM = 6;
-    public static bool LOADEDUSER = false;
+    public const float NORMALANIMATION = 0.3f;
+    public const float LONGANIMATION = 0.7f;
+
+    public const int GoldForSummoningHeroes = 5000;
+    public const int GemForSummoningHeroes = 45;
+    public const int GoldForSummoningHeroes10 = 45000;
+    public const int GemForSummoningHeroes10 = 400;
+
+    public static List<int> CurrentHeroesOdds = new List<int>();
+
+    public const string BYPASSUSERLOAD = "BYPASSUSERLOAD";
 
     // static data
-    public static DataManager instance;
+    public static DataManager instance = null;
 
     // datamanager data
+    public bool LOADEDUSER = false;
     public LevelData selectedLevel;
+    public SummonPageSetting SummonPageSettings = SummonPageSetting.NONE;
+    public PreBattlePage PreBattlePageSettings = PreBattlePage.NONE;
+    public UserData userData;
 
     public List<LevelData> listOfLevels;
     public List<Sprite> listOfFloorTiles;
@@ -29,30 +59,52 @@ public class DataManager : MonoBehaviour
 
     public List<PlayerCharacter> listOfPlayerCharacters = new List<PlayerCharacter>();
 
+
+
     void Awake()
     {
         Debug.Log("InitDataManager");
 
-        for (int i = 0; i < MAXTEAM; i++)
+        if (instance == null)
         {
-            Team t = new Team();
-            for (int j = 0; j < MAXUNITPERTEAM; j++)
+            for (int i = 0; i < MAXTEAM; i++)
             {
-                PlayerCharacter pc = new PlayerCharacter();
-                pc.ID = 0;
-                pc.databaseChar = Google2u.HeroesData.Instance.Rows.Find(x => x._ID == pc.ID);
-                t.SwapCharacter(j, pc);
+                Team t = new Team();
+                for (int j = 0; j < MAXUNITPERTEAM; j++)
+                {
+                    PlayerCharacter pc = new PlayerCharacter();
+                    pc.ID = 0;
+                    pc.databaseChar = Google2u.HeroesData.Instance.Rows.Find(x => x._ID == pc.ID);
+                    t.SwapCharacter(j, pc);
+                }
+                listOfTeams.Add(t);
             }
-            listOfTeams.Add(t);
-        }
 
-        instance = this;
+            instance = this;
+
+            StartHacks();
+        }
+        else
+        {
+            Debug.Log("attempt to generate 2nd datamanager?");
+        }
     }
 
-    // Use this for initialization
-    void Start()
+    // Use this for initialization hacks
+    void StartHacks()
     {
         selectedMapLevel = 1;
+
+        // hack to generate current odds for hero summon pool
+        for (int i = 0; i < 5; i++)
+        {
+            CurrentHeroesOdds.Add(1);
+            CurrentHeroesOdds.Add(2);
+            CurrentHeroesOdds.Add(3);
+            CurrentHeroesOdds.Add(4);
+            CurrentHeroesOdds.Add(5);
+        }
+
     }
 
     // Update is called once per frame
@@ -63,7 +115,7 @@ public class DataManager : MonoBehaviour
 
     public void LoadUser(string UniqueUserName)
     {
-        if (DataManager.LOADEDUSER == false)
+        if (DataManager.instance.LOADEDUSER == false)
         {
             Debug.Log("Loading UserData from our database::TODO");
             // insert unique pc for first 5.
@@ -98,6 +150,9 @@ public class DataManager : MonoBehaviour
             listOfTeams[0].SwapCharacter(3, listOfPlayerCharacters[4]);
             listOfTeams[0].SwapCharacter(4, listOfPlayerCharacters[3]);
             listOfTeams[0].SwapCharacter(5, listOfPlayerCharacters[20]);
+
+            // HACK TO GENERATE USERDATA
+            userData = new UserData();
 
             LOADEDUSER = true;
         }
