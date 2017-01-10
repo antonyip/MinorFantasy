@@ -9,6 +9,7 @@ public class PopUpObject : MonoBehaviour {
 	{
 		//Debug.Log("PopUP::ENABLE");
 		gameObject.transform.SetParent(PopUpManager.instance.transform);
+        gameObject.transform.localPosition = Vector3.zero;
 		gameObject.transform.localScale = Vector3.zero;
 		PopUpManager.instance.listOfPopUps.Add(this);
 	}

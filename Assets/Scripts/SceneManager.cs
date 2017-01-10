@@ -8,6 +8,7 @@ public class SceneManager: MonoBehaviour {
 	public string CurrentSceneName;
 	public string PrevSceneName;
 	public string NextSceneName;
+    public Camera CurrentMainCamera;
 
 	public enum GameMode
 	{
