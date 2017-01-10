@@ -132,7 +132,7 @@ public class DataManager : MonoBehaviour
             }
 
             // insert random for last 15
-            for (int i = 0; i < 15; i++)
+            for (int i = 0; i < 55; i++)
             {
                 pc = new PlayerCharacter();
                 pc.ID = 1;

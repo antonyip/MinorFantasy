@@ -5,7 +5,8 @@ public class UserData
     public int gold;
     public int gems;
     public int energy;
-    public int pvpenergy;
+    public int maxEnergy;
+    public int pvpEnergy;
 
     public List<int> ListOfGambits = new List<int>();
     public List<int> ListOfCraftingMats = new List<int>();
@@ -16,9 +17,10 @@ public class UserData
 
     public UserData()
     {
-        gold = 0;
-        gems = 0;
-        energy = 0;
-        pvpenergy = 0;
+        gold = 50000;
+        gems = 2000;
+        energy = 50;
+        maxEnergy = 50;
+        pvpEnergy = 0;
     }
 }
