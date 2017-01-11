@@ -80,9 +80,14 @@ public class GameMaster : MonoBehaviour {
 
         // load enemy data
         var Map = Google2u.LevelData.Instance.Rows.Find(x => x._ID == dataManager.selectedMapLevel);
-        string[] MobsToSpawn = Map._Battle1.Split(',');
+        List<string> MobsToSpawn = new List<string>();
 
-        for (int i = 0; i < MobsToSpawn.Length; i++)
+        if (Map._Battle1.Contains(','))
+            MobsToSpawn = Map._Battle1.Split(',').ToList();
+        else
+            MobsToSpawn.Add(Map._Battle1);
+
+        for (int i = 0; i < MobsToSpawn.Count; i++)
         {
             var item = MobsToSpawn[i];
             var MobsID = int.Parse(item);

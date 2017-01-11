@@ -93,8 +93,6 @@ public class DataManager : MonoBehaviour
     // Use this for initialization hacks
     void StartHacks()
     {
-        selectedMapLevel = 1;
-
         // hack to generate current odds for hero summon pool
         for (int i = 0; i < 5; i++)
         {

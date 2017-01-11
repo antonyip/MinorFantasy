@@ -10,7 +10,7 @@ public class LevelSelectManagerScript : MonoBehaviour {
     {
         for (int i = 0; i < ListOfButtons.Count; i++)
         {
-            ListOfButtons[i].GetComponent<LevelSelectButtonScript>().SetName(i.ToString());
+            ListOfButtons[i].GetComponent<LevelSelectButtonScript>().SetName((i+1).ToString());
         }
 	}
 	
