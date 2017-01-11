@@ -64,13 +64,6 @@ public class DataManager : MonoBehaviour
         for (int i = 0; i < MAXTEAM; i++)
         {
             Team t = new Team();
-            for (int j = 0; j < MAXUNITPERTEAM; j++)
-            {
-                PlayerCharacter pc = new PlayerCharacter();
-                pc.ID = 0;
-                pc.databaseChar = Google2u.HeroesData.Instance.Rows.Find(x => x._ID == pc.ID);
-                t.SwapCharacter(j, pc);
-            }
             userData.listOfTeams.Add(t);
         }
     }
@@ -119,18 +112,24 @@ public class DataManager : MonoBehaviour
             GenerateEmptyTeamStructure();
 
             Debug.Log("Loading UserData from our database::TODO");
-            // insert unique pc for first 5.
+            // insert unique pc for first 4.
             PlayerCharacter pc;
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < 4; i++)
             {
                 pc = new PlayerCharacter();
-                pc.ID = i * 2;
+                pc.ID = (i+1) * 2;
                 pc.databaseChar = Google2u.HeroesData.Instance.Rows.Find(x => x._ID == pc.ID);
                 userData.listOfPlayerCharacters.Add(pc);
             }
 
-            // insert random for last 15
-            for (int i = 0; i < 55; i++)
+            // insert random special character for last pc
+            pc = new PlayerCharacter();
+            pc.ID = 3;
+            pc.databaseChar = Google2u.HeroesData.Instance.Rows.Find(x => x._ID == pc.ID);
+            userData.listOfPlayerCharacters.Add(pc);
+
+            // insert random for last 8
+            for (int i = 0; i < 8; i++)
             {
                 pc = new PlayerCharacter();
                 pc.ID = 1;
@@ -138,21 +137,21 @@ public class DataManager : MonoBehaviour
                 userData.listOfPlayerCharacters.Add(pc);
             }
 
-            // insert random special character for last pc
-            pc = new PlayerCharacter();
-            pc.ID = 12;
-            pc.databaseChar = Google2u.HeroesData.Instance.Rows.Find(x => x._ID == pc.ID);
-            userData.listOfPlayerCharacters.Add(pc);
+            Debug.Assert(userData != null);
+            Debug.Assert(userData.listOfTeams != null);
 
-
-            userData.listOfTeams[0].SwapCharacter(0, userData.listOfPlayerCharacters[0]);
-            userData.listOfTeams[0].SwapCharacter(1, userData.listOfPlayerCharacters[1]);
-            userData.listOfTeams[0].SwapCharacter(2, userData.listOfPlayerCharacters[2]);
-            userData.listOfTeams[0].SwapCharacter(3, userData.listOfPlayerCharacters[4]);
-            userData.listOfTeams[0].SwapCharacter(4, userData.listOfPlayerCharacters[3]);
-            userData.listOfTeams[0].SwapCharacter(5, userData.listOfPlayerCharacters[20]);
+            userData.listOfTeams[0].SwapCharacter(0, 0);
+            userData.listOfTeams[0].SwapCharacter(1, 1);
+            userData.listOfTeams[0].SwapCharacter(2, 4);
+            userData.listOfTeams[0].SwapCharacter(3, 2);
+            userData.listOfTeams[0].SwapCharacter(5, 8);
 
             LOADEDUSER = true;
+        }
+
+        if (UniqueUserName == DataManager.BYPASSUSERLOAD)
+        {
+            PlayerIOManager.instance.BypassLogin();
         }
     }
 

@@ -10,7 +10,7 @@ public class TeamHeroButtonScript : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-	
+        GetComponent<Button>().colors = PreBattleSceneManagerScript.instance.defaultColorBlock;
 	}
 	
 	// Update is called once per frame

@@ -5,36 +5,46 @@ using System;
 
 public class Team {
 
-    List<PlayerCharacter> listOfCharacters = new List<PlayerCharacter>();
+    public const int EMPTYSLOT = -1;
 
-    public List<PlayerCharacter> GetListOfCharacters()
+    // indexes to userdata team
+    List<int> listOfCharacters = new List<int>();
+
+    public Team()
+    {
+        while (listOfCharacters.Count < 6)
+        {
+            listOfCharacters.Add(EMPTYSLOT);
+        }
+    }
+
+    public List<int> GetListOfIndexes()
     {
         return listOfCharacters;
     }
 
-	// Use this for initialization
-	void Start ()
+    public List<PlayerCharacter> GetListOfCharacters()
     {
-
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
-
-    public void SwapCharacter(int v, PlayerCharacter p)
-    {
-        if (listOfCharacters.Count < 6)
+        List<PlayerCharacter> returnValue = new List<PlayerCharacter>();
+        List<PlayerCharacter> listOfPC = DataManager.instance.userData.listOfPlayerCharacters;
+        for (int i = 0; i < DataManager.MAXUNITPERTEAM; i++)
         {
-            for (int i = 0; i < 6; i++)
+            if (listOfCharacters[i] == EMPTYSLOT)
             {
-                PlayerCharacter pc = new PlayerCharacter();
-                pc.ID = 0;
-                listOfCharacters.Add(pc);
+                returnValue.Add(null);
             }
-        }
+            else
+            {
+                Debug.Assert(listOfCharacters.Count == DataManager.MAXUNITPERTEAM);
+                returnValue.Add(listOfPC[listOfCharacters[i]]);
+            }
 
-        listOfCharacters[v] = p;
+        }
+        return returnValue;
+    }
+
+    public void SwapCharacter(int index, int PlayerIndexInUserData)
+    {
+        listOfCharacters[index] = PlayerIndexInUserData;
     }
 }

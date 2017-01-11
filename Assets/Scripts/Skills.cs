@@ -34,9 +34,19 @@ public class Skill
         skillString = dataBaseSkill._SkillFomular;
         SubsituteTexts(ref currentUnit, ref unit);
         int result = (int)ep.Evaluate(skillString);
+
+        // limit damage
+        if (result < 1)
+        {
+            result = 1;
+        }
+        
         // do stuffs
-        Debug.Log(string.Format("{0} hits {1} for {2} ({3})", currentUnit.GetUnitName(), unit.GetUnitName(), result, skillString));
-        unit.HP -= 10;
+        string topText = string.Format("{0} hits {1} for {2}", currentUnit.GetUnitName(), unit.GetUnitName(), result);
+        string debugText = string.Format("{0} ({1})", topText, skillString);
+        Debug.Log(debugText);
+        GameMaster.instance.UpdateTopText(topText);
+        unit.HP -= result;
         return dataBaseSkill._AnimationType.Contains("AnimType_MeleeTarget");
     }
 }

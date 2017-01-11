@@ -7,18 +7,19 @@ public class PlayerCharacter
     public int ID;
     public int CurrentLevel;
     public Google2u.HeroesDataRow databaseChar;
+}
 
-    public PlayerCharacter()
-    {
-
-    }
+public class MonsterCharacter
+{
+    public int ID;
+    public int CurrentLevel;
+    public Google2u.MobDataRow monsterStats;
 }
 
 public sealed class Character
 {
-
+    public MonsterCharacter monsterStats;
     public PlayerCharacter playerStats;
-    public Google2u.MobDataRow monsterStats;
     public Google2u.EquipmentDataRow equipmentStats;
 
     public bool IsMonster()
@@ -35,7 +36,7 @@ public sealed class Character
     {
         if (IsMonster())
         {
-            return monsterStats._Name;
+            return monsterStats.monsterStats._Name;
         }
 
         if (IsPlayer())
@@ -46,11 +47,26 @@ public sealed class Character
         return "INVALID";
     }
 
+    internal int GetCurrentLevel()
+    {
+        if (IsMonster())
+        {
+            return monsterStats.CurrentLevel;
+        }
+
+        if (IsPlayer())
+        {
+            return playerStats.CurrentLevel;
+        }
+
+        return 0;
+    }
+
     internal int GetMAtt()
     {
         if (IsMonster())
         {
-            return monsterStats._MAtt + monsterStats._Level * monsterStats._MAttGrowth;
+            return monsterStats.monsterStats._MAtt + monsterStats.CurrentLevel * monsterStats.monsterStats._MAttGrowth;
         }
 
         if (IsPlayer())
@@ -64,7 +80,7 @@ public sealed class Character
     {
         if (IsMonster())
         {
-            return monsterStats._STR + monsterStats._Level * monsterStats._STRGrowth;
+            return monsterStats.monsterStats._STR + monsterStats.CurrentLevel * monsterStats.monsterStats._STRGrowth;
         }
 
         if (IsPlayer())
@@ -78,7 +94,7 @@ public sealed class Character
     {
         if (IsMonster())
         {
-            return monsterStats._Def + monsterStats._Level * monsterStats._DefGrowth;
+            return monsterStats.monsterStats._Def + monsterStats.CurrentLevel * monsterStats.monsterStats._DefGrowth;
         }
 
         if (IsPlayer())
@@ -92,7 +108,7 @@ public sealed class Character
     {
         if (IsMonster())
         {
-            return monsterStats._Att + monsterStats._Level * monsterStats._AttGrowth;
+            return monsterStats.monsterStats._Att + monsterStats.CurrentLevel * monsterStats.monsterStats._AttGrowth;
         }
 
         if (IsPlayer())
@@ -106,7 +122,7 @@ public sealed class Character
     {
         if (IsMonster())
         {
-            return monsterStats._HP + monsterStats._Level * monsterStats._HPGrowth;
+            return monsterStats.monsterStats._HP + monsterStats.CurrentLevel * monsterStats.monsterStats._HPGrowth;
         }
 
         if (IsPlayer())
@@ -121,7 +137,7 @@ public sealed class Character
     {
         if (IsMonster())
         {
-            return monsterStats._DEX + monsterStats._Level * monsterStats._DEXGrowth;
+            return monsterStats.monsterStats._DEX + monsterStats.CurrentLevel * monsterStats.monsterStats._DEXGrowth;
         }
 
         if (IsPlayer())

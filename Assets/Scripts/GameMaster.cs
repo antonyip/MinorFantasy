@@ -9,6 +9,7 @@ public class GameMaster : MonoBehaviour {
 
     public static GameMaster instance;
     List<Unit> AllUnits = new List<Unit>();
+    List<Unit> PlayerUnits = new List<Unit>();
     public GameObject monsterPrefab;
     public List<GameObject> PlayerUnitsSpritePositions = new List<GameObject>();
     public List<GameObject> PlayerUnitsSprite = new List<GameObject>();
@@ -17,15 +18,25 @@ public class GameMaster : MonoBehaviour {
     public List<GameObject> OptionButtons = new List<GameObject>();
     public List<GameObject> PlayerButtons = new List<GameObject>();
 
+    public Text TempDefeatText;
+    public Text TopText;
+
     // gamelists
     public GameObject Announcer;
     public GameObject StartGamePopup;
     public GameObject VictoryPopup;
     bool AutoMode = true;
 
+    int currentWave = 0;
+
     void Awake()
     {
         instance = this;
+    }
+
+    public void UpdateTopText(string TextToUpdate)
+    {
+        TopText.text = TextToUpdate;
     }
 
     // Use this for initialization
@@ -40,6 +51,7 @@ public class GameMaster : MonoBehaviour {
 
         Debug.Log("GameStarted");
         Debug.Log("Loading Fight Data");
+
         // 1. load fight data
         // load player data
         var dataManager = DataManager.instance;
@@ -50,78 +62,36 @@ public class GameMaster : MonoBehaviour {
         for (int i = 0; i < dataManager.userData.listOfTeams[dataManager.selectedTeam].GetListOfCharacters().Count; i++)
         {
             var playerChar = dataManager.userData.listOfTeams[dataManager.selectedTeam].GetListOfCharacters()[i];
-
-            // skip id 0 as it is an empty spot
-            if (playerChar.ID == 0)
-                continue;
-            
             Unit u = new Unit();
-            u.character = new Character();
-            u.character.playerStats = playerChar;
-            u.character.playerStats.databaseChar = Google2u.HeroesData.Instance.Rows.Find(x => x._ID == playerChar.ID);
-            u.IsEnemyUnit = false;
-            u.Start();
-
-            u.aiActions.Add(Gambits.GetGambit(1));
-            u.aiSkills.Add(new Skill(1));
-
-            GameObject go = Instantiate(monsterPrefab) as GameObject;
-            go.transform.SetParent(PlayerUnitsSpritePositions[i].transform);
-            go.transform.localPosition = Vector3.zero;
-            go.transform.localScale = Vector3.one;
-            go.name = u.character.playerStats.databaseChar._SpriteIdle;
-            go.GetComponentInChildren<SpriteAnimation>().LoadEnemyImage(go.name);
-
-            u.sprite = go;
-            PlayerUnitsSprite.Add(go);
-
-            AllUnits.Add(u);
-        }
-
-        // load enemy data
-        var Map = Google2u.LevelData.Instance.Rows.Find(x => x._ID == dataManager.selectedMapLevel);
-        List<string> MobsToSpawn = new List<string>();
-
-        if (Map._Battle1.Contains(','))
-            MobsToSpawn = Map._Battle1.Split(',').ToList();
-        else
-            MobsToSpawn.Add(Map._Battle1);
-
-        for (int i = 0; i < MobsToSpawn.Count; i++)
-        {
-            var item = MobsToSpawn[i];
-            var MobsID = int.Parse(item);
-            var Mob = Google2u.MobData.Instance.Rows.Find(x => x._ID == MobsID);
-            Unit u = new Unit();
-            u.character = new Character();
-            u.character.monsterStats = Mob;
-            u.IsEnemyUnit = true;
-            u.Start();
-            string skillString = u.character.monsterStats._Skills;
-            string[] mobSkills = skillString.Split(',');
-            foreach (var skillPair in mobSkills)
+            if (playerChar != null)
             {
-                string[] skillParts = skillPair.Split(':');
-                int logic = int.Parse(skillParts[0]);
-                int skill = int.Parse(skillParts[1]);
-                u.aiActions.Add(Gambits.GetGambit(logic));
-                u.aiSkills.Add(new Skill(skill));
+                u.character = new Character();
+                u.character.playerStats = playerChar;
+                u.character.playerStats.databaseChar = Google2u.HeroesData.Instance.Rows.Find(x => x._ID == playerChar.ID);
+                u.IsEnemyUnit = false;
+                u.Start();
+
+                u.aiActions.Add(Gambits.GetGambit(1));
+                u.aiSkills.Add(new Skill(1));
+
+                GameObject go = Instantiate(monsterPrefab) as GameObject;
+                go.transform.SetParent(PlayerUnitsSpritePositions[i].transform);
+                go.transform.localPosition = Vector3.zero;
+                go.transform.localScale = Vector3.one;
+                go.name = u.character.playerStats.databaseChar._SpriteIdle;
+                go.GetComponentInChildren<SpriteAnimation>().LoadEnemyImage(go.name);
+
+                u.sprite = go;
+                PlayerUnitsSprite.Add(go);
+                AllUnits.Add(u);
             }
 
-            string modelName = "DustBunny";
-            GameObject go = Instantiate(Resources.Load("EnemyPrefabs/" + modelName)) as GameObject;
-            //GameObject go = Instantiate(monsterPrefab) as GameObject;
-            go.transform.SetParent(MonstersUnitsSpritePositions[i].transform);
-            go.transform.localPosition = Vector3.zero;
-            go.transform.localScale = Vector3.one * 100;
-            go.name = Mob._SpriteIdle; 
-            //go.GetComponentInChildren<SpriteAnimation>().LoadEnemyImage(Mob._SpriteIdle);
+            PlayerUnits.Add(u);
 
-            u.sprite = go;
-            MonstersUnitsSprite.Add(go);
-
-            AllUnits.Add(u);
         }
+
+        SpawnWave(currentWave);
+        UpdatePlayerControls();
 
         Debug.Log("Determining Speed Que");
         AllUnits = AllUnits.OrderBy(x => x.character.GetSpeed()).ToList();
@@ -136,10 +106,115 @@ public class GameMaster : MonoBehaviour {
         // place them in a que
         // start the que
 
-
     } //end start
+
+    void SpawnWave(int waveIndexToSpawn)
+    {
+        // clean up old waves
+        AllUnits = AllUnits.FindAll(x => x.character.IsPlayer()).ToList();
+
+        // load enemy data
+        DataManager dataManager = DataManager.instance;
+        var Map = Google2u.LevelData.Instance.Rows.Find(x => x._ID == dataManager.selectedMapLevel);
+        List<string> MobsToSpawn = new List<string>();
+
+        // figure out the wave string 
+
+
+        string WaveString = "";
+        switch (waveIndexToSpawn)
+        {
+            case 0:
+                WaveString = Map._Battle1;
+                break;
+            case 1:
+                WaveString = Map._Battle2;
+                break;
+            case 2:
+                WaveString = Map._Battle3;
+                break;
+            case 3:
+                WaveString = Map._Battle4;
+                break;
+            case 4:
+                WaveString = Map._Battle5;
+                break;
+            case 5:
+                WaveString = "";
+                break;
+            default:
+                break;
+
+        }
+
+        HasWon = false;
+
+        if (WaveString == "")
+        {
+            HasWon = true;
+            Debug.Log("You won this level!");
+            TempDefeatText.text = "You won this level!";
+            VictoryPopup.SetActive(true);
+            return;
+        }
+
+        if (WaveString.Contains(','))
+            MobsToSpawn = WaveString.Split(',').ToList();
+        else
+            MobsToSpawn.Add(WaveString);
+
+        for (int i = 0; i < MobsToSpawn.Count; i++)
+        {
+            var item = MobsToSpawn[i];
+            var MobsID = int.Parse(item);
+            var Mob = Google2u.MobData.Instance.Rows.Find(x => x._ID == MobsID);
+            Unit u = new Unit();
+            u.character = new Character();
+            u.character.monsterStats = new MonsterCharacter();
+            u.character.monsterStats.ID = MobsID;
+            u.character.monsterStats.monsterStats = Mob;
+            // set the hardness here for now HACK
+            u.character.monsterStats.CurrentLevel = 10;
+            u.IsEnemyUnit = true;
+            u.Start();
+            string skillString = u.character.monsterStats.monsterStats._Skills;
+            string[] mobSkills = skillString.Split(',');
+            foreach (var skillPair in mobSkills)
+            {
+                string[] skillParts = skillPair.Split(':');
+                int logic = int.Parse(skillParts[0]);
+                int skill = int.Parse(skillParts[1]);
+                u.aiActions.Add(Gambits.GetGambit(logic));
+                u.aiSkills.Add(new Skill(skill));
+            }
+
+            string modelName = "DustBunny";
+            GameObject go = Instantiate(Resources.Load("EnemyPrefabs/" + modelName)) as GameObject;
+            go.transform.SetParent(MonstersUnitsSpritePositions[i].transform);
+            go.transform.localPosition = Vector3.zero;
+            go.transform.localScale = Vector3.one * 100;
+            go.name = Mob._SpriteIdle; 
+            go.GetComponentInChildren<SpriteAnimation>().LoadEnemyImage(Mob._SpriteIdle);
+
+            u.sprite = go;
+            MonstersUnitsSprite.Add(go);
+
+            AllUnits.Add(u);
+        }
+    }
+
+    void UpdatePlayerControls()
+    {
+        List<PlayerCharacter> playerCharacters = DataManager.instance.userData.listOfTeams[DataManager.instance.selectedTeam].GetListOfCharacters();
+        for (int i = 0; i < DataManager.MAXUNITPERTEAM; i++)
+        {           
+            PlayerButtons[i].GetComponent<BattleButtonScript>().UpdateGUI(PlayerUnits[i]);
+        }
+    }
+
     public bool BypassAnimationLock = false;
     public bool AnimationLock = false;
+
     public void ReleaseAnimationLock()
     {
         AnimationLock = false;
@@ -176,17 +251,21 @@ public class GameMaster : MonoBehaviour {
         if (EnemyUnits.Count == 0)
         {
             HasWon = true;
-            Debug.Log("You won!");
-            VictoryPopup.SetActive(true);
+            Debug.Log("You won this wave!");
+            TempDefeatText.text = "You won this wave!";
+            ++currentWave;
+            SpawnWave(currentWave);
+            //VictoryPopup.SetActive(true);
             return;
         }
-        
+
         var PlayerUnits = AllUnits.FindAll(x => x.IsEnemyUnit == false && !x.isDead);
 
         if (PlayerUnits.Count == 0)
         {
             HasLost = true;
             Debug.Log("You lost!");
+            TempDefeatText.text = "You lost!";
             VictoryPopup.SetActive(true);
             return;
         }
@@ -223,6 +302,9 @@ public class GameMaster : MonoBehaviour {
 
     private void ExecuteGambits(ref Unit currentUnit)
     {
+        if (currentUnit.isDead)
+            return;
+        
         //evaulate gambits
         for (int i = 0; i < 10; i++)
         {
@@ -235,12 +317,21 @@ public class GameMaster : MonoBehaviour {
                 // to do - change this to the proper animation
                 currentUnit.sprite.GetComponentInChildren<SpriteAnimation>().LoadEnemyAttack("Swordman_Casting");
                 Debug.Log("Execute Gambit");
-                foreach (var unit in unitsAffected)
+                for (int j = 0; j < unitsAffected.Count; j++)
                 {
-                    var ounit = unit;
-                    ounit.sprite.transform.DOPunchPosition(new Vector3(Random.Range(-25,25), Random.Range(15, 15), 0), DataManager.LONGANIMATION);
+                    Unit ounit = unitsAffected[j];
+                    ounit.sprite.transform.DOPunchPosition(new Vector3(Random.Range(-15, 15), Random.Range(-15, 15), 0), DataManager.LONGANIMATION);
                     AnimationLock = currentUnit.aiSkills[i].EvaluateSkillEffect(ref currentUnit, ref ounit);
+
+                    if (ounit.isDead)
+                    {
+                        Sequence seq = DOTween.Sequence();
+                        seq.AppendInterval(DataManager.LONGANIMATION);
+                        seq.Append(ounit.sprite.transform.DOScale(Vector3.zero, DataManager.LONGANIMATION));
+                        seq.Play();
+                    }
                 }
+                UpdatePlayerControls();
                 return;
             }
         }
