@@ -1,0 +1,565 @@
+fileFormatVersion: 2
+guid: ab52ada6fdf416b47bf7c82635e06bc8
+timeCreated: 1484355349
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: HumanSprite_0
+    21300002: HumanSprite_1
+    21300004: HumanSprite_2
+    21300006: HumanSprite_3
+    21300008: HumanSprite_4
+    21300010: HumanSprite_5
+    21300012: HumanSprite_6
+    21300014: HumanSprite_7
+    21300016: HumanSprite_8
+    21300018: HumanSprite_9
+    21300020: HumanSprite_10
+    21300022: HumanSprite_11
+    21300024: HumanSprite_12
+    21300026: HumanSprite_13
+    21300028: HumanSprite_14
+    21300030: HumanSprite_15
+    21300032: HumanSprite_16
+    21300034: HumanSprite_17
+    21300036: HumanSprite_18
+    21300038: HumanSprite_19
+    21300040: HumanSprite_20
+    21300042: HumanSprite_21
+    21300044: HumanSprite_22
+    21300046: HumanSprite_23
+    21300048: HumanSprite_24
+    21300050: HumanSprite_25
+    21300052: HumanSprite_26
+    21300054: HumanSprite_27
+    21300056: HumanSprite_28
+    21300058: HumanSprite_29
+    21300060: HumanSprite_30
+    21300062: HumanSprite_31
+    21300064: HumanSprite_32
+    21300066: HumanSprite_33
+    21300068: HumanSprite_34
+    21300070: HumanSprite_35
+    21300072: HumanSprite_36
+    21300074: HumanSprite_37
+    21300076: HumanSprite_38
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 7
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: HumanSprite_0
+      rect:
+        serializedVersion: 2
+        x: 44
+        y: 111
+        width: 51
+        height: 55
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: HumanSprite_1
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 111
+        width: 51
+        height: 55
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: HumanSprite_2
+      rect:
+        serializedVersion: 2
+        x: 214
+        y: 111
+        width: 51
+        height: 55
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: HumanSprite_3
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 111
+        width: 50
+        height: 55
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: HumanSprite_4
+      rect:
+        serializedVersion: 2
+        x: 393
+        y: 101
+        width: 51
+        height: 55
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: HumanSprite_5
+      rect:
+        serializedVersion: 2
+        x: 468
+        y: 101
+        width: 51
+        height: 55
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: HumanSprite_6
+      rect:
+        serializedVersion: 2
+        x: 22
+        y: 86
+        width: 15
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: HumanSprite_7
+      rect:
+        serializedVersion: 2
+        x: 58
+        y: 73
+        width: 25
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: HumanSprite_8
+      rect:
+        serializedVersion: 2
+        x: 98
+        y: 86
+        width: 13
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: HumanSprite_9
+      rect:
+        serializedVersion: 2
+        x: 193
+        y: 86
+        width: 14
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: HumanSprite_10
+      rect:
+        serializedVersion: 2
+        x: 228
+        y: 73
+        width: 25
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: HumanSprite_11
+      rect:
+        serializedVersion: 2
+        x: 268
+        y: 85
+        width: 13
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: HumanSprite_12
+      rect:
+        serializedVersion: 2
+        x: 371
+        y: 76
+        width: 15
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: HumanSprite_13
+      rect:
+        serializedVersion: 2
+        x: 407
+        y: 63
+        width: 25
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: HumanSprite_14
+      rect:
+        serializedVersion: 2
+        x: 447
+        y: 76
+        width: 13
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: HumanSprite_15
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 57
+        width: 19
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: HumanSprite_16
+      rect:
+        serializedVersion: 2
+        x: 47
+        y: 50
+        width: 12
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: HumanSprite_17
+      rect:
+        serializedVersion: 2
+        x: 77
+        y: 50
+        width: 12
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: HumanSprite_18
+      rect:
+        serializedVersion: 2
+        x: 114
+        y: 56
+        width: 21
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: HumanSprite_19
+      rect:
+        serializedVersion: 2
+        x: 187
+        y: 57
+        width: 18
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: HumanSprite_20
+      rect:
+        serializedVersion: 2
+        x: 219
+        y: 46
+        width: 11
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: HumanSprite_21
+      rect:
+        serializedVersion: 2
+        x: 248
+        y: 46
+        width: 12
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: HumanSprite_22
+      rect:
+        serializedVersion: 2
+        x: 284
+        y: 56
+        width: 21
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: HumanSprite_23
+      rect:
+        serializedVersion: 2
+        x: 365
+        y: 47
+        width: 19
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: HumanSprite_24
+      rect:
+        serializedVersion: 2
+        x: 402
+        y: 43
+        width: 11
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: HumanSprite_25
+      rect:
+        serializedVersion: 2
+        x: 431
+        y: 43
+        width: 12
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: HumanSprite_26
+      rect:
+        serializedVersion: 2
+        x: 463
+        y: 46
+        width: 21
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: HumanSprite_27
+      rect:
+        serializedVersion: 2
+        x: 42
+        y: 28
+        width: 13
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: HumanSprite_28
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 28
+        width: 13
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: HumanSprite_29
+      rect:
+        serializedVersion: 2
+        x: 214
+        y: 24
+        width: 12
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: HumanSprite_30
+      rect:
+        serializedVersion: 2
+        x: 253
+        y: 24
+        width: 12
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: HumanSprite_31
+      rect:
+        serializedVersion: 2
+        x: 396
+        y: 21
+        width: 13
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: HumanSprite_32
+      rect:
+        serializedVersion: 2
+        x: 435
+        y: 21
+        width: 13
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: HumanSprite_33
+      rect:
+        serializedVersion: 2
+        x: 38
+        y: 17
+        width: 17
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: HumanSprite_34
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 17
+        width: 17
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: HumanSprite_35
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 13
+        width: 16
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: HumanSprite_36
+      rect:
+        serializedVersion: 2
+        x: 253
+        y: 13
+        width: 16
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: HumanSprite_37
+      rect:
+        serializedVersion: 2
+        x: 393
+        y: 10
+        width: 16
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: HumanSprite_38
+      rect:
+        serializedVersion: 2
+        x: 436
+        y: 10
+        width: 16
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
