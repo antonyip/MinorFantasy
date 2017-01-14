@@ -64,7 +64,12 @@ public class MainMenuButton : MonoBehaviour
         DataManager.instance.PreBattlePageSettings = PreBattlePage.MANAGEHEROES;
     }
 
-	public void RegisterAccount()
+    public void GoLibrary()
+    {
+        SceneManager.instance.NextSceneName = "LibraryScene";
+    }
+
+    public void RegisterAccount()
 	{
 
 	}
