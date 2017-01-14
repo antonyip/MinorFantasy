@@ -6,7 +6,6 @@ public class LibrarySceneButtonScript : MonoBehaviour {
     public static LibrarySceneButtonScript instance;
 
     //Tabbed Pane Views
-    public GameObject Views;
     string[] viewNames = { "Mob View", "Gambit View", "Hero View", "Equip View" };
     GameObject[] viewPanels;
 
