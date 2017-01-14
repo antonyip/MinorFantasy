@@ -7,4 +7,4 @@ Turn based AI Battle Game
 
 [Report bugs and issues here!](https://github.com/antonyip/MinorFantasy/issues)  
 
-Looking for People to participate in the project! send me a e-mail at anton_yip@hotmail.com
+To Contribute to the project, Please submit an issue regarding what is missing and what you intend to do on the issues tab.
