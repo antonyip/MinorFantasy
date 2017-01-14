@@ -5,20 +5,15 @@ public class LibrarySceneButtonScript : MonoBehaviour {
 
     public static LibrarySceneButtonScript instance;
 
-    //Tabbed Pane Views
-    string[] viewNames = { "Mob View", "Gambit View", "Hero View", "Equip View" };
-    GameObject[] viewPanels;
-
     // Use this for initialization
     void Start () {
-        //Save panels for hiding later on
-        viewPanels = new GameObject[viewNames.Length];
-        for (int i=0; i<viewNames.Length; i++)
-        {
-            viewPanels[i] = GameObject.Find(viewNames[i]);
-        }
-        instance = this;
+
 	}
+
+    void Awake()
+    {
+        instance = this;
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -27,29 +22,23 @@ public class LibrarySceneButtonScript : MonoBehaviour {
 
     public void GoToHero()
     {
-        switchPanel("Hero View");
+        LibrarySceneManagerScript.instance.GoToHero();
     }
 
     public void GoToEquip()
     {
-        switchPanel("Equip View");
+        LibrarySceneManagerScript.instance.GoToEquip();
     }
 
     public void GoToMob()
     {
-        switchPanel("Mob View");
+        LibrarySceneManagerScript.instance.GoToMob();
     }
 
     public void GoToGambit()
     {
-        switchPanel("Gambit View");
+        LibrarySceneManagerScript.instance.GoToGambit();
     }
 
-    public void switchPanel(string panelName)
-    {
-        for (int i=0; i<viewNames.Length; i++)
-        {
-            viewPanels[i].SetActive(viewNames[i].Equals(panelName));
-        }
-    }
+
 }
