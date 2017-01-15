@@ -1,0 +1,565 @@
+fileFormatVersion: 2
+guid: e0f4f6f3c493b9549925d33465101e2d
+timeCreated: 1484441103
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: Troops1_0
+    21300002: Troops1_1
+    21300004: Troops1_2
+    21300006: Troops1_3
+    21300008: Troops1_4
+    21300010: Troops1_5
+    21300012: Troops1_6
+    21300014: Troops1_7
+    21300016: Troops1_8
+    21300018: Troops1_9
+    21300020: Troops1_10
+    21300022: Troops1_11
+    21300024: Troops1_12
+    21300026: Troops1_13
+    21300028: Troops1_14
+    21300030: Troops1_15
+    21300032: Troops1_16
+    21300034: Troops1_17
+    21300036: Troops1_18
+    21300038: Troops1_19
+    21300040: Troops1_20
+    21300042: Troops1_21
+    21300044: Troops1_22
+    21300046: Troops1_23
+    21300048: Troops1_24
+    21300050: Troops1_25
+    21300052: Troops1_26
+    21300054: Troops1_27
+    21300056: Troops1_28
+    21300058: Troops1_29
+    21300060: Troops1_30
+    21300062: Troops1_31
+    21300064: Troops1_32
+    21300066: Troops1_33
+    21300068: Troops1_34
+    21300070: Troops1_35
+    21300072: Troops1_36
+    21300074: Troops1_37
+    21300076: Troops1_38
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 7
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Troops1_0
+      rect:
+        serializedVersion: 2
+        x: 33
+        y: 122
+        width: 56
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: Troops1_1
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 122
+        width: 56
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: Troops1_2
+      rect:
+        serializedVersion: 2
+        x: 193
+        y: 117
+        width: 56
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: Troops1_3
+      rect:
+        serializedVersion: 2
+        x: 253
+        y: 117
+        width: 56
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: Troops1_4
+      rect:
+        serializedVersion: 2
+        x: 366
+        y: 111
+        width: 56
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: Troops1_5
+      rect:
+        serializedVersion: 2
+        x: 430
+        y: 80
+        width: 62
+        height: 84
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: Troops1_6
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 92
+        width: 15
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: Troops1_7
+      rect:
+        serializedVersion: 2
+        x: 54
+        y: 78
+        width: 27
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: Troops1_8
+      rect:
+        serializedVersion: 2
+        x: 97
+        y: 91
+        width: 13
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: Troops1_9
+      rect:
+        serializedVersion: 2
+        x: 182
+        y: 86
+        width: 15
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: Troops1_10
+      rect:
+        serializedVersion: 2
+        x: 219
+        y: 72
+        width: 27
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: Troops1_11
+      rect:
+        serializedVersion: 2
+        x: 261
+        y: 85
+        width: 14
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: Troops1_12
+      rect:
+        serializedVersion: 2
+        x: 352
+        y: 86
+        width: 15
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: Troops1_13
+      rect:
+        serializedVersion: 2
+        x: 390
+        y: 72
+        width: 26
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: Troops1_14
+      rect:
+        serializedVersion: 2
+        x: 432
+        y: 85
+        width: 13
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: Troops1_15
+      rect:
+        serializedVersion: 2
+        x: 11
+        y: 61
+        width: 19
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: Troops1_16
+      rect:
+        serializedVersion: 2
+        x: 45
+        y: 51
+        width: 13
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: Troops1_17
+      rect:
+        serializedVersion: 2
+        x: 76
+        y: 51
+        width: 13
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: Troops1_18
+      rect:
+        serializedVersion: 2
+        x: 113
+        y: 60
+        width: 22
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: Troops1_19
+      rect:
+        serializedVersion: 2
+        x: 176
+        y: 55
+        width: 19
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: Troops1_20
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 45
+        width: 13
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: Troops1_21
+      rect:
+        serializedVersion: 2
+        x: 241
+        y: 45
+        width: 13
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: Troops1_22
+      rect:
+        serializedVersion: 2
+        x: 278
+        y: 54
+        width: 22
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: Troops1_23
+      rect:
+        serializedVersion: 2
+        x: 346
+        y: 55
+        width: 20
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: Troops1_24
+      rect:
+        serializedVersion: 2
+        x: 381
+        y: 45
+        width: 12
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: Troops1_25
+      rect:
+        serializedVersion: 2
+        x: 412
+        y: 45
+        width: 12
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: Troops1_26
+      rect:
+        serializedVersion: 2
+        x: 449
+        y: 54
+        width: 21
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: Troops1_27
+      rect:
+        serializedVersion: 2
+        x: 40
+        y: 28
+        width: 13
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: Troops1_28
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 28
+        width: 14
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: Troops1_29
+      rect:
+        serializedVersion: 2
+        x: 205
+        y: 22
+        width: 13
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: Troops1_30
+      rect:
+        serializedVersion: 2
+        x: 245
+        y: 22
+        width: 14
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: Troops1_31
+      rect:
+        serializedVersion: 2
+        x: 376
+        y: 22
+        width: 13
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: Troops1_32
+      rect:
+        serializedVersion: 2
+        x: 416
+        y: 22
+        width: 13
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: Troops1_33
+      rect:
+        serializedVersion: 2
+        x: 36
+        y: 16
+        width: 17
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: Troops1_34
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 16
+        width: 17
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: Troops1_35
+      rect:
+        serializedVersion: 2
+        x: 201
+        y: 10
+        width: 17
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: Troops1_36
+      rect:
+        serializedVersion: 2
+        x: 246
+        y: 10
+        width: 17
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: Troops1_37
+      rect:
+        serializedVersion: 2
+        x: 371
+        y: 10
+        width: 18
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: Troops1_38
+      rect:
+        serializedVersion: 2
+        x: 405
+        y: 0
+        width: 29
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
