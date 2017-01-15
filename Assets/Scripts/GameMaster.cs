@@ -74,7 +74,10 @@ public class GameMaster : MonoBehaviour {
                 u.aiActions.Add(Gambits.GetGambit(1));
                 u.aiSkills.Add(new Skill(1));
 
-                GameObject go = Instantiate(monsterPrefab) as GameObject;
+                //GameObject go = Instantiate(monsterPrefab) as GameObject;
+                string modelName = u.character.playerStats.databaseChar._SpriteIdle;
+                Debug.Log("attempting to load" +  modelName);
+                GameObject go = Instantiate(Resources.Load("EnemyPrefabs/" + modelName)) as GameObject;
                 go.transform.SetParent(PlayerUnitsSpritePositions[i].transform);
                 go.transform.localPosition = Vector3.zero;
                 go.transform.localScale = Vector3.one;
@@ -188,7 +191,7 @@ public class GameMaster : MonoBehaviour {
                 u.aiSkills.Add(new Skill(skill));
             }
 
-            string modelName = "DustBunny";
+            string modelName = Mob._SpriteIdle;
             GameObject go = Instantiate(Resources.Load("EnemyPrefabs/" + modelName)) as GameObject;
             go.transform.SetParent(MonstersUnitsSpritePositions[i].transform);
             go.transform.localPosition = Vector3.zero;

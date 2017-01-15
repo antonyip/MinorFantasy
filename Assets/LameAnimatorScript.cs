@@ -11,21 +11,24 @@ public class LameAnimatorScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-	    if (Input.GetKeyDown(KeyCode.Space))
-        {
-            if (GetComponent<Animator>().GetInteger("StateMachine") == 1)
-            {
-                GetComponent<Animator>().SetInteger("StateMachine", 0);
-            }
-            else
-            {
-                GetComponent<Animator>().SetInteger("StateMachine", 1);
-            }
-        }
+
 	}
 
-    public void ResetStateMachine()
+    public void LoadEnemyImageInner(string s)
     {
-        GetComponent<Animator>().SetInteger("StateMachine", 0);
+
+    }
+
+    public void LoadEnemyAttackInner(string s)
+    {
+        GetComponentInChildren<Animator>().SetInteger("StateMachine", 1);
+        StartCoroutine("TurnOffAttack");
+    }
+
+    IEnumerator TurnOffAttack()
+    {
+        yield return new WaitForSeconds(1.5f);
+        GameMaster.instance.AnimationLock = false;
     }
 }
+
