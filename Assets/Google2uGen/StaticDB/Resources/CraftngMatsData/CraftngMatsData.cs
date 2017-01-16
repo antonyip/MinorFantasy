@@ -100,7 +100,7 @@ namespace Google2u
 
 		private CraftngMatsData()
 		{
-			Rows.Add( new CraftngMatsDataRow("Tree_Log", "1", "ImageName"));
+			Rows.Add( new CraftngMatsDataRow("Tree_Log", "1", "Tree_Log_Image"));
 		}
 		public IGoogle2uRow GetGenRow(string in_RowString)
 		{

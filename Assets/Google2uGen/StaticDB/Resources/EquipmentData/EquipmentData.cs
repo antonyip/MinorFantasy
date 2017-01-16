@@ -809,10 +809,10 @@ namespace Google2u
 	public sealed class EquipmentData : IGoogle2uDB
 	{
 		public enum rowIds {
-	
+			E_01
 		};
 		public string [] rowNames = {
-	
+			"E_01"
 		};
 		public System.Collections.Generic.List<EquipmentDataRow> Rows = new System.Collections.Generic.List<EquipmentDataRow>();
 
@@ -829,6 +829,7 @@ namespace Google2u
 
 		private EquipmentData()
 		{
+			Rows.Add( new EquipmentDataRow("E_01", "NOEQUIPMENT", "0", "NOEQUIPMENT", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "Tree_Log", "Tree_Log", "Tree_Log", "NONE", "NONE", "NONE", "NONE", "NONE", "1", "1", "1"));
 		}
 		public IGoogle2uRow GetGenRow(string in_RowString)
 		{

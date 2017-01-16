@@ -11,8 +11,6 @@ public class ItemManager : MonoBehaviour
         instance = this;
     }
 	
-    public int ItemDatabaseIndex = 0;
-
     TypeEnum SearchForItem(string NameOfItem)
     {
         return SearchForItem(NameOfItem, TypeEnum.ERROR);
@@ -80,35 +78,35 @@ public class ItemManager : MonoBehaviour
         {
             returnValue = new Item();
             returnValue.CraftingMatsDatabase = Google2u.CraftngMatsData.Instance.GetRow(NameOfItem);
-            returnValue.IndexInDatabase = Google2u.CraftngMatsData.Instance.Rows.FindIndex(x => x.Equals(returnValue.CraftingMatsDatabase));
+            returnValue.IndexInDatabase = Google2u.CraftngMatsData.Instance.Rows.FindIndex(x => x._ID == returnValue.CraftingMatsDatabase._ID);
         }
 
         if (Google2u.CraftingData.Instance.GetRow(NameOfItem) != null)
         {
             returnValue = new Item();
             returnValue.CraftingDataDatabase = Google2u.CraftingData.Instance.GetRow(NameOfItem);
-            returnValue.IndexInDatabase = Google2u.CraftingData.Instance.Rows.FindIndex(x => x.Equals(returnValue.CraftingDataDatabase));
+            returnValue.IndexInDatabase = Google2u.CraftingData.Instance.Rows.FindIndex(x => x._ID == returnValue.CraftingDataDatabase._ID);
         }
 
         if (Google2u.HeroesData.Instance.GetRow(NameOfItem) != null)
         {
             returnValue = new Item();
             returnValue.HeroDatabase = Google2u.HeroesData.Instance.GetRow(NameOfItem);
-            returnValue.IndexInDatabase = Google2u.HeroesData.Instance.Rows.FindIndex(x => x.Equals(returnValue.HeroDatabase));
+            returnValue.IndexInDatabase = Google2u.HeroesData.Instance.Rows.FindIndex(x => x._ID == returnValue.HeroDatabase._ID);
         }
 
         if (Google2u.GambitData.Instance.GetRow(NameOfItem) != null)
         {
             returnValue = new Item();
             returnValue.GambitDatabase = Google2u.GambitData.Instance.GetRow(NameOfItem);
-            returnValue.IndexInDatabase = Google2u.GambitData.Instance.Rows.FindIndex(x => x.Equals(returnValue.GambitDatabase));
+            returnValue.IndexInDatabase = Google2u.GambitData.Instance.Rows.FindIndex(x => x._ID == returnValue.GambitDatabase._ID);
         }
 
         if (Google2u.EquipmentData.Instance.GetRow(NameOfItem) != null)
         {
             returnValue = new Item();
             returnValue.EquipmentDatabase = Google2u.EquipmentData.Instance.GetRow(NameOfItem);
-            returnValue.IndexInDatabase = Google2u.EquipmentData.Instance.Rows.FindIndex(x => x.Equals(returnValue.EquipmentDatabase));
+            returnValue.IndexInDatabase = Google2u.EquipmentData.Instance.Rows.FindIndex(x => x._ID == returnValue.EquipmentDatabase._ID);
         }
         
         return returnValue;

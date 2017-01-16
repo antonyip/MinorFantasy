@@ -320,20 +320,23 @@ public class GameMaster : MonoBehaviour {
 
     void RollForLoot(Unit killer, Unit deadUnit)
     {
-        Item ItemThatDropped = killer.character.GetLoot(deadUnit, 0,0,0,0);
-        if (ItemThatDropped.ItemType != TypeEnum.ERROR)
+        Debug.Log("rolling for loot");
+        Item ItemThatDropped = deadUnit.character.GetLoot(deadUnit, 0,0,0,0);
+        if (ItemThatDropped != null)
         {
             // do some animation with the dropped item like spawning it
             GameObject go = Instantiate(ItemDropPrefab);
             go.transform.SetParent(deadUnit.sprite.transform.parent);
-            go.transform.localScale = Vector3.one;
+            go.transform.localScale = Vector3.zero;
             go.transform.localPosition = Vector3.zero;
             go.SetActive(true);
             go.GetComponent<ItemDropScript>().SetupItem(ItemThatDropped);
 
             ItemThatDropped.sprite = go;
             ListOfItemsThatDropped.Add(ItemThatDropped);
+            Debug.Log("LegitItem");
         }
+        
     }
 
     private void ExecuteGambits(ref Unit currentUnit)

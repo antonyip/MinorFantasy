@@ -28,7 +28,7 @@ public class UtilsManager
     {
         if (randomInit == false)
         {
-            Random.seed = 32767;
+            Random.seed = 9999;
             randomInit = true;
         }
     }

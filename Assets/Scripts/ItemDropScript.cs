@@ -17,8 +17,11 @@ public class ItemDropScript : MonoBehaviour {
 
     public void SetupItem(Item i)
     {
-        transform.localScale = Vector3.zero;
-        StartAnimation();
+        if (i != null)
+        { 
+            transform.localScale = Vector3.zero;
+            StartAnimation();
+        }
     }
 
     public void StartAnimation()

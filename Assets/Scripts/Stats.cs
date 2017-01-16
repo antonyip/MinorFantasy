@@ -155,16 +155,17 @@ public sealed class Character
         if (IsMonster())
         {
             float rolldropchance = UtilsManager.RandomFloat(0, 1) + BonusChanceDrop;
+            Debug.Log("DropChance:" + rolldropchance.ToString());
             // manager to get loot
             if (rolldropchance > DataManager.BASEDROPCHANCE)
             {
                 float rollitemchance = UtilsManager.RandomFloat(0, 1);
-
+                Debug.Log("ItemChance:" + rollitemchance.ToString());
                 if (rollitemchance + BonusChanceLegend > DataManager.BASELEGENDDROP)
                 {
                     returnValue = ItemManager.instance.GenerateItem(DeadUnit.character.GetLegendDropName());
                 }
-                else if (rollitemchance + BonusChanceLegend > DataManager.BASERAREDROP)
+                else if (rollitemchance + BonusChanceRare > DataManager.BASERAREDROP)
                 {
                     returnValue = ItemManager.instance.GenerateItem(DeadUnit.character.GetRareDropName());
                 }
