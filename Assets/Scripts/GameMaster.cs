@@ -18,16 +18,22 @@ public class GameMaster : MonoBehaviour {
     public List<GameObject> OptionButtons = new List<GameObject>();
     public List<GameObject> PlayerButtons = new List<GameObject>();
 
-    public Text TempDefeatText;
     public Text TopText;
 
     // gamelists
     public GameObject Announcer;
     public GameObject StartGamePopup;
     public GameObject VictoryPopup;
+
+    public GameObject ItemDropPrefab;
+
+    public List<Item> ListOfItemsThatDropped = new List<Item>();
+
     bool AutoMode = true;
 
     int currentWave = 0;
+    int experienceEarnedThisMap = 0;
+    static float MAPBONUSMULTIPLIER = 1.0f;
 
     void Awake()
     {
@@ -39,10 +45,18 @@ public class GameMaster : MonoBehaviour {
         TopText.text = TextToUpdate;
     }
 
+    void ResetMapDetails()
+    {
+        currentWave = 0;
+        experienceEarnedThisMap = 0;
+    }
+
     // Use this for initialization
     void Start () {
 
         DataManager.instance.LoadUser(DataManager.BYPASSUSERLOAD);
+
+        ResetMapDetails();
 
         // 0. setup playing field
         OptionButtons[0].GetComponentInChildren<Text>().text = "Auto";
@@ -156,8 +170,10 @@ public class GameMaster : MonoBehaviour {
         {
             HasWon = true;
             Debug.Log("You won this level!");
-            TempDefeatText.text = "You won this level!";
             VictoryPopup.SetActive(true);
+            VictoryPopup.GetComponent<VictoryScript>().SpreadExpPoints(experienceEarnedThisMap);
+            VictoryPopup.GetComponent<VictoryScript>().DisplayLoots(ListOfItemsThatDropped);
+            VictoryPopup.GetComponent<VictoryScript>().HandleVictory();
             return;
         }
 
@@ -255,10 +271,8 @@ public class GameMaster : MonoBehaviour {
         {
             HasWon = true;
             Debug.Log("You won this wave!");
-            TempDefeatText.text = "You won this wave!";
             ++currentWave;
             SpawnWave(currentWave);
-            //VictoryPopup.SetActive(true);
             return;
         }
 
@@ -268,8 +282,9 @@ public class GameMaster : MonoBehaviour {
         {
             HasLost = true;
             Debug.Log("You lost!");
-            TempDefeatText.text = "You lost!";
             VictoryPopup.SetActive(true);
+            VictoryPopup.GetComponent<VictoryScript>().DisplayLoots(ListOfItemsThatDropped);
+            VictoryPopup.GetComponent<VictoryScript>().HandleLost();
             return;
         }
 
@@ -303,13 +318,31 @@ public class GameMaster : MonoBehaviour {
 
     } // end update
 
+    void RollForLoot(Unit killer, Unit deadUnit)
+    {
+        Item ItemThatDropped = killer.character.GetLoot(deadUnit, 0,0,0,0);
+        if (ItemThatDropped.ItemType != TypeEnum.ERROR)
+        {
+            // do some animation with the dropped item like spawning it
+            GameObject go = Instantiate(ItemDropPrefab);
+            go.transform.SetParent(deadUnit.sprite.transform.parent);
+            go.transform.localScale = Vector3.one;
+            go.transform.localPosition = Vector3.zero;
+            go.SetActive(true);
+            go.GetComponent<ItemDropScript>().SetupItem(ItemThatDropped);
+
+            ItemThatDropped.sprite = go;
+            ListOfItemsThatDropped.Add(ItemThatDropped);
+        }
+    }
+
     private void ExecuteGambits(ref Unit currentUnit)
     {
         if (currentUnit.isDead)
             return;
         
         //evaulate gambits
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < DataManager.MAXGAMBITCOUNT; i++)
         {
             if (i >= currentUnit.aiActions.Count)
                 return;
@@ -332,6 +365,8 @@ public class GameMaster : MonoBehaviour {
                         seq.AppendInterval(DataManager.LONGANIMATION);
                         seq.Append(ounit.sprite.transform.DOScale(Vector3.zero, DataManager.LONGANIMATION));
                         seq.Play();
+                        experienceEarnedThisMap += Mathf.CeilToInt(1.0f * ounit.character.GetExperience() * MAPBONUSMULTIPLIER * DataManager.instance.userData.MAPBONUSMULTIPLIER);
+                        RollForLoot(currentUnit, ounit);
                     }
                 }
                 UpdatePlayerControls();
@@ -339,4 +374,6 @@ public class GameMaster : MonoBehaviour {
             }
         }
     }
+
+
 }

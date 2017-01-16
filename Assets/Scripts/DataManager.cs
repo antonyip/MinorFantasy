@@ -27,11 +27,16 @@ public class DataManager : MonoBehaviour
     public const int MAXUNITPERTEAM = 6;
     public const float NORMALANIMATION = 0.3f;
     public const float LONGANIMATION = 0.7f;
+    public const float BASEDROPCHANCE = 0.5f;
+    public const float BASERAREDROP = 0.55f;
+    public const float BASELEGENDDROP = 0.85f;
+    public const int MAXGAMBITCOUNT = 10;
 
     public const int GoldForSummoningHeroes = 5000;
     public const int GemForSummoningHeroes = 45;
     public const int GoldForSummoningHeroes10 = 45000;
     public const int GemForSummoningHeroes10 = 400;
+
 
     public static List<int> CurrentHeroesOdds = new List<int>();
 

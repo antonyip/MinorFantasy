@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System;
+using System.Collections.Generic;
 
 public class PlayerCharacter
 {
@@ -143,6 +144,75 @@ public sealed class Character
         if (IsPlayer())
         { 
             return playerStats.databaseChar._DEX + playerStats.CurrentLevel * playerStats.databaseChar._DEXGrowth;
+        }
+
+        return 0;
+    }
+
+    public Item GetLoot(Unit DeadUnit, float BonusChanceDrop, float BonusChanceNormal, float BonusChanceRare, float BonusChanceLegend)
+    {
+        Item returnValue = null;
+        if (IsMonster())
+        {
+            float rolldropchance = UtilsManager.RandomFloat(0, 1) + BonusChanceDrop;
+            // manager to get loot
+            if (rolldropchance > DataManager.BASEDROPCHANCE)
+            {
+                float rollitemchance = UtilsManager.RandomFloat(0, 1);
+
+                if (rollitemchance + BonusChanceLegend > DataManager.BASELEGENDDROP)
+                {
+                    returnValue = ItemManager.instance.GenerateItem(DeadUnit.character.GetLegendDropName());
+                }
+                else if (rollitemchance + BonusChanceLegend > DataManager.BASERAREDROP)
+                {
+                    returnValue = ItemManager.instance.GenerateItem(DeadUnit.character.GetRareDropName());
+                }
+                else
+                {
+                    returnValue = ItemManager.instance.GenerateItem(DeadUnit.character.GetNormalDropName());
+                }
+            }
+        }
+
+        return returnValue;
+    }
+
+    public string GetLegendDropName()
+    {
+        if (IsMonster())
+        {
+            return monsterStats.monsterStats._DropLegend;
+        }
+
+        return "NONE";
+    }
+
+    public string GetRareDropName()
+    {
+        if (IsMonster())
+        {
+            return monsterStats.monsterStats._DropRare;
+        }
+
+        return "NONE";
+    }
+
+    public string GetNormalDropName()
+    {
+        if (IsMonster())
+        {
+            return monsterStats.monsterStats._DropNormal;
+        }
+
+        return "NONE";
+    }
+
+    public int GetExperience()
+    {
+        if (IsMonster())
+        {
+            return monsterStats.monsterStats._Exp;
         }
 
         return 0;

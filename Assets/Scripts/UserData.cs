@@ -7,6 +7,7 @@ public class UserData
     public int energy;
     public int maxEnergy;
     public int pvpEnergy;
+    public float MAPBONUSMULTIPLIER;
 
     public List<int> ListOfGambits = new List<int>();
     public List<int> ListOfCraftingMats = new List<int>();
@@ -22,5 +23,6 @@ public class UserData
         energy = 50;
         maxEnergy = 50;
         pvpEnergy = 0;
+        MAPBONUSMULTIPLIER = 1.0f;
     }
 }
