@@ -29,6 +29,7 @@ public class ItemDropScript : MonoBehaviour {
         Sequence seq = DOTween.Sequence();
         seq.Append(transform.DOScale(Vector3.one, DataManager.NORMALANIMATION));
         seq.AppendInterval(DataManager.LONGANIMATION);
+        seq.Append(transform.DOLocalMoveY(50, DataManager.NORMALANIMATION));
         seq.Append(transform.DOScale(Vector3.zero, DataManager.NORMALANIMATION));
         // TODO make it nicer
         seq.Play();
