@@ -20,17 +20,17 @@ namespace UnityEngine
     {
         public static void Log(object o)
         {
-
+            Console.WriteLine("[LOG] " + o.ToString());
         }
 
         public static void LogError(object o)
         {
-
+            Console.WriteLine("[ERROR] " + o.ToString());
         }
 
         public static void LogWarning(object o)
         {
-
+            Console.WriteLine("[WARNING] " + o.ToString());
         }
     }
 }
