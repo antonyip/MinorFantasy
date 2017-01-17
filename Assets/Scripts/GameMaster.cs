@@ -50,7 +50,7 @@ public class GameMaster : MonoBehaviour {
         currentWave = 0;
         experienceEarnedThisMap = 0;
     }
-
+    int NumPlayerSpawn = 0;
     // Use this for initialization
     void Start () {
 
@@ -73,12 +73,15 @@ public class GameMaster : MonoBehaviour {
         Debug.Assert(dataManager.userData.listOfTeams != null);
         Debug.Assert(dataManager.userData.listOfTeams[dataManager.selectedTeam] != null);
 
+
+        NumPlayerSpawn = 0;
         for (int i = 0; i < dataManager.userData.listOfTeams[dataManager.selectedTeam].GetListOfCharacters().Count; i++)
         {
             var playerChar = dataManager.userData.listOfTeams[dataManager.selectedTeam].GetListOfCharacters()[i];
             Unit u = new Unit();
             if (playerChar != null)
             {
+                
                 u.character = new Character();
                 u.character.playerStats = playerChar;
                 u.character.playerStats.databaseChar = Google2u.HeroesData.Instance.Rows.Find(x => x._ID == playerChar.ID);
@@ -94,7 +97,15 @@ public class GameMaster : MonoBehaviour {
                 GameObject go = Instantiate(Resources.Load("EnemyPrefabs/" + modelName)) as GameObject;
                 go.transform.SetParent(PlayerUnitsSpritePositions[i].transform);
                 go.transform.localPosition = Vector3.zero;
-                go.transform.localScale = Vector3.one;
+                go.transform.localScale = Vector3.zero;
+
+                Sequence seq = DOTween.Sequence();
+                seq.AppendInterval(DataManager.NORMALANIMATION * i);
+                seq.Append(go.transform.DOScale(Vector3.one, DataManager.LONGANIMATION));
+                seq.Play().OnComplete(ButtonStartGameClicked);
+                //used for animation
+                ++NumPlayerSpawn;
+
                 go.name = u.character.playerStats.databaseChar._SpriteIdle;
                 go.GetComponentInChildren<SpriteAnimation>().LoadEnemyImage(go.name);
 
@@ -102,11 +113,12 @@ public class GameMaster : MonoBehaviour {
                 PlayerUnitsSprite.Add(go);
                 AllUnits.Add(u);
             }
+            
 
             PlayerUnits.Add(u);
 
         }
-
+        
         SpawnWave(currentWave);
         UpdatePlayerControls();
 
@@ -245,10 +257,15 @@ public class GameMaster : MonoBehaviour {
     }
 
     // start Game button clicked from UI
+    int counter = 0;
     public void ButtonStartGameClicked()
     {
-        GameNotStarted = false;
-        StartGamePopup.SetActive(false);
+        ++counter;
+        if (NumPlayerSpawn == counter)
+        { 
+            GameNotStarted = false;
+            StartGamePopup.SetActive(false);
+        }
     }
 
     int UnitOrderCounter = 0;

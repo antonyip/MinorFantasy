@@ -18,7 +18,8 @@ namespace Google2u
 		public string _Type;
 		public int _ID;
 		public string _Description;
-		public GambitDataRow(string __GamditIndex, string __Name, string __Type, string __ID, string __Description) 
+		public string _Sprite;
+		public GambitDataRow(string __GamditIndex, string __Name, string __Type, string __ID, string __Description, string __Sprite) 
 		{
 			_Name = __Name.Trim();
 			_Type = __Type.Trim();
@@ -30,9 +31,10 @@ namespace Google2u
 					Debug.LogError("Failed To Convert _ID string: "+ __ID +" to int");
 			}
 			_Description = __Description.Trim();
+			_Sprite = __Sprite.Trim();
 		}
 
-		public int Length { get { return 4; } }
+		public int Length { get { return 5; } }
 
 		public string this[int i]
 		{
@@ -59,6 +61,9 @@ namespace Google2u
 				case 3:
 					ret = _Description.ToString();
 					break;
+				case 4:
+					ret = _Sprite.ToString();
+					break;
 			}
 
 			return ret;
@@ -81,6 +86,9 @@ namespace Google2u
 				case "Description":
 					ret = _Description.ToString();
 					break;
+				case "Sprite":
+					ret = _Sprite.ToString();
+					break;
 			}
 
 			return ret;
@@ -92,6 +100,7 @@ namespace Google2u
 			ret += "{" + "Type" + " : " + _Type.ToString() + "} ";
 			ret += "{" + "ID" + " : " + _ID.ToString() + "} ";
 			ret += "{" + "Description" + " : " + _Description.ToString() + "} ";
+			ret += "{" + "Sprite" + " : " + _Sprite.ToString() + "} ";
 			return ret;
 		}
 	}
@@ -120,26 +129,26 @@ namespace Google2u
 
 		private GambitData()
 		{
-			Rows.Add( new GambitDataRow("G_1", "Any_Enemy", "Gambit_Target", "1", "Selects an Enemy at random"));
-			Rows.Add( new GambitDataRow("G_2", "Enemy > 75%", "Gambit_Target", "2", "Enemy > 75%"));
-			Rows.Add( new GambitDataRow("G_3", "Enemy > 50%", "Gambit_Target", "3", "Enemy > 50%"));
-			Rows.Add( new GambitDataRow("G_4", "Enemy > 25%", "Gambit_Target", "4", "Enemy > 25%"));
-			Rows.Add( new GambitDataRow("G_5", "Ally > 75%", "Gambit_Target", "5", "Ally > 75%"));
-			Rows.Add( new GambitDataRow("G_6", "Ally > 50%", "Gambit_Target", "6", "Ally > 50%"));
-			Rows.Add( new GambitDataRow("G_7", "Ally > 25%", "Gambit_Target", "7", "Ally > 25%"));
-			Rows.Add( new GambitDataRow("G_8", "Any_Ally", "Gambit_Target", "8", "Any_Ally"));
-			Rows.Add( new GambitDataRow("G_9", "Enemy Team", "Gambit_Team", "9", "Enemy Team"));
-			Rows.Add( new GambitDataRow("G_10", "Ally Team", "Gambit_Team", "10", "Ally Team"));
-			Rows.Add( new GambitDataRow("G_11", "Burnt Ally", "Gambit_Target", "11", "Burnt Ally"));
-			Rows.Add( new GambitDataRow("G_12", "Frozen Ally", "Gambit_Target", "12", "Frozen Ally"));
-			Rows.Add( new GambitDataRow("G_13", "Shocked Ally", "Gambit_Target", "13", "Shocked Ally"));
-			Rows.Add( new GambitDataRow("G_14", "Burnt Enemy", "Gambit_Target", "14", "Burnt Enemy"));
-			Rows.Add( new GambitDataRow("G_15", "Frozen Enemy", "Gambit_Target", "15", "Frozen Enemy"));
-			Rows.Add( new GambitDataRow("G_16", "Shocked Enemy", "Gambit_Target", "16", "Shocked Enemy"));
-			Rows.Add( new GambitDataRow("G_17", "Do Once Per Battle", "Gambit_Team", "17", "Do Once Per Battle"));
-			Rows.Add( new GambitDataRow("G_18", "Every Other Turn", "Gambit_Team", "18", "Every Other Turn"));
-			Rows.Add( new GambitDataRow("G_19", "Every 5 turns", "Gambit_Team", "19", "Every 5 turns"));
-			Rows.Add( new GambitDataRow("G_20", "Every Turn", "Gambit_Team", "20", "Every Turn"));
+			Rows.Add( new GambitDataRow("G_1", "Any_Enemy", "Gambit_Target", "1", "Selects an Enemy at random", "NONE"));
+			Rows.Add( new GambitDataRow("G_2", "Enemy > 75%", "Gambit_Target", "2", "Enemy > 75%", "NONE"));
+			Rows.Add( new GambitDataRow("G_3", "Enemy > 50%", "Gambit_Target", "3", "Enemy > 50%", "NONE"));
+			Rows.Add( new GambitDataRow("G_4", "Enemy > 25%", "Gambit_Target", "4", "Enemy > 25%", "NONE"));
+			Rows.Add( new GambitDataRow("G_5", "Ally > 75%", "Gambit_Target", "5", "Ally > 75%", "NONE"));
+			Rows.Add( new GambitDataRow("G_6", "Ally > 50%", "Gambit_Target", "6", "Ally > 50%", "NONE"));
+			Rows.Add( new GambitDataRow("G_7", "Ally > 25%", "Gambit_Target", "7", "Ally > 25%", "NONE"));
+			Rows.Add( new GambitDataRow("G_8", "Any_Ally", "Gambit_Target", "8", "Any_Ally", "NONE"));
+			Rows.Add( new GambitDataRow("G_9", "Enemy Team", "Gambit_Team", "9", "Enemy Team", "NONE"));
+			Rows.Add( new GambitDataRow("G_10", "Ally Team", "Gambit_Team", "10", "Ally Team", "NONE"));
+			Rows.Add( new GambitDataRow("G_11", "Burnt Ally", "Gambit_Target", "11", "Burnt Ally", "NONE"));
+			Rows.Add( new GambitDataRow("G_12", "Frozen Ally", "Gambit_Target", "12", "Frozen Ally", "NONE"));
+			Rows.Add( new GambitDataRow("G_13", "Shocked Ally", "Gambit_Target", "13", "Shocked Ally", "NONE"));
+			Rows.Add( new GambitDataRow("G_14", "Burnt Enemy", "Gambit_Target", "14", "Burnt Enemy", "NONE"));
+			Rows.Add( new GambitDataRow("G_15", "Frozen Enemy", "Gambit_Target", "15", "Frozen Enemy", "NONE"));
+			Rows.Add( new GambitDataRow("G_16", "Shocked Enemy", "Gambit_Target", "16", "Shocked Enemy", "NONE"));
+			Rows.Add( new GambitDataRow("G_17", "Do Once Per Battle", "Gambit_Team", "17", "Do Once Per Battle", "NONE"));
+			Rows.Add( new GambitDataRow("G_18", "Every Other Turn", "Gambit_Team", "18", "Every Other Turn", "NONE"));
+			Rows.Add( new GambitDataRow("G_19", "Every 5 turns", "Gambit_Team", "19", "Every 5 turns", "NONE"));
+			Rows.Add( new GambitDataRow("G_20", "Every Turn", "Gambit_Team", "20", "Every Turn", "NONE"));
 		}
 		public IGoogle2uRow GetGenRow(string in_RowString)
 		{

@@ -64,12 +64,13 @@ namespace Google2u
 		public string _SpriteIdle;
 		public string _SpriteAttack;
 		public string _SpriteMagic;
+		public string _SpriteIcon;
 		public string _SoundDeath;
 		public string _SoundAttack;
 		public int _Energy;
 		public int _EnergyGrowth;
 		public string _Story;
-		public EquipmentDataRow(string __EIndex, string __Name, string __ID, string __Description, string __Level, string __HP, string __HPGrowth, string __MP, string __MPGrowth, string __STR, string __STRGrowth, string __DEX, string __DEXGrowth, string __INT, string __INTGrowth, string __LUK, string __LUKGrowth, string __Speed, string __Att, string __Def, string __AttGrowth, string __DefGrowth, string __MAtt, string __MAttGrowth, string __MDef, string __MDefGrowth, string __FAtt, string __FAttGrowth, string __IAtt, string __IAttGrowth, string __TAtt, string __TAttGrowth, string __FDef, string __IDef, string __TDef, string __FRes, string __IRes, string __TRes, string __FDefGrowth, string __IDefGrowth, string __TDefGrowth, string __FResGrowth, string __IResGrowth, string __TResGrowth, string __Skills, string __DropNormal, string __DropRare, string __DropLegend, string __SpriteIdle, string __SpriteAttack, string __SpriteMagic, string __SoundDeath, string __SoundAttack, string __Energy, string __EnergyGrowth, string __Story) 
+		public EquipmentDataRow(string __EIndex, string __Name, string __ID, string __Description, string __Level, string __HP, string __HPGrowth, string __MP, string __MPGrowth, string __STR, string __STRGrowth, string __DEX, string __DEXGrowth, string __INT, string __INTGrowth, string __LUK, string __LUKGrowth, string __Speed, string __Att, string __Def, string __AttGrowth, string __DefGrowth, string __MAtt, string __MAttGrowth, string __MDef, string __MDefGrowth, string __FAtt, string __FAttGrowth, string __IAtt, string __IAttGrowth, string __TAtt, string __TAttGrowth, string __FDef, string __IDef, string __TDef, string __FRes, string __IRes, string __TRes, string __FDefGrowth, string __IDefGrowth, string __TDefGrowth, string __FResGrowth, string __IResGrowth, string __TResGrowth, string __Skills, string __DropNormal, string __DropRare, string __DropLegend, string __SpriteIdle, string __SpriteAttack, string __SpriteMagic, string __SpriteIcon, string __SoundDeath, string __SoundAttack, string __Energy, string __EnergyGrowth, string __Story) 
 		{
 			_Name = __Name.Trim();
 			{
@@ -367,6 +368,7 @@ namespace Google2u
 			_SpriteIdle = __SpriteIdle.Trim();
 			_SpriteAttack = __SpriteAttack.Trim();
 			_SpriteMagic = __SpriteMagic.Trim();
+			_SpriteIcon = __SpriteIcon.Trim();
 			_SoundDeath = __SoundDeath.Trim();
 			_SoundAttack = __SoundAttack.Trim();
 			{
@@ -386,7 +388,7 @@ namespace Google2u
 			_Story = __Story.Trim();
 		}
 
-		public int Length { get { return 55; } }
+		public int Length { get { return 56; } }
 
 		public string this[int i]
 		{
@@ -552,18 +554,21 @@ namespace Google2u
 					ret = _SpriteMagic.ToString();
 					break;
 				case 50:
-					ret = _SoundDeath.ToString();
+					ret = _SpriteIcon.ToString();
 					break;
 				case 51:
-					ret = _SoundAttack.ToString();
+					ret = _SoundDeath.ToString();
 					break;
 				case 52:
-					ret = _Energy.ToString();
+					ret = _SoundAttack.ToString();
 					break;
 				case 53:
-					ret = _EnergyGrowth.ToString();
+					ret = _Energy.ToString();
 					break;
 				case 54:
+					ret = _EnergyGrowth.ToString();
+					break;
+				case 55:
 					ret = _Story.ToString();
 					break;
 			}
@@ -726,6 +731,9 @@ namespace Google2u
 				case "SpriteMagic":
 					ret = _SpriteMagic.ToString();
 					break;
+				case "SpriteIcon":
+					ret = _SpriteIcon.ToString();
+					break;
 				case "SoundDeath":
 					ret = _SoundDeath.ToString();
 					break;
@@ -798,6 +806,7 @@ namespace Google2u
 			ret += "{" + "SpriteIdle" + " : " + _SpriteIdle.ToString() + "} ";
 			ret += "{" + "SpriteAttack" + " : " + _SpriteAttack.ToString() + "} ";
 			ret += "{" + "SpriteMagic" + " : " + _SpriteMagic.ToString() + "} ";
+			ret += "{" + "SpriteIcon" + " : " + _SpriteIcon.ToString() + "} ";
 			ret += "{" + "SoundDeath" + " : " + _SoundDeath.ToString() + "} ";
 			ret += "{" + "SoundAttack" + " : " + _SoundAttack.ToString() + "} ";
 			ret += "{" + "Energy" + " : " + _Energy.ToString() + "} ";
@@ -829,7 +838,7 @@ namespace Google2u
 
 		private EquipmentData()
 		{
-			Rows.Add( new EquipmentDataRow("E_01", "NOEQUIPMENT", "0", "NOEQUIPMENT", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "Tree_Log", "Tree_Log", "Tree_Log", "NONE", "NONE", "NONE", "NONE", "NONE", "1", "1", "1"));
+			Rows.Add( new EquipmentDataRow("E_01", "NOEQUIPMENT", "0", "NOEQUIPMENT", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "Tree_Log", "Tree_Log", "Tree_Log", "NONE", "NONE", "NONE", "NONE", "NONE", "NONE", "1", "1", "1"));
 		}
 		public IGoogle2uRow GetGenRow(string in_RowString)
 		{

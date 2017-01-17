@@ -36,9 +36,12 @@ public class VictoryScript : MonoBehaviour
 	
     public void HandleVictory()
     {
-        DebugText.text = "You won this level!";
+        DebugText.text = "Victory";
         VictoryImage.SetActive(true);
+        transform.localScale = Vector3.zero;
         Sequence seq = DOTween.Sequence();
+        seq.Append(transform.DOScale(Vector3.one, DataManager.NORMALANIMATION));
+        seq.AppendInterval(DataManager.LONGANIMATION); // do nothing
         seq.Append(VictoryImage.transform.DOLocalMove(Vector3.zero, DataManager.NORMALANIMATION));
         seq.AppendInterval(DataManager.LONGANIMATION); // do nothing
         seq.Append(ExperienceBar.transform.DOLocalMove(Vector3.zero, DataManager.NORMALANIMATION));
@@ -50,7 +53,7 @@ public class VictoryScript : MonoBehaviour
 
     public void HandleLost()
     {
-        DebugText.text = "You lost!";
+        DebugText.text = "Defeat";
         DefeatImage.SetActive(true);
         DefeatImage.transform.DOLocalMove(Vector3.zero, DataManager.NORMALANIMATION);
     }

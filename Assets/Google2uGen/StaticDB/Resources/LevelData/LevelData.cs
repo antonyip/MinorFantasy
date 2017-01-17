@@ -23,7 +23,8 @@ namespace Google2u
 		public string _Battle5;
 		public string _Loot;
 		public string _Description;
-		public LevelDataRow(string __NameIndex, string __Name, string __ID, string __Battle1, string __Battle2, string __Battle3, string __Battle4, string __Battle5, string __Loot, string __Description) 
+		public int _EnergyRequirement;
+		public LevelDataRow(string __NameIndex, string __Name, string __ID, string __Battle1, string __Battle2, string __Battle3, string __Battle4, string __Battle5, string __Loot, string __Description, string __EnergyRequirement) 
 		{
 			_Name = __Name.Trim();
 			{
@@ -40,9 +41,16 @@ namespace Google2u
 			_Battle5 = __Battle5.Trim();
 			_Loot = __Loot.Trim();
 			_Description = __Description.Trim();
+			{
+			int res;
+				if(int.TryParse(__EnergyRequirement, NumberStyles.Any, CultureInfo.InvariantCulture, out res))
+					_EnergyRequirement = res;
+				else
+					Debug.LogError("Failed To Convert _EnergyRequirement string: "+ __EnergyRequirement +" to int");
+			}
 		}
 
-		public int Length { get { return 9; } }
+		public int Length { get { return 10; } }
 
 		public string this[int i]
 		{
@@ -84,6 +92,9 @@ namespace Google2u
 				case 8:
 					ret = _Description.ToString();
 					break;
+				case 9:
+					ret = _EnergyRequirement.ToString();
+					break;
 			}
 
 			return ret;
@@ -121,6 +132,9 @@ namespace Google2u
 				case "Description":
 					ret = _Description.ToString();
 					break;
+				case "EnergyRequirement":
+					ret = _EnergyRequirement.ToString();
+					break;
 			}
 
 			return ret;
@@ -137,6 +151,7 @@ namespace Google2u
 			ret += "{" + "Battle5" + " : " + _Battle5.ToString() + "} ";
 			ret += "{" + "Loot" + " : " + _Loot.ToString() + "} ";
 			ret += "{" + "Description" + " : " + _Description.ToString() + "} ";
+			ret += "{" + "EnergyRequirement" + " : " + _EnergyRequirement.ToString() + "} ";
 			return ret;
 		}
 	}
@@ -165,26 +180,26 @@ namespace Google2u
 
 		private LevelData()
 		{
-			Rows.Add( new LevelDataRow("L_1", "NONAMEYET", "1", "1", "1,1", "", "", "", "", ""));
-			Rows.Add( new LevelDataRow("L_2", "NONAMEYET", "2", "1", "1,1,1", "", "", "", "", ""));
-			Rows.Add( new LevelDataRow("L_3", "NONAMEYET", "3", "1,2,1", "2,1,2", "", "", "", "", ""));
-			Rows.Add( new LevelDataRow("L_4", "NONAMEYET", "4", "2,2", "1,2,1,1", "", "", "", "", ""));
-			Rows.Add( new LevelDataRow("L_5", "NONAMEYET", "5", "2,2,2", "1,1,1,1", "2,3,2", "", "", "", ""));
-			Rows.Add( new LevelDataRow("L_6", "NONAMEYET", "6", "2,1,1,2", "1,3,1", "", "", "", "", ""));
-			Rows.Add( new LevelDataRow("L_7", "NONAMEYET", "7", "2,3,3,2", "1,2,1,2,1", "", "", "", "", ""));
-			Rows.Add( new LevelDataRow("L_8", "NONAMEYET", "8", "1,1,1", "1,1,4,1,1", "", "", "", "", ""));
-			Rows.Add( new LevelDataRow("L_9", "NONAMEYET", "9", "2,1,4,1", "2,3,3,3,2", "", "", "", "", ""));
-			Rows.Add( new LevelDataRow("L_10", "NONAMEYET", "10", "1,1,1,1,1", "1,3,4,3,1", "3,4,5,4,3", "", "", "", ""));
-			Rows.Add( new LevelDataRow("L_11", "NONAMEYET", "11", "2,2,2,2", "2,3,4,3,2", "3,1,1,1,3", "", "", "", ""));
-			Rows.Add( new LevelDataRow("L_12", "NONAMEYET", "12", "2,1,2,1,2", "4,2,4,2,4", "1,8,3,8,1", "", "", "", ""));
-			Rows.Add( new LevelDataRow("L_13", "NONAMEYET", "13", "5,4,1,4,5", "3,3,8,8,3", "2,3,2,3,4", "", "", "", ""));
-			Rows.Add( new LevelDataRow("L_14", "NONAMEYET", "14", "1,1,5,8,1,1", "2,1,2,8,8", "1,3,5,5,5", "", "", "", ""));
-			Rows.Add( new LevelDataRow("L_15", "NONAMEYET", "15", "1,1,1,1", "2,8,5,8,2", "2,3,4,4,3,2", "1,6,8,6,1", "", "", ""));
-			Rows.Add( new LevelDataRow("L_16", "NONAMEYET", "16", "1,1,1,1,1,1", "2,3,4,3,4,8", "1,4,2,6,2,1", "", "", "", ""));
-			Rows.Add( new LevelDataRow("L_17", "NONAMEYET", "17", "2,2,2,2,2,2", "3,5,3,5,3", "1,5,5,8,5,5", "", "", "", ""));
-			Rows.Add( new LevelDataRow("L_18", "NONAMEYET", "18", "3,3,3,3,3,3", "3,3,8,6,6,9", "2,6,8,9,6,2", "", "", "", ""));
-			Rows.Add( new LevelDataRow("L_19", "NONAMEYET", "19", "4,4,4,4,4,4", "7,7,7", "3,4,5,5,4,3", "", "", "", ""));
-			Rows.Add( new LevelDataRow("L_20", "NONAMEYET", "20", "5,5,5,5,5,5", "2,1,7,1,2", "2,2,3,3,2,2", "6,8,7,7,6,9", "", "", ""));
+			Rows.Add( new LevelDataRow("L_1", "NONAMEYET", "1", "1", "1,1", "", "", "", "", "", "2"));
+			Rows.Add( new LevelDataRow("L_2", "NONAMEYET", "2", "1", "1,1,1", "", "", "", "", "", "2"));
+			Rows.Add( new LevelDataRow("L_3", "NONAMEYET", "3", "1,2,1", "2,1,2", "", "", "", "", "", "3"));
+			Rows.Add( new LevelDataRow("L_4", "NONAMEYET", "4", "2,2", "1,2,1,1", "", "", "", "", "", "3"));
+			Rows.Add( new LevelDataRow("L_5", "NONAMEYET", "5", "2,2,2", "1,1,1,1", "2,3,2", "", "", "", "", "3"));
+			Rows.Add( new LevelDataRow("L_6", "NONAMEYET", "6", "2,1,1,2", "1,3,1", "", "", "", "", "", "4"));
+			Rows.Add( new LevelDataRow("L_7", "NONAMEYET", "7", "2,3,3,2", "1,2,1,2,1", "", "", "", "", "", "4"));
+			Rows.Add( new LevelDataRow("L_8", "NONAMEYET", "8", "1,1,1", "1,1,4,1,1", "", "", "", "", "", "4"));
+			Rows.Add( new LevelDataRow("L_9", "NONAMEYET", "9", "2,1,4,1", "2,3,3,3,2", "", "", "", "", "", "4"));
+			Rows.Add( new LevelDataRow("L_10", "NONAMEYET", "10", "1,1,1,1,1", "1,3,4,3,1", "3,4,5,4,3", "", "", "", "", "5"));
+			Rows.Add( new LevelDataRow("L_11", "NONAMEYET", "11", "2,2,2,2", "2,3,4,3,2", "3,1,1,1,3", "", "", "", "", "5"));
+			Rows.Add( new LevelDataRow("L_12", "NONAMEYET", "12", "2,1,2,1,2", "4,2,4,2,4", "1,8,3,8,1", "", "", "", "", "5"));
+			Rows.Add( new LevelDataRow("L_13", "NONAMEYET", "13", "5,4,1,4,5", "3,3,8,8,3", "2,3,2,3,4", "", "", "", "", "5"));
+			Rows.Add( new LevelDataRow("L_14", "NONAMEYET", "14", "1,1,5,8,1,1", "2,1,2,8,8", "1,3,5,5,5", "", "", "", "", "6"));
+			Rows.Add( new LevelDataRow("L_15", "NONAMEYET", "15", "1,1,1,1", "2,8,5,8,2", "2,3,4,4,3,2", "1,6,8,6,1", "", "", "", "6"));
+			Rows.Add( new LevelDataRow("L_16", "NONAMEYET", "16", "1,1,1,1,1,1", "2,3,4,3,4,8", "1,4,2,6,2,1", "", "", "", "", "6"));
+			Rows.Add( new LevelDataRow("L_17", "NONAMEYET", "17", "2,2,2,2,2,2", "3,5,3,5,3", "1,5,5,8,5,5", "", "", "", "", "7"));
+			Rows.Add( new LevelDataRow("L_18", "NONAMEYET", "18", "3,3,3,3,3,3", "3,3,8,6,6,9", "2,6,8,9,6,2", "", "", "", "", "7"));
+			Rows.Add( new LevelDataRow("L_19", "NONAMEYET", "19", "4,4,4,4,4,4", "7,7,7", "3,4,5,5,4,3", "", "", "", "", "8"));
+			Rows.Add( new LevelDataRow("L_20", "NONAMEYET", "20", "5,5,5,5,5,5", "2,1,7,1,2", "2,2,3,3,2,2", "6,8,7,7,6,9", "", "", "", "10"));
 		}
 		public IGoogle2uRow GetGenRow(string in_RowString)
 		{

@@ -16,7 +16,8 @@ namespace Google2u
 	{
 		public int _ID;
 		public string _Items;
-		public CraftingDataRow(string __Name, string __ID, string __Items) 
+		public string _Sprite;
+		public CraftingDataRow(string __Name, string __ID, string __Items, string __Sprite) 
 		{
 			{
 			int res;
@@ -26,9 +27,10 @@ namespace Google2u
 					Debug.LogError("Failed To Convert _ID string: "+ __ID +" to int");
 			}
 			_Items = __Items.Trim();
+			_Sprite = __Sprite.Trim();
 		}
 
-		public int Length { get { return 2; } }
+		public int Length { get { return 3; } }
 
 		public string this[int i]
 		{
@@ -49,6 +51,9 @@ namespace Google2u
 				case 1:
 					ret = _Items.ToString();
 					break;
+				case 2:
+					ret = _Sprite.ToString();
+					break;
 			}
 
 			return ret;
@@ -65,6 +70,9 @@ namespace Google2u
 				case "Items":
 					ret = _Items.ToString();
 					break;
+				case "Sprite":
+					ret = _Sprite.ToString();
+					break;
 			}
 
 			return ret;
@@ -74,6 +82,7 @@ namespace Google2u
 			string ret = System.String.Empty;
 			ret += "{" + "ID" + " : " + _ID.ToString() + "} ";
 			ret += "{" + "Items" + " : " + _Items.ToString() + "} ";
+			ret += "{" + "Sprite" + " : " + _Sprite.ToString() + "} ";
 			return ret;
 		}
 	}
@@ -100,7 +109,7 @@ namespace Google2u
 
 		private CraftingData()
 		{
-			Rows.Add( new CraftingDataRow("Tree_Lumber", "1", "1,1,1"));
+			Rows.Add( new CraftingDataRow("Tree_Lumber", "1", "1,1,1", "Tree_Lumber_Image"));
 		}
 		public IGoogle2uRow GetGenRow(string in_RowString)
 		{
