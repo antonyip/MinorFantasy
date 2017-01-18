@@ -1,0 +1,3 @@
+Name;ID;Items;Sprite
+string;Int;string;string
+Tree_Lumber;1;1,1,1;Tree_Lumber_Image

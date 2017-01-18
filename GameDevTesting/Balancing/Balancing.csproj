@@ -53,26 +53,30 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="Google2u\ComponentBase.cs" />
-    <Compile Include="Resources\CraftingData\CraftingData.cs" />
-    <Compile Include="Resources\CraftngMatsData\CraftngMatsData.cs" />
-    <Compile Include="Resources\EnemyWaves\EnemyWaves.cs" />
-    <Compile Include="Resources\Enums\Enums.cs" />
-    <Compile Include="Resources\EquipmentData\EquipmentData.cs" />
-    <Compile Include="Resources\ExpTable\ExpTable.cs" />
-    <Compile Include="Resources\GambitData\GambitData.cs" />
-    <Compile Include="Resources\HeroesData\HeroesData.cs" />
-    <Compile Include="Resources\LevelData\LevelData.cs" />
-    <Compile Include="Resources\Levels\Levels.cs" />
-    <Compile Include="Resources\MapData\MapData.cs" />
-    <Compile Include="Resources\MobData\MobData.cs" />
-    <Compile Include="Resources\SkillData\SkillData.cs" />
-    <Compile Include="Resources\Towers\Towers.cs" />
+    <Compile Include="..\..\Assets\Google2uGen\StaticDB\Resources\CraftingData\CraftingData.cs">
+      <Link>Databases\CraftingData.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Assets\Google2uGen\StaticDB\Resources\CraftngMatsData\CraftngMatsData.cs">
+      <Link>Databases\CraftngMatsData.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Assets\Google2uGen\StaticDB\Resources\HeroesData\HeroesData.cs">
+      <Link>Databases\HeroesData.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Assets\Google2uGen\StaticDB\Resources\EquipmentData\EquipmentData.cs">
+      <Link>Databases\EquipmentData.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Assets\Google2uGen\StaticDB\Resources\MobData\MobData.cs">
+      <Link>Databases\MobData.cs</Link>
+    </Compile>    
+    <Compile Include="..\..\Assets\Standard Assets\Resources\Google2u\ComponentBase.cs">
+      <Link>Google2u\ComponentBase.cs</Link>
+    </Compile>
     <Compile Include="TestHelpers.cs" />
     <Compile Include="UnitTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UnityEngineDummy.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

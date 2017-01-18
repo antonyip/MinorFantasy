@@ -1,0 +1,22 @@
+GamditIndex;Name;Type;ID;Description;Sprite
+string;string;string;Int;string;string
+G_1;Any_Enemy;Gambit_Target;1;Selects an Enemy at random;NONE
+G_2;Enemy > 75%;Gambit_Target;2;Enemy > 75%;NONE
+G_3;Enemy > 50%;Gambit_Target;3;Enemy > 50%;NONE
+G_4;Enemy > 25%;Gambit_Target;4;Enemy > 25%;NONE
+G_5;Ally > 75%;Gambit_Target;5;Ally > 75%;NONE
+G_6;Ally > 50%;Gambit_Target;6;Ally > 50%;NONE
+G_7;Ally > 25%;Gambit_Target;7;Ally > 25%;NONE
+G_8;Any_Ally;Gambit_Target;8;Any_Ally;NONE
+G_9;Enemy Team;Gambit_Team;9;Enemy Team;NONE
+G_10;Ally Team;Gambit_Team;10;Ally Team;NONE
+G_11;Burnt Ally;Gambit_Target;11;Burnt Ally;NONE
+G_12;Frozen Ally;Gambit_Target;12;Frozen Ally;NONE
+G_13;Shocked Ally;Gambit_Target;13;Shocked Ally;NONE
+G_14;Burnt Enemy;Gambit_Target;14;Burnt Enemy;NONE
+G_15;Frozen Enemy;Gambit_Target;15;Frozen Enemy;NONE
+G_16;Shocked Enemy;Gambit_Target;16;Shocked Enemy;NONE
+G_17;Do Once Per Battle;Gambit_Team;17;Do Once Per Battle;NONE
+G_18;Every Other Turn;Gambit_Team;18;Every Other Turn;NONE
+G_19;Every 5 turns;Gambit_Team;19;Every 5 turns;NONE
+G_20;Every Turn;Gambit_Team;20;Every Turn;NONE
