@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using Google2u;
 
 public enum SummonPageSetting
 {
@@ -123,7 +122,7 @@ public class DataManager : MonoBehaviour
             {
                 pc = new PlayerCharacter();
                 pc.ID = (i+1) * 2;
-                pc.databaseChar = Google2u.HeroesData.Instance.Rows.Find(x => x._ID == pc.ID);
+                pc.databaseChar = AntTool.HeroesData.Instance.Rows.Find(x => x._ID == pc.ID);
                 userData.listOfPlayerCharacters.Add(pc);
             }
 

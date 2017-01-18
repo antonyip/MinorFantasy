@@ -1,7 +1,7 @@
-d:\SandBox\MinorFantasy\Tools\GameDatabaseTool\GameDatabaseConverter\bin\Debug\GameDatabaseConverter.exe d:\SandBox\MinorFantasy\GameDatabase\CraftingData.csv d:\SandBox\MinorFantasy\Tools\GameDatabaseTool\GameDatabaseConverter\out\CraftingData.cs CraftingData
+SET CONVERTERPATH=.\bin\Debug\GameDatabaseConverter.exe
+SET INFOLDER=..\..\..\GameDatabase\
+SET OUTFOLDER=.\out\
 
-d:\SandBox\MinorFantasy\Tools\GameDatabaseTool\GameDatabaseConverter\bin\Debug\GameDatabaseConverter.exe d:\SandBox\MinorFantasy\GameDatabase\CraftingMatsData.csv d:\SandBox\MinorFantasy\Tools\GameDatabaseTool\GameDatabaseConverter\out\CraftingMatsData.cs CraftingMatsData
-
-d:\SandBox\MinorFantasy\Tools\GameDatabaseTool\GameDatabaseConverter\bin\Debug\GameDatabaseConverter.exe d:\SandBox\MinorFantasy\GameDatabase\HeroesData.csv d:\SandBox\MinorFantasy\Tools\GameDatabaseTool\GameDatabaseConverter\out\HeroesData.cs HeroesData
-
-pause
+%CONVERTERPATH% %INFOLDER%CraftingData.csv %OUTFOLDER%CraftingData.cs CraftingData
+%CONVERTERPATH% %INFOLDER%CraftingMatsData.csv %OUTFOLDER%CraftingMatsData.cs CraftingMatsData
+%CONVERTERPATH% %INFOLDER%HeroesData.csv %OUTFOLDER%HeroesData.cs HeroesData
