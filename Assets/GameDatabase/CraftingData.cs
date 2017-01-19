@@ -6,12 +6,12 @@ namespace AntTool
 {
   public class CraftingDataRow
   {
-    string _Name;
-    string _ID;
-    string _Items;
-    string _Sprite;
+    public string _Name;
+    public int _ID;
+    public string _Items;
+    public string _Sprite;
     string _end;
-    public CraftingDataRow(string Name,string ID,string Items,string Sprite,string end)
+    public CraftingDataRow(string Name,int ID,string Items,string Sprite,string end)
     {
      _Name = Name;
      _ID = ID;
@@ -24,7 +24,7 @@ namespace AntTool
   {
     private CraftingData()
     {
-      Rows.Add(new CraftingDataRow("Tree_Lumber","Tree_Lumber","Tree_Lumber","Tree_Lumber","end"));
+      Rows.Add(new CraftingDataRow("Tree_Lumber",1,"1,1,1","Tree_Lumber_Image","end"));
     }
 
     private class NestedCraftingData
@@ -33,7 +33,7 @@ namespace AntTool
       internal static readonly CraftingData instance = new CraftingData();
     }
 
-    private static CraftingData instance
+    public static CraftingData instance
     {
       get { return NestedCraftingData.instance;}
     }

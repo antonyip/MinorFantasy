@@ -122,14 +122,14 @@ public class DataManager : MonoBehaviour
             {
                 pc = new PlayerCharacter();
                 pc.ID = (i+1) * 2;
-                pc.databaseChar = AntTool.HeroesData.Instance.Rows.Find(x => x._ID == pc.ID);
+                pc.databaseChar = AntTool.HeroesData.instance.Rows.Find(x => x._ID == pc.ID);
                 userData.listOfPlayerCharacters.Add(pc);
             }
 
             // insert random special character for last pc
             pc = new PlayerCharacter();
             pc.ID = 3;
-            pc.databaseChar = Google2u.HeroesData.Instance.Rows.Find(x => x._ID == pc.ID);
+            pc.databaseChar = AntTool.HeroesData.instance.Rows.Find(x => x._ID == pc.ID);
             userData.listOfPlayerCharacters.Add(pc);
 
             // insert random for last 8
@@ -137,7 +137,7 @@ public class DataManager : MonoBehaviour
             {
                 pc = new PlayerCharacter();
                 pc.ID = 1;
-                pc.databaseChar = Google2u.HeroesData.Instance.Rows.Find(x => x._ID == pc.ID);
+                pc.databaseChar = AntTool.HeroesData.instance.Rows.Find(x => x._ID == pc.ID);
                 userData.listOfPlayerCharacters.Add(pc);
             }
 

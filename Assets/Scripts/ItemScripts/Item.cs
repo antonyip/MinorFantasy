@@ -14,11 +14,11 @@ public enum TypeEnum
 public class Item
 {
     public TypeEnum ItemType = TypeEnum.ERROR;
-    public Google2u.CraftngMatsDataRow CraftingMatsDatabase = null;
-    public Google2u.CraftingDataRow    CraftingDataDatabase = null;
-    public Google2u.HeroesDataRow      HeroDatabase = null;
-    public Google2u.GambitDataRow      GambitDatabase = null;
-    public Google2u.EquipmentDataRow   EquipmentDatabase = null;
+    public AntTool.CraftingMatsDataRow CraftingMatsDatabase = null;
+    public AntTool.CraftingDataRow    CraftingDataDatabase = null;
+    public AntTool.HeroesDataRow      HeroDatabase = null;
+    public AntTool.GambitDataRow      GambitDatabase = null;
+    public AntTool.EquipmentDataRow   EquipmentDatabase = null;
     public int IndexInDatabase = -1;
 
     public GameObject sprite;

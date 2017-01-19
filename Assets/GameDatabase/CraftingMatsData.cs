@@ -6,11 +6,11 @@ namespace AntTool
 {
   public class CraftingMatsDataRow
   {
-    string _Name;
-    string _ID;
-    string _Sprite;
+    public string _Name;
+    public int _ID;
+    public string _Sprite;
     string _end;
-    public CraftingMatsDataRow(string Name,string ID,string Sprite,string end)
+    public CraftingMatsDataRow(string Name,int ID,string Sprite,string end)
     {
      _Name = Name;
      _ID = ID;
@@ -22,7 +22,7 @@ namespace AntTool
   {
     private CraftingMatsData()
     {
-      Rows.Add(new CraftingMatsDataRow("Tree_Log","Tree_Log","Tree_Log","end"));
+      Rows.Add(new CraftingMatsDataRow("Tree_Log",1,"Tree_Log_Image","end"));
     }
 
     private class NestedCraftingMatsData
@@ -31,7 +31,7 @@ namespace AntTool
       internal static readonly CraftingMatsData instance = new CraftingMatsData();
     }
 
-    private static CraftingMatsData instance
+    public static CraftingMatsData instance
     {
       get { return NestedCraftingMatsData.instance;}
     }

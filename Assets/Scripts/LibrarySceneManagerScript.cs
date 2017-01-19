@@ -15,7 +15,7 @@ public class LibrarySceneManagerScript : MonoBehaviour {
     // Use this for initialization
     void Start () {
         //Initialize and populate all panes
-        var heroesData = Google2u.HeroesData.Instance.Rows;
+        var heroesData = AntTool.HeroesData.instance.Rows;
         for (int i=0; i<heroesData.Count; i++)
         {
             //Spawn Prefab with index as argument, Data retrieval in the object itself

@@ -84,7 +84,7 @@ public class GameMaster : MonoBehaviour {
                 
                 u.character = new Character();
                 u.character.playerStats = playerChar;
-                u.character.playerStats.databaseChar = Google2u.HeroesData.Instance.Rows.Find(x => x._ID == playerChar.ID);
+                u.character.playerStats.databaseChar = AntTool.HeroesData.instance.Rows.Find(x => x._ID == playerChar.ID);
                 u.IsEnemyUnit = false;
                 u.Start();
 
@@ -144,7 +144,7 @@ public class GameMaster : MonoBehaviour {
 
         // load enemy data
         DataManager dataManager = DataManager.instance;
-        var Map = Google2u.LevelData.Instance.Rows.Find(x => x._ID == dataManager.selectedMapLevel);
+        var Map = AntTool.LevelData.instance.Rows.Find(x => x._ID == dataManager.selectedMapLevel);
         List<string> MobsToSpawn = new List<string>();
 
         // figure out the wave string 
@@ -198,7 +198,7 @@ public class GameMaster : MonoBehaviour {
         {
             var item = MobsToSpawn[i];
             var MobsID = int.Parse(item);
-            var Mob = Google2u.MobData.Instance.Rows.Find(x => x._ID == MobsID);
+            var Mob = AntTool.MobData.instance.Rows.Find(x => x._ID == MobsID);
             Unit u = new Unit();
             u.character = new Character();
             u.character.monsterStats = new MonsterCharacter();

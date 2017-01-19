@@ -198,7 +198,7 @@ public class SummonSceneManager : MonoBehaviour {
 
         for (int i = 0; i < heroesToGet; i++)
         {
-            ListOfHeroesGottenText.text += (i + 1).ToString() + ". " + Google2u.HeroesData.Instance.Rows[HeroesGotten[i]]._Name + "\n";
+            ListOfHeroesGottenText.text += (i + 1).ToString() + ". " + AntTool.HeroesData.instance.Rows[HeroesGotten[i]]._Name + "\n";
         }
         HeroesGottenPopup.SetActive(true);
 
@@ -206,7 +206,7 @@ public class SummonSceneManager : MonoBehaviour {
         {
             PlayerCharacter pc = new PlayerCharacter();
             pc.ID = HeroesGotten[i];
-            pc.databaseChar = Google2u.HeroesData.Instance.Rows.Find(x => x._ID == pc.ID);
+            pc.databaseChar = AntTool.HeroesData.instance.Rows.Find(x => x._ID == pc.ID);
             DataManager.instance.userData.listOfPlayerCharacters.Add(pc);
         }
 
