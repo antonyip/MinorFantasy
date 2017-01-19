@@ -52,14 +52,14 @@ namespace GameDatabaseConverter
 
             for (int i = 0; i < headerArray.Count; i++)
             {
-                sw.WriteLine("    string _" + headerArray[i].ToString() + ";");
+                sw.WriteLine("    public "+ typeArray[i].ToLower() +" _" + headerArray[i].ToString() + ";");
             }
             sw.WriteLine("    string _" + "end" + ";");
 
             sw.Write("    public " + args[2] + "Row(");
             for (int i = 0; i < headerArray.Count; i++)
             {
-                sw.Write("string " + headerArray[i].ToString() + ",");
+                sw.Write(typeArray[i].ToLower() + " " + headerArray[i].ToString() + ",");
             }
             sw.Write("string end");
             sw.WriteLine(")");
@@ -100,10 +100,18 @@ namespace GameDatabaseConverter
 
                 for (int j = 0; j < PrintString.Count; j++)
                 {
-                    sw.Write("\"");
-                    sw.Write(PrintString[i]);
-                    sw.Write("\"");
-                    sw.Write(",");
+                    if (typeArray[j].ToLower().Equals("int"))
+                    {
+                        sw.Write(PrintString[j]);
+                        sw.Write(",");
+                    }
+                    else
+                    {
+                        sw.Write("\"");
+                        sw.Write(PrintString[j]);
+                        sw.Write("\"");
+                        sw.Write(",");
+                    }
                 }
                 sw.Write("\"end\"");
                 sw.Write("));");
@@ -122,7 +130,7 @@ namespace GameDatabaseConverter
             sw.WriteLine("");
 
             // instance
-            sw.WriteLine("    private static " + args[2] + " instance");
+            sw.WriteLine("    public static " + args[2] + " instance");
             sw.WriteLine("    {");
             sw.WriteLine("      get { return Nested" + args[2] + ".instance;}");
             sw.WriteLine("    }");

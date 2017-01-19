@@ -23,3 +23,7 @@ sysinfo.txt
 
 # balancing files
 /GameDevTesting/Balancing/obj/
+/GameDevTesting/Balancing/bin/
+/Tools/GameDatabaseTool/GameDatabaseConverter/bin/
+/Tools/GameDatabaseTool/GameDatabaseConverter/obj/
+/Tools/GameDatabaseTool/GameDatabaseConverter/out/

@@ -8,13 +8,13 @@ using UnityEngine;
 public class Skill
 {
     public int id;
-    public Google2u.SkillDataRow dataBaseSkill;
+    public AntTool.SkillDataRow dataBaseSkill;
     private static ExpressionParser ep = new ExpressionParser();
 
     public Skill(int skillid)
     {
         this.id = skillid;
-        dataBaseSkill = Google2u.SkillData.Instance.Rows.Find(x => x._ID == id);
+        dataBaseSkill = AntTool.SkillData.instance.Rows.Find(x => x._ID == id);
     }
 
     string skillString;

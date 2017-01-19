@@ -1,4 +1,4 @@
-GamditIndex;Name;Type;ID;Description;Sprite
+GambitIndex;Name;Type;ID;Description;Sprite
 string;string;string;Int;string;string
 G_1;Any_Enemy;Gambit_Target;1;Selects an Enemy at random;NONE
 G_2;Enemy > 75%;Gambit_Target;2;Enemy > 75%;NONE

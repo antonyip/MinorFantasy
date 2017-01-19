@@ -7,21 +7,21 @@ public class PlayerCharacter
 {
     public int ID;
     public int CurrentLevel;
-    public Google2u.HeroesDataRow databaseChar;
+    public AntTool.HeroesDataRow databaseChar;
 }
 
 public class MonsterCharacter
 {
     public int ID;
     public int CurrentLevel;
-    public Google2u.MobDataRow monsterStats;
+    public AntTool.MobDataRow monsterStats;
 }
 
 public sealed class Character
 {
     public MonsterCharacter monsterStats;
     public PlayerCharacter playerStats;
-    public Google2u.EquipmentDataRow equipmentStats;
+    public AntTool.EquipmentDataRow equipmentStats;
 
     public bool IsMonster()
     {
