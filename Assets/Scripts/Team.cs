@@ -47,4 +47,15 @@ public class Team {
     {
         listOfCharacters[index] = PlayerIndexInUserData;
     }
+
+    internal int FindCharacterIndexInTeam(int IndexOfHeroInGlobalContainer)
+    {
+        for (int i = 0; i < listOfCharacters.Count; i++)
+        {
+            if (listOfCharacters[i] == IndexOfHeroInGlobalContainer)
+                return i;
+        }
+        return -1;
+        
+    }
 }

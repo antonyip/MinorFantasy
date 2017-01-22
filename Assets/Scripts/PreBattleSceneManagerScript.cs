@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using DG.Tweening;
+using System;
 
 public class PreBattleSceneManagerScript : MonoBehaviour {
 
@@ -28,7 +29,7 @@ public class PreBattleSceneManagerScript : MonoBehaviour {
 
     public GameObject ReserveButtonPrefab;
     public GameObject ReserveButtonContainer;
-    public List<GameObject> ReserveHeroes = new List<GameObject>();
+    public List<GameObject> ReserveHeroesButtons = new List<GameObject>();
 
     public GameObject TacticsScreen;
 
@@ -37,6 +38,8 @@ public class PreBattleSceneManagerScript : MonoBehaviour {
 
     public ColorBlock defaultColorBlock;
     public ColorBlock selectedColorBlock;
+
+    public GameObject SelectionButtonIndicator;
 
     // IDEA handle energy in teams?
 
@@ -59,7 +62,8 @@ public class PreBattleSceneManagerScript : MonoBehaviour {
         UpdateTeamGUI();
 
         // generate reserve list
-        while(ReserveButtonContainer.transform.childCount > 0)
+        ReserveHeroesButtons.Clear();
+        while (ReserveButtonContainer.transform.childCount > 0)
         {
             Debug.Log("Destorying");
             Destroy(ReserveButtonContainer.transform.GetChild(0));
@@ -75,20 +79,18 @@ public class PreBattleSceneManagerScript : MonoBehaviour {
 
             // hack for now because no art and database no update
             PlayerCharacter playerChar = dataManager.userData.listOfPlayerCharacters[i];
-            if (string.IsNullOrEmpty(playerChar.databaseChar._SpriteIdle) == true)
-            {
-                continue;
-            }
 
             Debug.Assert(string.IsNullOrEmpty(playerChar.databaseChar._SpriteIdle) == false);
-            var sprites = Resources.LoadAll<Sprite>(playerChar.databaseChar._SpriteFace);
+            var sprites = Resources.Load<Sprite>("HeroPrefabs/Faces/" + playerChar.databaseChar._SpriteFace);
             var spritesClass = Resources.Load<Sprite>("ICON_"+playerChar.databaseChar._HeroClass);
 
-            NewReserveButton.GetComponent<ReserveHeroButtonScript>().FaceImage.sprite = sprites[0];
+            NewReserveButton.GetComponent<ReserveHeroButtonScript>().FaceImage.sprite = sprites;
             NewReserveButton.GetComponent<ReserveHeroButtonScript>().ClassImage.sprite = spritesClass;
+
+            ReserveHeroesButtons.Add(NewReserveButton);
         }
 
-        UpdateDisabledButtons();
+        //UpdateDisabledButtons();
 	} // end start
 
     void UpdateTeamGUI()
@@ -106,7 +108,7 @@ public class PreBattleSceneManagerScript : MonoBehaviour {
                 // special case where slot is empty
                 if (playerChar == null)
                 {
-                    var sprites = Resources.Load<Sprite>("NONE");
+                    var sprites = Resources.Load<Sprite>("HeroPrefabs/Faces/NONE");
                     CurrentTeamButtons[ButtonCounter].GetComponent<TeamHeroButtonScript>().FaceImage.sprite = sprites;
                     CurrentTeamButtons[ButtonCounter].GetComponent<TeamHeroButtonScript>().ClassImage.sprite = sprites;
                 }
@@ -123,10 +125,10 @@ public class PreBattleSceneManagerScript : MonoBehaviour {
                     }
 
                     Debug.Assert(string.IsNullOrEmpty(playerChar.databaseChar._SpriteIdle) == false);
-                    var sprites = Resources.LoadAll<Sprite>(playerChar.databaseChar._SpriteFace);
+                    var sprites = Resources.Load<Sprite>("HeroPrefabs/Faces/" + playerChar.databaseChar._SpriteFace);
                     var spritesClass = Resources.Load<Sprite>("ICON_"+playerChar.databaseChar._HeroClass);
 
-                    CurrentTeamButtons[ButtonCounter].GetComponent<TeamHeroButtonScript>().FaceImage.sprite = sprites[0];
+                    CurrentTeamButtons[ButtonCounter].GetComponent<TeamHeroButtonScript>().FaceImage.sprite = sprites;
                     CurrentTeamButtons[ButtonCounter].GetComponent<TeamHeroButtonScript>().ClassImage.sprite = spritesClass;
                     // todo handle swapping mechanics of teams
                     // remember to handle different team members
@@ -161,7 +163,11 @@ public class PreBattleSceneManagerScript : MonoBehaviour {
         Debug.Log(i + " team selected!");
         DataManager.instance.selectedTeam = i;
         MainTeamContainer.transform.transform.DOLocalMoveX(i * -1550, DataManager.NORMALANIMATION);
-        UpdateDisabledButtons();
+
+        MainSelected = SelectEmpty;
+        ReserveSelected = SelectEmpty;
+
+        //UpdateDisabledButtons();
     }
 	
     public void ToBattleScene()
@@ -216,61 +222,101 @@ public class PreBattleSceneManagerScript : MonoBehaviour {
 
     public void TeamHeroButtonClicked(int pos)
     {
-        if (enPreBattleMode == PreBattleMode.TACTICS)
+        if (MainSelected == pos)
         {
+            // if double click
             TacticsScreen.SetActive(true);
             TacticsScreen.GetComponent<TacticsScreenScript>().Setup(pos, ButtonType.MAIN);
+            MainSelected = SelectEmpty;
         }
-        else if (enPreBattleMode == PreBattleMode.SWAP)
+        else if (ReserveSelected != SelectEmpty)
         {
-            Debug.Log("m" + pos);
-            if (MainSelected == pos)
-            {
-                MainSelected = SelectEmpty;
-            }
-            else
-            {
-                MainSelected = pos;
-                if (ReserveSelected != SelectEmpty)
-                {
-                    HandleSwap(MainSelected, ReserveSelected);
-                }
-            }
+            MainSelected = pos;
+            HandleSwap(MainSelected, ReserveSelected);
+            MainSelected = SelectEmpty;
+            ReserveSelected = SelectEmpty;
         }
+        else
+        {
+            MainSelected = pos;
+        }
+
+        UpdateSelectionButtons();
+    }
+
+    private void UpdateSelectionButtons()
+    {
+        if (MainSelected != SelectEmpty)
+        {
+            SelectionButtonIndicator.transform.DOScale(Vector3.zero, DataManager.NORMALANIMATION);
+            SelectionButtonIndicator.transform.SetParent(CurrentTeamButtons[MainSelected].transform);
+            Zoom();
+        }
+        else if (ReserveSelected != SelectEmpty)
+        {
+            SelectionButtonIndicator.transform.DOScale(Vector3.zero, DataManager.NORMALANIMATION);
+            SelectionButtonIndicator.transform.SetParent(ReserveHeroesButtons[ReserveSelected].transform);
+            Zoom();
+        }
+        else
+        {
+            SelectionButtonIndicator.transform.DOScale(Vector3.zero, DataManager.NORMALANIMATION);
+        }
+    }
+
+    private void Zoom()
+    {
+        SelectionButtonIndicator.transform.localPosition = Vector3.zero;
+        SelectionButtonIndicator.transform.localScale = Vector3.zero;
+        SelectionButtonIndicator.transform.DOScale(Vector3.one, DataManager.NORMALANIMATION);
     }
 
     public void ReservedHeroButtonClicked(int pos)
     {
-        if (enPreBattleMode == PreBattleMode.TACTICS)
+        if (ReserveSelected == pos)
         {
+            // if double click
             TacticsScreen.SetActive(true);
             TacticsScreen.GetComponent<TacticsScreenScript>().Setup(pos, ButtonType.RESERVE);
+            ReserveSelected = SelectEmpty;
         }
-        else if (enPreBattleMode == PreBattleMode.SWAP)
+        else if (MainSelected != SelectEmpty)
         {
-            Debug.Log("r" + pos);
-            if (ReserveSelected == pos)
-            {
-                ReserveSelected = SelectEmpty;
-            }
-            else
-            {
-                ReserveSelected = pos;
-                if (MainSelected != SelectEmpty)
-                {
-                    HandleSwap(MainSelected, ReserveSelected);
-                }
-            }
+            ReserveSelected = pos;
+            HandleSwap(MainSelected, ReserveSelected);
+            MainSelected = SelectEmpty;
+            ReserveSelected = SelectEmpty;
         }
+        else
+        {
+            ReserveSelected = pos;
+        }
+
+        UpdateSelectionButtons();
     }
 
     void HandleSwap(int Main, int Reserve)
     {
         Debug.Log("HandleSwap");
-        DataManager.instance.userData.listOfTeams[DataManager.instance.selectedTeam].SwapCharacter(Main % DataManager.MAXUNITPERTEAM, Reserve);
+
+
+        Team t = DataManager.instance.userData.listOfTeams[DataManager.instance.selectedTeam];
+        int teamSlotIndex = Main % DataManager.MAXUNITPERTEAM;
+        int IsHeroFound = t.FindCharacterIndexInTeam(Reserve);
+        if (IsHeroFound == -1) // not found
+        { 
+            t.SwapCharacter(teamSlotIndex, Reserve);
+        }
+        else 
+        {
+            t.SwapCharacter(teamSlotIndex, Reserve);
+            t.SwapCharacter(IsHeroFound, Team.EMPTYSLOT);
+        }
+        // remove duplicate of self
+
         MainSelected = SelectEmpty;
         ReserveSelected = SelectEmpty;
         UpdateTeamGUI();
-        UpdateDisabledButtons();
+        //UpdateDisabledButtons();
     }
 }
