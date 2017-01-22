@@ -54,14 +54,18 @@ namespace GameDatabaseConverter
             {
                 sw.WriteLine("    public "+ typeArray[i].ToLower() +" _" + headerArray[i].ToString() + ";");
             }
-            sw.WriteLine("    string _" + "end" + ";");
+            //sw.WriteLine("    string _" + "end" + ";");
 
             sw.Write("    public " + args[2] + "Row(");
+
+            string ConstructorVars = "";
             for (int i = 0; i < headerArray.Count; i++)
             {
-                sw.Write(typeArray[i].ToLower() + " " + headerArray[i].ToString() + ",");
+                ConstructorVars += (typeArray[i].ToLower() + " " + headerArray[i].ToString() + ",");
             }
-            sw.Write("string end");
+            ConstructorVars = ConstructorVars.Substring(0, ConstructorVars.LastIndexOf(','));
+
+            sw.Write(ConstructorVars);
             sw.WriteLine(")");
             sw.WriteLine("    {");
 
@@ -69,7 +73,8 @@ namespace GameDatabaseConverter
             {
                 sw.WriteLine("     _" + headerArray[i].ToString() + " = " + headerArray[i].ToString() + ";");
             }
-            sw.WriteLine("     _end = end;");
+
+            //sw.WriteLine("     _end = end;");
 
             sw.WriteLine("    }");
             sw.WriteLine("  } // class " + args[2] + "Row");
@@ -98,22 +103,27 @@ namespace GameDatabaseConverter
                     PrintString.Add(dataStrings[i]);
                 }
 
+                ConstructorVars = "";
+
                 for (int j = 0; j < PrintString.Count; j++)
                 {
                     if (typeArray[j].ToLower().Equals("int"))
                     {
-                        sw.Write(PrintString[j]);
-                        sw.Write(",");
+                        ConstructorVars += (PrintString[j]);
+                        ConstructorVars += (",");
                     }
                     else
                     {
-                        sw.Write("\"");
-                        sw.Write(PrintString[j]);
-                        sw.Write("\"");
-                        sw.Write(",");
+                        ConstructorVars += ("\"");
+                        ConstructorVars += (PrintString[j]);
+                        ConstructorVars += ("\"");
+                        ConstructorVars += (",");
                     }
                 }
-                sw.Write("\"end\"");
+                ConstructorVars = ConstructorVars.Substring(0, ConstructorVars.LastIndexOf(','));
+
+                //sw.Write("\"end\"");
+                sw.Write(ConstructorVars);
                 sw.Write("));");
                 sw.WriteLine("");
             }

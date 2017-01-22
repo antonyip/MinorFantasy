@@ -63,8 +63,7 @@ namespace AntTool
     public int _Energy;
     public int _EnergyGrowth;
     public string _Story;
-    string _end;
-    public EquipmentDataRow(string EIndex,string Name,int ID,string Description,int Level,int HP,int HPGrowth,int MP,int MPGrowth,int STR,int STRGrowth,int DEX,int DEXGrowth,int INT,int INTGrowth,int LUK,int LUKGrowth,int Speed,int Att,int Def,int AttGrowth,int DefGrowth,int MAtt,int MAttGrowth,int MDef,int MDefGrowth,int FAtt,int FAttGrowth,int IAtt,int IAttGrowth,int TAtt,int TAttGrowth,int FDef,int IDef,int TDef,int FRes,int IRes,int TRes,int FDefGrowth,int IDefGrowth,int TDefGrowth,int FResGrowth,int IResGrowth,int TResGrowth,string Skills,string DropNormal,string DropRare,string DropLegend,string SpriteIdle,string SpriteAttack,string SpriteMagic,string SpriteIcon,string SoundDeath,string SoundAttack,int Energy,int EnergyGrowth,string Story,string end)
+    public EquipmentDataRow(string EIndex,string Name,int ID,string Description,int Level,int HP,int HPGrowth,int MP,int MPGrowth,int STR,int STRGrowth,int DEX,int DEXGrowth,int INT,int INTGrowth,int LUK,int LUKGrowth,int Speed,int Att,int Def,int AttGrowth,int DefGrowth,int MAtt,int MAttGrowth,int MDef,int MDefGrowth,int FAtt,int FAttGrowth,int IAtt,int IAttGrowth,int TAtt,int TAttGrowth,int FDef,int IDef,int TDef,int FRes,int IRes,int TRes,int FDefGrowth,int IDefGrowth,int TDefGrowth,int FResGrowth,int IResGrowth,int TResGrowth,string Skills,string DropNormal,string DropRare,string DropLegend,string SpriteIdle,string SpriteAttack,string SpriteMagic,string SpriteIcon,string SoundDeath,string SoundAttack,int Energy,int EnergyGrowth,string Story)
     {
      _EIndex = EIndex;
      _Name = Name;
@@ -123,14 +122,13 @@ namespace AntTool
      _Energy = Energy;
      _EnergyGrowth = EnergyGrowth;
      _Story = Story;
-     _end = end;
     }
   } // class EquipmentDataRow
   public class EquipmentData
   {
     private EquipmentData()
     {
-      Rows.Add(new EquipmentDataRow("E_01","NOEQUIPMENT",0,"NOEQUIPMENT",1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,"1","Tree_Log","Tree_Log","Tree_Log","NONE","NONE","NONE","NONE","NONE","NONE",1,1,"1","end"));
+      Rows.Add(new EquipmentDataRow("E_01","NOEQUIPMENT",0,"NOEQUIPMENT",1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,"1","Tree_Log","Tree_Log","Tree_Log","NONE","NONE","NONE","NONE","NONE","NONE",1,1,"1"));
     }
 
     private class NestedEquipmentData

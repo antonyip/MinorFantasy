@@ -10,21 +10,19 @@ namespace AntTool
     public int _ID;
     public string _Items;
     public string _Sprite;
-    string _end;
-    public CraftingDataRow(string Name,int ID,string Items,string Sprite,string end)
+    public CraftingDataRow(string Name,int ID,string Items,string Sprite)
     {
      _Name = Name;
      _ID = ID;
      _Items = Items;
      _Sprite = Sprite;
-     _end = end;
     }
   } // class CraftingDataRow
   public class CraftingData
   {
     private CraftingData()
     {
-      Rows.Add(new CraftingDataRow("Tree_Lumber",1,"1,1,1","Tree_Lumber_Image","end"));
+      Rows.Add(new CraftingDataRow("Tree_Lumber",1,"1,1,1","Tree_Lumber_Image"));
     }
 
     private class NestedCraftingData
