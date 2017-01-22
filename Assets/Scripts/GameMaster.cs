@@ -99,7 +99,7 @@ public class GameMaster : MonoBehaviour {
                 //GameObject go = Instantiate(monsterPrefab) as GameObject;
                 string modelName = u.character.playerStats.databaseChar._SpriteIdle;
                 Debug.Log("attempting to load" +  modelName);
-                GameObject go = Instantiate(Resources.Load("EnemyPrefabs/" + modelName)) as GameObject;
+                GameObject go = Instantiate(Resources.Load("HeroPrefabs/" + modelName)) as GameObject;
                 go.transform.SetParent(PlayerUnitsSpritePositions[i].transform);
                 go.transform.localPosition = Vector3.zero;
                 go.transform.localScale = Vector3.zero;
