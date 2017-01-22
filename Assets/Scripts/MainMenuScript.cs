@@ -28,8 +28,6 @@ public class MainMenuScript : MonoBehaviour {
 	{
 		if (PlayerIOManager.instance.LoggedIn)
 		{
-			ReloginPopup.SetActive(false);
-			LoginPopup.SetActive(false);
 			MainMenu.SetActive(true);
 			LoginMenu.SetActive(false);
 		}
@@ -45,5 +43,10 @@ public class MainMenuScript : MonoBehaviour {
 	{
 	
 	}
+
+    public void SaveCurrentData()
+    {
+        PlayerIOManager.instance.SaveToPlayerIODatabase();
+    }
 }
 

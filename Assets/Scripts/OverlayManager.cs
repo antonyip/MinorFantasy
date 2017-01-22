@@ -17,7 +17,7 @@ public class OverlayManager : MonoBehaviour {
 	public void Update()
     {
         // this is so badly done, think of how to factor this better.
-        if (DataManager.instance.userData != null)
+        if (DataManager.instance!= null && DataManager.instance.userData != null)
         {
             if (EnergyText != null)
                 EnergyText.text = "E: " + DataManager.instance.userData.energy.ToString() + " / " + DataManager.instance.userData.maxEnergy;

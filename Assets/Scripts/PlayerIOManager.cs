@@ -53,9 +53,6 @@ public class PlayerIOManager : MonoBehaviour {
 		cbFunctionFailure = callbackFunctionFailure;
 		Debug.Log("LoginSimple");
 		PlayerIO.QuickConnect.SimpleConnect(gameID,username,password,null,OnConnect,OnConnectFailure);
-
-        // Load the Userdata
-        DataManager.instance.LoadUser(_username);
 	}
 
 	public void Register(string _username, string _password, string _email, Action callbackFunctionSuccess, Action<string> callbackFunctionFailure)
@@ -78,7 +75,9 @@ public class PlayerIOManager : MonoBehaviour {
 		PlayerPrefs.SetString(PlayerPrefStrings.UserEmail, "");
 		PlayerPrefs.SetInt(PlayerPrefStrings.UserLoginMode, 0);
 		_loggedin = false;
-	}
+        CurrentPlayerDatabaseObject.Save();
+        CurrentPlayerDatabaseObject = null;
+    }
 
 	void OnRegisterFail(PlayerIOError _client)
 	{
@@ -118,9 +117,67 @@ public class PlayerIOManager : MonoBehaviour {
 		PlayerPrefs.SetInt(PlayerPrefStrings.UserLoginMode, mode);
 		_loggedin = true;
 		cbFunctionSuccess();
+
+        GetUserDataFromPlayerIO();
 	}
 
-	void OnConnectFailure(PlayerIOError _client)
+    void GetUserDataFromPlayerIO()
+    {
+        client.BigDB.LoadMyPlayerObject(OnPlayerObjectLoaded, LoginWentWrong);
+    }
+
+    void LoginWentWrong(PlayerIOError playerIOerror)
+    {
+        Debug.Log(playerIOerror.Message.ToString());
+        PopUpManager.instance.CloseLogin();
+    }
+
+    public void SaveToPlayerIODatabase()
+    {
+        Debug.Log("Success: Saving To PlayerIODatabase");
+        string compressString = DataManager.instance.userData.Compress();
+        CurrentPlayerDatabaseObject.Set(PlayerDatabaseString, compressString);
+        CurrentPlayerDatabaseObject.Save(true, true, SaveSuccess, OnConnectFailure);
+    }
+
+    void SaveSuccess()
+    {
+        Debug.Log("Save Successful");
+    }
+
+    const string PlayerDatabaseString = "PlayerDatabaseString";
+    DatabaseObject CurrentPlayerDatabaseObject = null;
+
+    void OnPlayerObjectLoaded(DatabaseObject databaseObject)
+    {
+        Debug.Log("Success: Function Returned");
+        if (databaseObject != null)
+        {
+            Debug.Log("Success: Got databaseObject");
+            CurrentPlayerDatabaseObject = databaseObject;
+            object myObject;
+            bool success = CurrentPlayerDatabaseObject.TryGetValue(PlayerDatabaseString, out myObject);
+            if (success)
+            {
+                Debug.Log("Success: Got found Loadablestring: " + myObject.ToString());
+                DataManager.instance.LoadUser(myObject.ToString());
+            }
+            else // it has not be created yet, time to create one
+            {
+                Debug.Log("Success: CreateString");
+                CurrentPlayerDatabaseObject.Set(PlayerDatabaseString, "v1=");
+                SaveToPlayerIODatabase();
+            }
+        }
+        else
+        {
+            Debug.Log("No Database Object found??");
+        }
+
+        PopUpManager.instance.CloseLogin();
+    }
+
+    void OnConnectFailure(PlayerIOError _client)
 	{
 		Debug.Log(_client.ErrorCode.ToString());
 		cbFunctionFailure(_client.ErrorCode.ToString());
