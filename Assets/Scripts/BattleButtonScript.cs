@@ -30,8 +30,8 @@ public class BattleButtonScript : MonoBehaviour {
         {
             name.text = pc.GetUnitName();
             red.transform.DOScaleX(pc.HPPercent, DataManager.NORMALANIMATION);
-            //blue.transform.DOScaleX(pc.HPPercent, DataManager.NORMALANIMATION);
-            //yellow.transform.DOScaleX(pc.HPPercent, DataManager.NORMALANIMATION);
+            blue.transform.DOScaleX(pc.MPPercent, DataManager.NORMALANIMATION);
+            yellow.transform.DOScaleX(pc.SoulPercent, DataManager.NORMALANIMATION);
         }
 
 	}

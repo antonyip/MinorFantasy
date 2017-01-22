@@ -49,6 +49,8 @@ public class VictoryScript : MonoBehaviour
         seq.Append(LootsContainer.transform.DOLocalMove(Vector3.zero, DataManager.NORMALANIMATION));
         seq.AppendInterval(DataManager.LONGANIMATION); // show items 1 by 1
         seq.Play();
+
+
     }
 
     public void HandleLost()

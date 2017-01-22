@@ -20,6 +20,8 @@ public class GameMaster : MonoBehaviour {
 
     public Text TopText;
 
+    public SpriteRenderer BattleBackground;
+
     // gamelists
     public GameObject Announcer;
     public GameObject StartGamePopup;
@@ -49,7 +51,10 @@ public class GameMaster : MonoBehaviour {
     {
         currentWave = 0;
         experienceEarnedThisMap = 0;
-    }
+
+        BattleBackground.sprite = Resources.Load<Sprite>("Backgrounds/" + AntTool.LevelData.instance.Rows.Find(x => x._ID == DataManager.instance.selectedMapLevel)._BackgroundSprite);
+        }
+
     int NumPlayerSpawn = 0;
     // Use this for initialization
     void Start () {
@@ -120,7 +125,7 @@ public class GameMaster : MonoBehaviour {
         }
         
         SpawnWave(currentWave);
-        UpdatePlayerControls();
+        //UpdatePlayerControls();
 
         Debug.Log("Determining Speed Que");
         AllUnits = AllUnits.OrderBy(x => x.character.GetSpeed()).ToList();
@@ -223,7 +228,7 @@ public class GameMaster : MonoBehaviour {
             GameObject go = Instantiate(Resources.Load("EnemyPrefabs/" + modelName)) as GameObject;
             go.transform.SetParent(MonstersUnitsSpritePositions[i].transform);
             go.transform.localPosition = Vector3.zero;
-            go.transform.localScale = Vector3.one * 100;
+            go.transform.localScale = Vector3.one;
             go.name = Mob._SpriteIdle; 
             go.GetComponentInChildren<SpriteAnimation>().LoadEnemyImage(Mob._SpriteIdle);
 
@@ -265,6 +270,7 @@ public class GameMaster : MonoBehaviour {
         { 
             GameNotStarted = false;
             StartGamePopup.SetActive(false);
+            UpdatePlayerControls();
         }
     }
 

@@ -134,6 +134,38 @@ public sealed class Character
         return 0;
     }
 
+    internal int GetMP()
+    {
+        if (IsMonster())
+        {
+            return monsterStats.monsterStats._MP + monsterStats.CurrentLevel * monsterStats.monsterStats._MPGrowth;
+        }
+
+        if (IsPlayer())
+        {
+            return playerStats.databaseChar._MP + playerStats.CurrentLevel * playerStats.databaseChar._MPGrowth;
+        }
+
+        return 0;
+    }
+
+    internal int GetSoul()
+    {
+        /*
+        if (IsMonster())
+        {
+            return monsterStats.monsterStats._MP + monsterStats.CurrentLevel * monsterStats.monsterStats._MPGrowth;
+        }
+
+        if (IsPlayer())
+        {
+            return playerStats.databaseChar._MP + playerStats.CurrentLevel * playerStats.databaseChar._MPGrowth;
+        }
+        */
+
+        return 1;
+    }
+
     public float GetSpeed()
     {
         if (IsMonster())
