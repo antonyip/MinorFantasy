@@ -5,10 +5,10 @@ using UnityEngine.UI;
 public class SpriteAnimation : MonoBehaviour
 {
     public MonoBehaviour AdapterScript;
-    int counter = 1;
-    bool Loaded = false;
-    bool Attacking = false;
-    string oldSprite;
+    //int counter = 1;
+    //bool Loaded = false;
+    //bool Attacking = false;
+    //string oldSprite;
 
     public void LoadEnemyImage(string s)
     {

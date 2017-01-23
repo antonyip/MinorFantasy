@@ -67,16 +67,19 @@ public class PlayerIOManager : MonoBehaviour {
 		PlayerIO.QuickConnect.SimpleRegister(gameID,username,password,_email,null,null,null,null,null,OnRegister,OnRegisterFail);
 	}
 
-	public void Logout()
-	{
-		//client.Logout();
-		PlayerPrefs.SetString(PlayerPrefStrings.UserUsername,"");
-		PlayerPrefs.SetString(PlayerPrefStrings.UserPassword,"");
-		PlayerPrefs.SetString(PlayerPrefStrings.UserEmail, "");
-		PlayerPrefs.SetInt(PlayerPrefStrings.UserLoginMode, 0);
-		_loggedin = false;
-        CurrentPlayerDatabaseObject.Save();
-        CurrentPlayerDatabaseObject = null;
+    public void Logout()
+    {
+        //client.Logout();
+        PlayerPrefs.SetString(PlayerPrefStrings.UserUsername, "");
+        PlayerPrefs.SetString(PlayerPrefStrings.UserPassword, "");
+        PlayerPrefs.SetString(PlayerPrefStrings.UserEmail, "");
+        PlayerPrefs.SetInt(PlayerPrefStrings.UserLoginMode, 0);
+        _loggedin = false;
+        if (CurrentPlayerDatabaseObject != null)
+        { 
+            CurrentPlayerDatabaseObject.Save();
+            CurrentPlayerDatabaseObject = null;
+        }
     }
 
 	void OnRegisterFail(PlayerIOError _client)

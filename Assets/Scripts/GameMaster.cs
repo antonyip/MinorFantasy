@@ -241,7 +241,7 @@ public class GameMaster : MonoBehaviour {
 
     void UpdatePlayerControls()
     {
-        List<PlayerCharacter> playerCharacters = DataManager.instance.userData.listOfTeams[DataManager.instance.selectedTeam].GetListOfCharacters();
+        //List<PlayerCharacter> playerCharacters = DataManager.instance.userData.listOfTeams[DataManager.instance.selectedTeam].GetListOfCharacters();
         for (int i = 0; i < DataManager.MAXUNITPERTEAM; i++)
         {           
             PlayerButtons[i].GetComponent<BattleButtonScript>().UpdateGUI(PlayerUnits[i]);

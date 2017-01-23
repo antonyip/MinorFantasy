@@ -9,7 +9,7 @@ public class BattleButtonScript : MonoBehaviour {
     public Image red;
     public Image blue;
     public Image yellow;
-    public Text name;
+    public Text myname;
 
 	// Use this for initialization
 	void Start () {
@@ -21,14 +21,14 @@ public class BattleButtonScript : MonoBehaviour {
     {
         if (pc.character == null)
         {
-            name.text = "No Character";
+            myname.text = "No Character";
             red.transform.DOScaleX(0, DataManager.NORMALANIMATION);
             blue.transform.DOScaleX(0, DataManager.NORMALANIMATION);
             yellow.transform.DOScaleX(0, DataManager.NORMALANIMATION);
         }
         else
         {
-            name.text = pc.GetUnitName();
+            myname.text = pc.GetUnitName();
             red.transform.DOScaleX(pc.HPPercent, DataManager.NORMALANIMATION);
             blue.transform.DOScaleX(pc.MPPercent, DataManager.NORMALANIMATION);
             yellow.transform.DOScaleX(pc.SoulPercent, DataManager.NORMALANIMATION);
