@@ -74,12 +74,12 @@ public class PlayerIOManager : MonoBehaviour {
         PlayerPrefs.SetString(PlayerPrefStrings.UserPassword, "");
         PlayerPrefs.SetString(PlayerPrefStrings.UserEmail, "");
         PlayerPrefs.SetInt(PlayerPrefStrings.UserLoginMode, 0);
-        _loggedin = false;
         if (CurrentPlayerDatabaseObject != null)
         { 
             CurrentPlayerDatabaseObject.Save();
             CurrentPlayerDatabaseObject = null;
         }
+        _loggedin = false;
     }
 
 	void OnRegisterFail(PlayerIOError _client)
@@ -164,6 +164,7 @@ public class PlayerIOManager : MonoBehaviour {
             {
                 Debug.Log("Success: Got found Loadablestring: " + myObject.ToString());
                 DataManager.instance.LoadUser(myObject.ToString());
+
             }
             else // it has not be created yet, time to create one
             {
@@ -171,6 +172,7 @@ public class PlayerIOManager : MonoBehaviour {
                 CurrentPlayerDatabaseObject.Set(PlayerDatabaseString, "v1=");
                 SaveToPlayerIODatabase();
             }
+            _loggedin = true;
         }
         else
         {

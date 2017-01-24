@@ -10,6 +10,7 @@ public class UserData
     public int pvpEnergy;
     public float MAPBONUSMULTIPLIER;
 
+    // stored as an index to the database
     public List<int> ListOfGambits = new List<int>();
     public List<int> ListOfCraftingMats = new List<int>();
     public List<int> ListOfEquipment = new List<int>();
@@ -42,6 +43,15 @@ public class UserData
 
         //pvp
         returnValue += "{p:" + pvpEnergy.ToString() + ":p}";
+
+        //
+        returnValue += "{gam:";
+        for (int i = 0; i < ListOfGambits.Count; i++)
+        {
+            returnValue += ListOfGambits[i].ToString();
+            returnValue += "=";
+        }
+        returnValue += ":gam}";
 
         //teams
         returnValue += "{tt:";
@@ -77,6 +87,19 @@ public class UserData
         DecompressInt(deString, "h", out gems);
         DecompressInt(deString, "i", out energy);
         DecompressInt(deString, "p", out pvpEnergy);
+
+        // gambits
+        string gam;
+        DecompressString(deString, "gam", out gam);
+        string[] gamSpilt = gam.Split('=');
+        ListOfGambits.Clear();
+        for (int i = 0; i < gamSpilt.Length; i++)
+        {
+            if (!string.IsNullOrEmpty(gamSpilt[i]))
+            {
+                ListOfGambits.Add(int.Parse(gamSpilt[i]));
+            }
+        }
 
         // PlayerCharacters
         string pc;

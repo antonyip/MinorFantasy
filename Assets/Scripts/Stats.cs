@@ -7,7 +7,33 @@ public class PlayerCharacter
 {
     public int ID;
     public int CurrentLevel;
+    public List<int> CurrentGambits = new List<int>();
+    public List<int> CurrentSkills = new List<int>();
+    public List<bool> LimitGambits = new List<bool>();
     public AntTool.HeroesDataRow databaseChar;
+
+    public PlayerCharacter()
+    {
+        while (CurrentGambits.Count < 10)
+        {
+            CurrentGambits.Add(-1);
+        }
+
+        while (CurrentSkills.Count < 10)
+        {
+            CurrentSkills.Add(-1);
+        }
+
+        while (LimitGambits.Count < 5)
+        {
+            LimitGambits.Add(true);
+        }
+
+        while (LimitGambits.Count < 10)
+        {
+            LimitGambits.Add(false);
+        }
+    }
 }
 
 public class MonsterCharacter

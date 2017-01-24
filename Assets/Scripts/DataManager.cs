@@ -45,7 +45,6 @@ public class DataManager : MonoBehaviour
     public static DataManager instance = null;
 
     // datamanager data
-    public bool LOADEDUSER = false;
     public int selectedTeam = 0;
     public int selectedMapLevel = 0;
 
@@ -110,14 +109,13 @@ public class DataManager : MonoBehaviour
 
     public void LoadUser(string UniqueUserName)
     {
-        if (LOADEDUSER == false && UniqueUserName != DataManager.BYPASSUSERLOAD) // normal loading goes here
+        if (PlayerIOManager.instance.LoggedIn == false && UniqueUserName != DataManager.BYPASSUSERLOAD) // normal loading goes here
         {
             Debug.Log("Decompressing");
             userData = new UserData();
             userData.Decompress(UniqueUserName);
-            LOADEDUSER = true;
         }
-        else if (LOADEDUSER == false && UniqueUserName == DataManager.BYPASSUSERLOAD)
+        else if (PlayerIOManager.instance.LoggedIn == false && UniqueUserName == DataManager.BYPASSUSERLOAD)
         {
             userData = new UserData();
             GenerateEmptyTeamStructure();
@@ -156,8 +154,6 @@ public class DataManager : MonoBehaviour
             userData.listOfTeams[0].SwapCharacter(2, 4);
             userData.listOfTeams[0].SwapCharacter(3, 2);
             userData.listOfTeams[0].SwapCharacter(5, 8);
-
-            LOADEDUSER = true;
 
             PlayerIOManager.instance.BypassLogin();
         }
