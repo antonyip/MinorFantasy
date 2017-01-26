@@ -230,6 +230,52 @@ public sealed class Character
         return 1;
     }
 
+    internal int GetFAtt()
+    {
+        if (IsMonster())
+        {
+            return monsterStats.monsterStats._FAtt + monsterStats.CurrentLevel * monsterStats.monsterStats._FAttGrowth;
+        }
+
+        if (IsPlayer())
+        {
+            return playerStats.databaseChar._FAtt + playerStats.CurrentLevel * playerStats.databaseChar._FAttGrowth;
+        }
+
+        return 0;
+    }
+
+    internal int GetMDef()
+    {
+        if (IsMonster())
+        {
+            return monsterStats.monsterStats._MDef + monsterStats.CurrentLevel * monsterStats.monsterStats._MDefGrowth;
+        }
+
+        if (IsPlayer())
+        {
+            return playerStats.databaseChar._MDef + playerStats.CurrentLevel * playerStats.databaseChar._MDefGrowth;
+        }
+
+        return 0;
+    }
+
+    internal int GetFDef()
+    {
+        if (IsMonster())
+        {
+            return monsterStats.monsterStats._FDef + monsterStats.CurrentLevel * monsterStats.monsterStats._FDefGrowth;
+        }
+
+        if (IsPlayer())
+        {
+            return playerStats.databaseChar._FDef + playerStats.CurrentLevel * playerStats.databaseChar._FDefGrowth;
+        }
+
+        return 0;
+    }
+
+
     public float GetSpeed()
     {
         if (IsMonster())

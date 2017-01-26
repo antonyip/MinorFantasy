@@ -237,8 +237,6 @@ public class TacticsScreenScript : MonoBehaviour {
         gambitButtonID = -1;
         skillButtonID = -1;
         skill.transform.DOLocalMoveY(-1650, DataManager.NORMALANIMATION).OnComplete(HideSkillGambit);
-
-        UtilsManager.UpdateUserData();
     }
 
     void HideSkillGambit()
