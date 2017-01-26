@@ -4,7 +4,8 @@ using System.Collections;
 
 public class GambitSkillButton : MonoBehaviour {
 
-    int ID;
+    int ButtonPosition;
+    int UserDatabasePosition;
     public Text textToShow;
 	// Use this for initialization
 	void Start () {
@@ -16,9 +17,11 @@ public class GambitSkillButton : MonoBehaviour {
 	
 	}
 
-    public void Setup(int idToBe)
+    public void Setup(int buttonPosition, int userDatabasePosition, bool HasBeenUsedElsewhere)
     {
-        ID = idToBe;
+        ButtonPosition = buttonPosition;
+        UserDatabasePosition = userDatabasePosition;
+        GetComponent<Button>().interactable = !HasBeenUsedElsewhere;
     }
 
     public void SetName(string name)
@@ -28,7 +31,7 @@ public class GambitSkillButton : MonoBehaviour {
 
     public void GambitSkillClick()
     {
-        TacticsScreenScript.instance.GambitSkillClicked(ID);
+        TacticsScreenScript.instance.GambitSkillClicked(ButtonPosition, UserDatabasePosition);
     }
 
     public void Cancel()

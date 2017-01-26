@@ -7,10 +7,32 @@ public class PlayerCharacter
 {
     public int ID;
     public int CurrentLevel;
+
+    /// <summary>
+    /// The current gambits that are assigned to this player character
+    /// </summary>
     public List<int> CurrentGambits = new List<int>();
+
+    /// <summary>
+    /// The current skills that are assigned to this player character
+    /// </summary>
     public List<int> CurrentSkills = new List<int>();
+
+    /// <summary>
+    /// The limit of gambits that this character has
+    /// </summary>
     public List<bool> LimitGambits = new List<bool>();
+
     public AntTool.HeroesDataRow databaseChar;
+
+    public EquipmentContainer Equipments = new EquipmentContainer();
+
+    public List<int> AvailableSkills()
+    {
+        List<int> returnValue = new List<int>();
+
+        return returnValue;
+    }
 
     public PlayerCharacter()
     {
@@ -47,7 +69,6 @@ public sealed class Character
 {
     public MonsterCharacter monsterStats;
     public PlayerCharacter playerStats;
-    public AntTool.EquipmentDataRow equipmentStats;
 
     public bool IsMonster()
     {

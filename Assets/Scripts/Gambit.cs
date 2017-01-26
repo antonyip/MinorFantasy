@@ -83,6 +83,16 @@ public class Gambit
         _IsExists = true;
     }
 
+    public void SetInUse()
+    {
+        _InUse = true;
+    }
+
+    public void RemoveFromUse()
+    {
+        _InUse = false;
+    }
+
     /// <summary>
     /// Is the User Using the Gambit on a hero
     /// </summary>
@@ -95,12 +105,7 @@ public class Gambit
 
     public Gambit(int positionInGambitDatabase)
     {
-        Construct(positionInGambitDatabase, -1, false, false);
-    }
-
-    public Gambit(int positionInGambitDatabase, int positionInPlayerDatabase)
-    {
-        Construct(positionInGambitDatabase, positionInPlayerDatabase, false, true);
+        Construct(positionInGambitDatabase, -1, false, true);
     }
 
     public Gambit(int positionInGambitDatabase, int positionInPlayerDatabase, bool inUse, bool isExists)

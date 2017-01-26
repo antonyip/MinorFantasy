@@ -181,17 +181,26 @@ public class TacticsScreenScript : MonoBehaviour {
         if (buttonType == ButtonType.Gambit)
         {
             GambitContainer GambitLists = DataManager.instance.userData.ListOfGambits;
+            int ButtonsGenerated = 0;
             for (int i = 0; i < GambitLists.Count; i++)
             {
-                GameObject go = Instantiate(SelectionSkillGambitPrefab) as GameObject;
-                go.transform.SetParent(SelectionSkillGambitContainer);
-                go.transform.localScale = Vector3.one;
-                go.GetComponent<GambitSkillButton>().Setup(i);
-                // TODO:: change this to the correct
-                int indexOfGambit = GambitLists.GetGambitAt(i).PositionInGambitDatabase;
-                AntTool.GambitDataRow gdr = AntTool.GambitData.instance.Rows.Find(x => x._ID == indexOfGambit);
-                Debug.Assert(gdr != null);
-                go.GetComponent<GambitSkillButton>().SetName(gdr._Name);
+                // if the gambit exists for the player -- there may be gambits that was removed by market / other things
+                if (GambitLists.GetGambitAt(i).IsExists)
+                {
+                    GameObject go = Instantiate(SelectionSkillGambitPrefab) as GameObject;
+                    go.transform.SetParent(SelectionSkillGambitContainer);
+                    go.transform.localScale = Vector3.one;
+
+                    // setting up the button to be clicked
+                    go.GetComponent<GambitSkillButton>().Setup(ButtonsGenerated, i, GambitLists.GetGambitAt(i).InUse);
+                    int indexOfGambit = GambitLists.GetGambitAt(i).PositionInGambitDatabase;
+                    AntTool.GambitDataRow gdr = AntTool.GambitData.instance.Rows.Find(x => x._ID == indexOfGambit);
+                    Debug.Assert(gdr != null);
+
+                    // setting up the details of the button
+                    go.GetComponent<GambitSkillButton>().SetName(gdr._Name);
+                    ++ButtonsGenerated;
+                }
             }
         }
         else if (buttonType == ButtonType.Skill)
@@ -214,6 +223,8 @@ public class TacticsScreenScript : MonoBehaviour {
         gambitButtonID = -1;
         skillButtonID = -1;
         skill.transform.DOLocalMoveY(-1650, DataManager.NORMALANIMATION).OnComplete(HideSkillGambit);
+
+        UtilsManager.UpdateUserData();
     }
 
     void HideSkillGambit()
@@ -222,19 +233,32 @@ public class TacticsScreenScript : MonoBehaviour {
     }
 
     /// <summary>
-    /// this happens when the skill button is clicked from the selection of tactics
+    /// Gambits the skill clicked.
     /// </summary>
-    /// <param name="id">Identifier.</param>
-    public void GambitSkillClicked(int id)
+    /// <param name="buttonPosition">Button position of the UI</param>
+    /// <param name="userDatabasePositionOfGambit">User database position of gambit.</param>
+    public void GambitSkillClicked(int buttonPosition, int userDatabasePositionOfGambit)
     {
+        // gambitButtonID tells me which gambitbutton was clicked in the selection of the gambit order
         Debug.Log("Button Clicked:" + gambitButtonID);
         if (gambitButtonID != -1)
         {
+            // remove whatever was there in the original gambit
+            int OriginalGambitID = currentPC.CurrentGambits[gambitButtonID];
+            if (OriginalGambitID != -1)
+            {
+                DataManager.instance.userData.ListOfGambits.GetGambitAt(OriginalGambitID).RemoveFromUse();
+            }
+
             // gambit was selected
-            Debug.Log("Gambit to Set:" + id);
-            Gambit g = DataManager.instance.userData.ListOfGambits.GetGambitAt(id);
-            GambitContainers[gambitButtonID].GetComponent<GambitContainerScript>().SetGambit(g.PositionInGambitDatabase);
-            currentPC.CurrentGambits[gambitButtonID] = id;
+            Debug.Log("buttonPosition:" + buttonPosition);
+            Debug.Log("userDatabasePositionOfGambit:" + userDatabasePositionOfGambit);
+
+            Gambit g = DataManager.instance.userData.ListOfGambits.GetGambitAt(userDatabasePositionOfGambit);
+            g.SetInUse();
+
+            GambitContainers[gambitButtonID].GetComponent<GambitContainerScript>().SetGambit(userDatabasePositionOfGambit);
+            currentPC.CurrentGambits[gambitButtonID] = userDatabasePositionOfGambit;
         }
 
         if (skillButtonID != -1)

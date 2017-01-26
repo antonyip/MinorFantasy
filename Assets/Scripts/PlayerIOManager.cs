@@ -135,14 +135,23 @@ public class PlayerIOManager : MonoBehaviour {
         PopUpManager.instance.CloseLogin();
     }
 
+    string OldString = "";
+
     public void SaveToPlayerIODatabase()
     {
         string compressString = DataManager.instance.userData.Compress();
         if (CurrentPlayerDatabaseObject != null)
         {
-            Debug.Log("Success: Saving To PlayerIODatabase");
-            CurrentPlayerDatabaseObject.Set(PlayerDatabaseString, compressString);
-            CurrentPlayerDatabaseObject.Save(true, true, SaveSuccess, OnConnectFailure);
+            if (OldString == compressString)
+            {
+                Debug.Log("Success: No Data Has changed. No Point saving...");
+            }
+            else
+            {
+                Debug.Log("Success: Saving To PlayerIODatabase");
+                CurrentPlayerDatabaseObject.Set(PlayerDatabaseString, compressString);
+                CurrentPlayerDatabaseObject.Save(true, true, SaveSuccess, OnConnectFailure);
+            }
         }
         else
         {

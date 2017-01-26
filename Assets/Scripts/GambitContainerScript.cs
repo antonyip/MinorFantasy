@@ -24,11 +24,13 @@ public class GambitContainerScript : MonoBehaviour {
         ID = idToBe;
     }
 
-    public void SetGambit(int indexInGambitDatabase)
+    public void SetGambit(int indexInUserDatabase)
     {
-        if (indexInGambitDatabase != -1)
+        Debug.Log("SetGambit:" + indexInUserDatabase);
+        if (indexInUserDatabase != -1)
         {
-            GambitText.text = AntTool.GambitData.instance.Rows.Find(x => x._ID == indexInGambitDatabase)._Name;
+            Gambit g = DataManager.instance.userData.ListOfGambits.GetGambitAt(indexInUserDatabase);
+            GambitText.text = AntTool.GambitData.instance.Rows.Find(x => x._ID == g.PositionInGambitDatabase)._Name;
         }
         else
         {

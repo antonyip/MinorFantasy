@@ -171,11 +171,11 @@ public class DataManager : MonoBehaviour
             userData.listOfTeams[0].SwapCharacter(3, 2);
             userData.listOfTeams[0].SwapCharacter(5, 8);
 
-            userData.ListOfGambits.Add(new Gambit(5,0));
-            userData.ListOfGambits.Add(new Gambit(1,1));
-            userData.ListOfGambits.Add(new Gambit(2,2));
-            userData.ListOfGambits.Add(new Gambit(3,3));
-            userData.ListOfGambits.Add(new Gambit(4,4));
+            userData.ListOfGambits.Add(new Gambit(5));
+            userData.ListOfGambits.Add(new Gambit(1));
+            userData.ListOfGambits.Add(new Gambit(2));
+            userData.ListOfGambits.Add(new Gambit(3));
+            userData.ListOfGambits.Add(new Gambit(4));
 
             PlayerIOManager.instance.BypassLogin();
         }
