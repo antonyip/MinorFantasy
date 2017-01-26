@@ -2,13 +2,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using System;
+using System.Xml.Serialization;
 
+[System.Serializable]
 public class Team {
 
     public const int EMPTYSLOT = -1;
 
     // indexes to userdata team
     List<int> listOfCharacters = new List<int>();
+
+    public List<int> S_ListOfCharacters
+    {
+        get { return listOfCharacters; }
+        set { listOfCharacters = value; }
+    }
 
     public Team()
     {

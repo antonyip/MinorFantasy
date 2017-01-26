@@ -2,7 +2,10 @@
 using System.Collections;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Xml.Serialization;
 
+[System.Serializable]
 public class PlayerCharacter
 {
     public int ID;
@@ -23,6 +26,7 @@ public class PlayerCharacter
     /// </summary>
     public List<bool> LimitGambits = new List<bool>();
 
+    [XmlIgnore]
     public AntTool.HeroesDataRow databaseChar;
 
     public EquipmentContainer Equipments = new EquipmentContainer();

@@ -28,6 +28,8 @@ public class BattleButtonScript : MonoBehaviour {
         }
         else
         {
+            Debug.Assert(pc != null);
+            Debug.Assert(myname != null);
             myname.text = pc.GetUnitName();
             red.transform.DOScaleX(pc.HPPercent, DataManager.NORMALANIMATION);
             blue.transform.DOScaleX(pc.MPPercent, DataManager.NORMALANIMATION);

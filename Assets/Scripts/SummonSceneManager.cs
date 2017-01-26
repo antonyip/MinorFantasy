@@ -109,7 +109,7 @@ public class SummonSceneManager : MonoBehaviour {
     public void SummonHeroButtonPressed1Gold()
     {
         Debug.Log("Summon Heroes button pressed");
-        if (DataManager.instance.userData.gold >= DataManager.GoldForSummoningHeroes)
+        if (DataManager.instance.userData.Gold >= DataManager.GoldForSummoningHeroes)
         {
             Debug.Log("Send Confirmation of gold summon 1");
             summonPaymentType = SummonPaymentType.Gold;
@@ -128,7 +128,7 @@ public class SummonSceneManager : MonoBehaviour {
     public void SummonHeroButtonPressed11Gold()
     {
         Debug.Log("Summon Heroes button pressed");
-        if (DataManager.instance.userData.gold >= DataManager.GoldForSummoningHeroes10)
+        if (DataManager.instance.userData.Gold >= DataManager.GoldForSummoningHeroes10)
         {
             Debug.Log("Send Confirmation of gold summon 11");
             summonPaymentType = SummonPaymentType.Gold;
@@ -147,7 +147,7 @@ public class SummonSceneManager : MonoBehaviour {
     public void SummonHeroButtonPressed1Gem()
     {
         Debug.Log("Summon Heroes button pressed");
-        if (DataManager.instance.userData.gems >= DataManager.GemForSummoningHeroes)
+        if (DataManager.instance.userData.Gems >= DataManager.GemForSummoningHeroes)
         {
             Debug.Log("Send Confirmation of gem summon 1");
             summonPaymentType = SummonPaymentType.Gem;
@@ -166,7 +166,7 @@ public class SummonSceneManager : MonoBehaviour {
     public void SummonHeroButtonPressed11Gem()
     {
         Debug.Log("Summon Heroes button pressed");
-        if (DataManager.instance.userData.gems >= DataManager.GemForSummoningHeroes10)
+        if (DataManager.instance.userData.Gems >= DataManager.GemForSummoningHeroes10)
         {
             Debug.Log("Send Confirmation of gem summon 11");
             summonPaymentType = SummonPaymentType.Gem;
@@ -187,7 +187,7 @@ public class SummonSceneManager : MonoBehaviour {
     public void SummonGambitButtonPressed1Gold()
     {
         Debug.Log("Summon Gambit button pressed");
-        if (DataManager.instance.userData.gold >= DataManager.GoldForSummoningGambit)
+        if (DataManager.instance.userData.Gold >= DataManager.GoldForSummoningGambit)
         {
             Debug.Log("Send Confirmation of gold summon 1");
             summonPaymentType = SummonPaymentType.Gold;
@@ -206,7 +206,7 @@ public class SummonSceneManager : MonoBehaviour {
     public void SummonGambitButtonPressed11Gold()
     {
         Debug.Log("Summon Gambit button pressed");
-        if (DataManager.instance.userData.gold >= DataManager.GoldForSummoningGambit10)
+        if (DataManager.instance.userData.Gold >= DataManager.GoldForSummoningGambit10)
         {
             Debug.Log("Send Confirmation of gold summon 11");
             summonPaymentType = SummonPaymentType.Gold;
@@ -225,7 +225,7 @@ public class SummonSceneManager : MonoBehaviour {
     public void SummonGambitButtonPressed1Gem()
     {
         Debug.Log("Summon Gambit button pressed");
-        if (DataManager.instance.userData.gems >= DataManager.GemForSummoningGambit)
+        if (DataManager.instance.userData.Gems >= DataManager.GemForSummoningGambit)
         {
             Debug.Log("Send Confirmation of gem summon 1");
             summonPaymentType = SummonPaymentType.Gem;
@@ -244,7 +244,7 @@ public class SummonSceneManager : MonoBehaviour {
     public void SummonGambitButtonPressed11Gem()
     {
         Debug.Log("Summon Heroes button pressed");
-        if (DataManager.instance.userData.gems >= DataManager.GemForSummoningGambit10)
+        if (DataManager.instance.userData.Gems >= DataManager.GemForSummoningGambit10)
         {
             Debug.Log("Send Confirmation of gem summon 11");
             summonPaymentType = SummonPaymentType.Gem;
@@ -271,11 +271,11 @@ public class SummonSceneManager : MonoBehaviour {
         // TO FINISH UP
         if (summonPaymentType == SummonPaymentType.Gold)
         {
-            DataManager.instance.userData.gold -= amountToPay;
+            DataManager.instance.userData.Gold -= amountToPay;
         }
         else if (summonPaymentType == SummonPaymentType.Gem)
         {
-            DataManager.instance.userData.gems -= amountToPay;
+            DataManager.instance.userData.Gems -= amountToPay;
         }
         
         ListOfHeroesGottenText.text = "";

@@ -127,8 +127,9 @@ public class DataManager : MonoBehaviour
         if (PlayerIOManager.instance.LoggedIn == false && UniqueUserName != DataManager.BYPASSUSERLOAD) // normal loading goes here
         {
             Debug.Log("Decompressing");
-            userData = new UserData();
-            userData.Decompress(UniqueUserName);
+            UserDataContainer udc = new UserDataContainer();
+            udc.Decompress(UniqueUserName);
+            userData = udc.userData;
         }
         // hacks for debugging
         else if (PlayerIOManager.instance.LoggedIn == false && UniqueUserName == DataManager.BYPASSUSERLOAD)
@@ -144,6 +145,8 @@ public class DataManager : MonoBehaviour
                 pc = new PlayerCharacter();
                 pc.ID = (i+1) * 2;
                 pc.databaseChar = AntTool.HeroesData.instance.Rows.Find(x => x._ID == pc.ID);
+                pc.CurrentGambits[0] = 0;
+                pc.CurrentSkills[0] = 1;
                 userData.listOfPlayerCharacters.Add(pc);
             }
 
@@ -151,6 +154,8 @@ public class DataManager : MonoBehaviour
             pc = new PlayerCharacter();
             pc.ID = 3;
             pc.databaseChar = AntTool.HeroesData.instance.Rows.Find(x => x._ID == pc.ID);
+            pc.CurrentGambits[0] = 0;
+            pc.CurrentSkills[0] = 1;
             userData.listOfPlayerCharacters.Add(pc);
 
             // insert random for last 8
@@ -158,6 +163,8 @@ public class DataManager : MonoBehaviour
             {
                 pc = new PlayerCharacter();
                 pc.ID = 1;
+                pc.CurrentGambits[0] = 0;
+                pc.CurrentSkills[0] = 1;
                 pc.databaseChar = AntTool.HeroesData.instance.Rows.Find(x => x._ID == pc.ID);
                 userData.listOfPlayerCharacters.Add(pc);
             }
@@ -171,11 +178,11 @@ public class DataManager : MonoBehaviour
             userData.listOfTeams[0].SwapCharacter(3, 2);
             userData.listOfTeams[0].SwapCharacter(5, 8);
 
-            userData.ListOfGambits.Add(new Gambit(5));
             userData.ListOfGambits.Add(new Gambit(1));
             userData.ListOfGambits.Add(new Gambit(2));
             userData.ListOfGambits.Add(new Gambit(3));
             userData.ListOfGambits.Add(new Gambit(4));
+            userData.ListOfGambits.Add(new Gambit(5));
 
             PlayerIOManager.instance.BypassLogin();
         }

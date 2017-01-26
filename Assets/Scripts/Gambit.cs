@@ -1,9 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 
+[System.Serializable]
 public class GambitContainer
 {
     List<Gambit> ListOfGambits = new List<Gambit>();
+
+    public List<Gambit> S_ListOfGambits
+    {
+        get { return ListOfGambits; }
+        set { S_ListOfGambits = value; }
+    }
 
     public int Count
     { 
@@ -46,8 +53,33 @@ public class GambitContainer
     }
 }
 
+[System.Serializable]
 public class Gambit
 {
+    public int S_PositionInGambitDatabase
+    {
+        get { return _PositionInGambitDatabase; }
+        set { _PositionInGambitDatabase = value; }
+    }
+
+    public int S_PositionInPlayerDatabase
+    {
+        get { return _PositionInPlayerDatabase; }
+        set { _PositionInPlayerDatabase = value; }
+    }
+
+    public bool S_InUse
+    {
+        get { return _InUse; }
+        set { _InUse = value; }
+    }
+
+    public bool S_IsExists
+    {
+        get { return _IsExists; }
+        set { _IsExists = value; }
+    }
+
     int _PositionInGambitDatabase;
     int _PositionInPlayerDatabase;
 
@@ -102,6 +134,11 @@ public class Gambit
     /// Does the User Have the Gambit ?
     /// </summary>
     bool _IsExists = true;
+
+    public Gambit()
+    {
+        Construct(-1, -1, false, false);
+    }
 
     public Gambit(int positionInGambitDatabase)
     {
