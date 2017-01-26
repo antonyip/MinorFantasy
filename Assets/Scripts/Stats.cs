@@ -31,6 +31,19 @@ public class PlayerCharacter
     {
         List<int> returnValue = new List<int>();
 
+        if (databaseChar == null)
+            databaseChar = AntTool.HeroesData.instance.Rows.Find(x => x._ID == ID);
+
+        string[] ListOfSkillsAvail = databaseChar._Skills.Split('=');
+
+        for (int i = 0; i < ListOfSkillsAvail.Length; i++)
+        {
+            if (!string.IsNullOrEmpty(ListOfSkillsAvail[i]))
+            {
+                returnValue.Add(int.Parse(ListOfSkillsAvail[i]));
+            }
+        }
+
         return returnValue;
     }
 

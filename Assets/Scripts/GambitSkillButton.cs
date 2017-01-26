@@ -7,6 +7,8 @@ public class GambitSkillButton : MonoBehaviour {
     int ButtonPosition;
     int UserDatabasePosition;
     public Text textToShow;
+
+
 	// Use this for initialization
 	void Start () {
 	
@@ -17,11 +19,17 @@ public class GambitSkillButton : MonoBehaviour {
 	
 	}
 
-    public void Setup(int buttonPosition, int userDatabasePosition, bool HasBeenUsedElsewhere)
+    public void SetupGambit(int buttonPosition, int userDatabasePosition, bool HasBeenUsedElsewhere)
     {
         ButtonPosition = buttonPosition;
         UserDatabasePosition = userDatabasePosition;
         GetComponent<Button>().interactable = !HasBeenUsedElsewhere;
+    }
+
+    public void SetupSkill(int buttonPosition, int skillID)
+    {
+        ButtonPosition = buttonPosition;
+        UserDatabasePosition = skillID;
     }
 
     public void SetName(string name)

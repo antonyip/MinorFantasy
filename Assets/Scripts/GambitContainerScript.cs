@@ -26,7 +26,6 @@ public class GambitContainerScript : MonoBehaviour {
 
     public void SetGambit(int indexInUserDatabase)
     {
-        Debug.Log("SetGambit:" + indexInUserDatabase);
         if (indexInUserDatabase != -1)
         {
             Gambit g = DataManager.instance.userData.ListOfGambits.GetGambitAt(indexInUserDatabase);
@@ -40,6 +39,7 @@ public class GambitContainerScript : MonoBehaviour {
 
     public void SetSkill(int indexInSkillDatabase)
     {
+        Debug.Log("indexInSkillDatabase" + indexInSkillDatabase);
         if (indexInSkillDatabase != -1)
         {
             SkillText.text = AntTool.SkillData.instance.Rows.Find(x => x._ID == indexInSkillDatabase)._Name;

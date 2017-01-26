@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using AntTool;
 
 public class TacticsScreenScript : MonoBehaviour {
 
@@ -192,7 +193,7 @@ public class TacticsScreenScript : MonoBehaviour {
                     go.transform.localScale = Vector3.one;
 
                     // setting up the button to be clicked
-                    go.GetComponent<GambitSkillButton>().Setup(ButtonsGenerated, i, GambitLists.GetGambitAt(i).InUse);
+                    go.GetComponent<GambitSkillButton>().SetupGambit(ButtonsGenerated, i, GambitLists.GetGambitAt(i).InUse);
                     int indexOfGambit = GambitLists.GetGambitAt(i).PositionInGambitDatabase;
                     AntTool.GambitDataRow gdr = AntTool.GambitData.instance.Rows.Find(x => x._ID == indexOfGambit);
                     Debug.Assert(gdr != null);
@@ -205,7 +206,20 @@ public class TacticsScreenScript : MonoBehaviour {
         }
         else if (buttonType == ButtonType.Skill)
         {
+            var SkillList = currentPC.AvailableSkills();
+            for (int i = 0; i < SkillList.Count; i++)
+            {
+                GameObject go = Instantiate(SelectionSkillGambitPrefab) as GameObject;
+                go.transform.SetParent(SelectionSkillGambitContainer);
+                go.transform.localScale = Vector3.one;
 
+                // setting up the button to be clicked
+                go.GetComponent<GambitSkillButton>().SetupSkill(i, SkillList[i]);
+
+                // setting up the details of the button
+                SkillDataRow skill = AntTool.SkillData.instance.Rows.Find(x => x._ID == SkillList[i]);
+                go.GetComponent<GambitSkillButton>().SetName(skill._Name);
+            }
         }
     }
 
@@ -236,13 +250,13 @@ public class TacticsScreenScript : MonoBehaviour {
     /// Gambits the skill clicked.
     /// </summary>
     /// <param name="buttonPosition">Button position of the UI</param>
-    /// <param name="userDatabasePositionOfGambit">User database position of gambit.</param>
+    /// <param name="userDatabasePositionOfGambit">User database position of gambit. / Skill Data Position in the other case</param>
     public void GambitSkillClicked(int buttonPosition, int userDatabasePositionOfGambit)
     {
         // gambitButtonID tells me which gambitbutton was clicked in the selection of the gambit order
-        Debug.Log("Button Clicked:" + gambitButtonID);
         if (gambitButtonID != -1)
         {
+            Debug.Log("Button Clicked:" + gambitButtonID);
             // remove whatever was there in the original gambit
             int OriginalGambitID = currentPC.CurrentGambits[gambitButtonID];
             if (OriginalGambitID != -1)
@@ -263,7 +277,10 @@ public class TacticsScreenScript : MonoBehaviour {
 
         if (skillButtonID != -1)
         {
+            Debug.Log("Button Clicked:" + skillButtonID);
 
+            GambitContainers[skillButtonID].GetComponent<GambitContainerScript>().SetSkill(userDatabasePositionOfGambit);
+            currentPC.CurrentSkills[skillButtonID] = userDatabasePositionOfGambit;
         }
 
         CancelSelectGambitSkill();
