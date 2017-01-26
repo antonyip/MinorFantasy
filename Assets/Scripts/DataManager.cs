@@ -36,8 +36,14 @@ public class DataManager : MonoBehaviour
     public const int GoldForSummoningHeroes10 = 45000;
     public const int GemForSummoningHeroes10 = 400;
 
+    public const int GoldForSummoningGambit = 5000;
+    public const int GemForSummoningGambit = 45;
+    public const int GoldForSummoningGambit10 = 45000;
+    public const int GemForSummoningGambit10 = 400;
+
 
     public static List<int> CurrentHeroesOdds = new List<int>();
+    public static List<int> CurrentGambitOdds = new List<int>();
 
     public const string BYPASSUSERLOAD = "BYPASSUSERLOAD";
 
@@ -99,6 +105,15 @@ public class DataManager : MonoBehaviour
             CurrentHeroesOdds.Add(5);
         }
 
+        // hack to generate current odds for hero summon pool
+        for (int i = 0; i < 5; i++)
+        {
+            CurrentGambitOdds.Add(1);
+            CurrentGambitOdds.Add(2);
+            CurrentGambitOdds.Add(3);
+            CurrentGambitOdds.Add(4);
+            CurrentGambitOdds.Add(5);
+        }
     }
 
     // Update is called once per frame
@@ -115,6 +130,7 @@ public class DataManager : MonoBehaviour
             userData = new UserData();
             userData.Decompress(UniqueUserName);
         }
+        // hacks for debugging
         else if (PlayerIOManager.instance.LoggedIn == false && UniqueUserName == DataManager.BYPASSUSERLOAD)
         {
             userData = new UserData();
@@ -154,6 +170,12 @@ public class DataManager : MonoBehaviour
             userData.listOfTeams[0].SwapCharacter(2, 4);
             userData.listOfTeams[0].SwapCharacter(3, 2);
             userData.listOfTeams[0].SwapCharacter(5, 8);
+
+            userData.ListOfGambits.Add(new Gambit(5,0));
+            userData.ListOfGambits.Add(new Gambit(1,1));
+            userData.ListOfGambits.Add(new Gambit(2,2));
+            userData.ListOfGambits.Add(new Gambit(3,3));
+            userData.ListOfGambits.Add(new Gambit(4,4));
 
             PlayerIOManager.instance.BypassLogin();
         }

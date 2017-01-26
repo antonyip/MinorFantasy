@@ -180,7 +180,7 @@ public class TacticsScreenScript : MonoBehaviour {
 
         if (buttonType == ButtonType.Gambit)
         {
-            List<int> GambitLists = DataManager.instance.userData.ListOfGambits;
+            GambitContainer GambitLists = DataManager.instance.userData.ListOfGambits;
             for (int i = 0; i < GambitLists.Count; i++)
             {
                 GameObject go = Instantiate(SelectionSkillGambitPrefab) as GameObject;
@@ -188,7 +188,8 @@ public class TacticsScreenScript : MonoBehaviour {
                 go.transform.localScale = Vector3.one;
                 go.GetComponent<GambitSkillButton>().Setup(i);
                 // TODO:: change this to the correct
-                AntTool.GambitDataRow gdr = AntTool.GambitData.instance.Rows.Find(x => x._ID == GambitLists[i]);
+                int indexOfGambit = GambitLists.GetGambitAt(i).PositionInGambitDatabase;
+                AntTool.GambitDataRow gdr = AntTool.GambitData.instance.Rows.Find(x => x._ID == indexOfGambit);
                 Debug.Assert(gdr != null);
                 go.GetComponent<GambitSkillButton>().SetName(gdr._Name);
             }
@@ -220,8 +221,28 @@ public class TacticsScreenScript : MonoBehaviour {
         skill.SetActive(false);
     }
 
+    /// <summary>
+    /// this happens when the skill button is clicked from the selection of tactics
+    /// </summary>
+    /// <param name="id">Identifier.</param>
     public void GambitSkillClicked(int id)
     {
-        Debug.Log("Button Clicked:" + id);
+        Debug.Log("Button Clicked:" + gambitButtonID);
+        if (gambitButtonID != -1)
+        {
+            // gambit was selected
+            Debug.Log("Gambit to Set:" + id);
+            Gambit g = DataManager.instance.userData.ListOfGambits.GetGambitAt(id);
+            GambitContainers[gambitButtonID].GetComponent<GambitContainerScript>().SetGambit(g.PositionInGambitDatabase);
+            currentPC.CurrentGambits[gambitButtonID] = id;
+        }
+
+        if (skillButtonID != -1)
+        {
+
+        }
+
+        CancelSelectGambitSkill();
     }
 }
+

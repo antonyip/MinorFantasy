@@ -5,7 +5,7 @@ public class UtilsManager
 {
     public static void UpdateUserData()
     {
-
+        PlayerIOManager.instance.SaveToPlayerIODatabase();
     }
 
     public static Color hexToColor(string hex)

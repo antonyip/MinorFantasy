@@ -11,7 +11,7 @@ public class UserData
     public float MAPBONUSMULTIPLIER;
 
     // stored as an index to the database
-    public List<int> ListOfGambits = new List<int>();
+    public GambitContainer ListOfGambits = new GambitContainer();
     public List<int> ListOfCraftingMats = new List<int>();
     public List<int> ListOfEquipment = new List<int>();
 
@@ -48,7 +48,7 @@ public class UserData
         returnValue += "{gam:";
         for (int i = 0; i < ListOfGambits.Count; i++)
         {
-            returnValue += ListOfGambits[i].ToString();
+            returnValue += ListOfGambits.GetGambitAt(i).PositionInGambitDatabase.ToString();
             returnValue += "=";
         }
         returnValue += ":gam}";
@@ -97,7 +97,8 @@ public class UserData
         {
             if (!string.IsNullOrEmpty(gamSpilt[i]))
             {
-                ListOfGambits.Add(int.Parse(gamSpilt[i]));
+                int GambitIndex = int.Parse(gamSpilt[i]);
+                ListOfGambits.Add(new Gambit(GambitIndex));
             }
         }
 

@@ -137,10 +137,17 @@ public class PlayerIOManager : MonoBehaviour {
 
     public void SaveToPlayerIODatabase()
     {
-        Debug.Log("Success: Saving To PlayerIODatabase");
         string compressString = DataManager.instance.userData.Compress();
-        CurrentPlayerDatabaseObject.Set(PlayerDatabaseString, compressString);
-        CurrentPlayerDatabaseObject.Save(true, true, SaveSuccess, OnConnectFailure);
+        if (CurrentPlayerDatabaseObject != null)
+        {
+            Debug.Log("Success: Saving To PlayerIODatabase");
+            CurrentPlayerDatabaseObject.Set(PlayerDatabaseString, compressString);
+            CurrentPlayerDatabaseObject.Save(true, true, SaveSuccess, OnConnectFailure);
+        }
+        else
+        {
+            Debug.LogWarning("No CurrentPlayerDatabase Object");
+        }
     }
 
     void SaveSuccess()
