@@ -30,6 +30,7 @@ public class MainMenuScript : MonoBehaviour {
 		{
 			MainMenu.SetActive(true);
 			LoginMenu.SetActive(false);
+            PopUpManager.instance.CloseLogin();
 		}
 		else
 		{

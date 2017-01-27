@@ -12,6 +12,11 @@ public class MainMenuButton : MonoBehaviour
 	public GameObject LoginMenu;
 	public GameObject MainMenu;
 
+    void Start()
+    {
+        GetComponentInChildren<Text>().color = Color.white;
+    }
+
     /// <summary>
     /// hack to bypass the login system - user data is not saved
     /// </summary>
@@ -19,7 +24,6 @@ public class MainMenuButton : MonoBehaviour
 	{
         //SceneManager.instance.NextSceneName = "MapScene";
         DataManager.instance.LoadUser(DataManager.BYPASSUSERLOAD);
-        PlayerIOManager.instance.BypassLogin();
         LoginMenu.SetActive(false);
         MainMenu.SetActive(true);
     }

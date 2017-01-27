@@ -20,13 +20,13 @@ public class OverlayManager : MonoBehaviour {
         if (DataManager.instance!= null && DataManager.instance.userData != null)
         {
             if (EnergyText != null)
-                EnergyText.text = "E: " + DataManager.instance.userData.energy.ToString() + " / " + DataManager.instance.userData.maxEnergy;
+                EnergyText.text = "E: " + DataManager.instance.userData.Energy.ToString() + " / " + DataManager.instance.userData.MaxEnergy;
         
             if (MoneyText != null)
-                MoneyText.text = "$" + DataManager.instance.userData.gold.ToString();
+                MoneyText.text = "$" + DataManager.instance.userData.Gold.ToString();
         
             if (GemText != null)
-                GemText.text = "G: " + DataManager.instance.userData.gems.ToString();
+                GemText.text = "G: " + DataManager.instance.userData.Gems.ToString();
         }
 	}
 	        

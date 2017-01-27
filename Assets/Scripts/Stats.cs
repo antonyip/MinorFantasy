@@ -2,12 +2,134 @@
 using System.Collections;
 using System;
 using System.Collections.Generic;
+using SimpleJSON;
 
-public class PlayerCharacter
+public class PlayerCharacter : Compressable
 {
+    public string Compress()
+    {
+        var returnValue = JSON.Parse("{}");
+        returnValue["ID"] = ID.ToString();
+        
+        returnValue["CurrentLevel"] = CurrentLevel.ToString();
+
+        for (int i = 0; i < CurrentGambits.Count; i++)
+        {
+            returnValue["Gambits"][-1] = CurrentGambits[i].ToString();
+        }
+
+        for (int i = 0; i < CurrentSkills.Count; i++)
+        {
+            returnValue["Skills"][-1] = CurrentSkills[i].ToString();
+        }
+
+        for (int i = 0; i < LimitGambits.Count; i++)
+        {
+            returnValue["LimitGambits"][-1] = LimitGambits[i].ToString();
+        }
+
+        return returnValue.ToString();
+    }
+
+    public void Decompress(string deString)
+    {
+        var json = JSON.Parse(deString);
+        if (json["ID"] != null) ID = json["ID"].AsInt;
+        if (json["CurrentLevel"] != null) CurrentLevel = json["CurrentLevel"].AsInt;
+
+        CurrentGambits.Clear();
+        CurrentSkills.Clear();
+        LimitGambits.Clear();
+
+        int counter = 0;
+        while(json["Skills"][counter] != null)
+        {
+            CurrentSkills.Add(json["Skills"][counter].AsInt);
+            ++counter;
+        }
+
+        counter = 0;
+        while (json["Gambits"][counter] != null)
+        {
+            CurrentGambits.Add(json["Gambits"][counter].AsInt);
+            ++counter;
+        }
+
+        counter = 0;
+        while (json["LimitGambits"][counter] != null)
+        {
+            LimitGambits.Add(json["LimitGambits"][counter].AsBool);
+            ++counter;
+        }
+
+        // other init 
+        databaseChar = AntTool.HeroesData.instance.Rows.Find(x => x._ID == ID);
+    }
+
     public int ID;
-    public int CurrentLevel;
+    public int CurrentLevel = 1;
+
+    /// <summary>
+    /// The current gambits that are assigned to this player character
+    /// </summary>
+    public List<int> CurrentGambits = new List<int>();
+
+    /// <summary>
+    /// The current skills that are assigned to this player character
+    /// </summary>
+    public List<int> CurrentSkills = new List<int>();
+
+    /// <summary>
+    /// The limit of gambits that this character has
+    /// </summary>
+    public List<bool> LimitGambits = new List<bool>();
+
     public AntTool.HeroesDataRow databaseChar;
+
+    public EquipmentContainer Equipments = new EquipmentContainer();
+
+    public List<int> AvailableSkills()
+    {
+        List<int> returnValue = new List<int>();
+
+        if (databaseChar == null)
+            databaseChar = AntTool.HeroesData.instance.Rows.Find(x => x._ID == ID);
+
+        string[] ListOfSkillsAvail = databaseChar._Skills.Split('=');
+
+        for (int i = 0; i < ListOfSkillsAvail.Length; i++)
+        {
+            if (!string.IsNullOrEmpty(ListOfSkillsAvail[i]))
+            {
+                returnValue.Add(int.Parse(ListOfSkillsAvail[i]));
+            }
+        }
+
+        return returnValue;
+    }
+
+    public PlayerCharacter()
+    {
+        while (CurrentGambits.Count < 10)
+        {
+            CurrentGambits.Add(-1);
+        }
+
+        while (CurrentSkills.Count < 10)
+        {
+            CurrentSkills.Add(-1);
+        }
+
+        while (LimitGambits.Count < 5)
+        {
+            LimitGambits.Add(true);
+        }
+
+        while (LimitGambits.Count < 10)
+        {
+            LimitGambits.Add(false);
+        }
+    }
 }
 
 public class MonsterCharacter
@@ -21,7 +143,6 @@ public sealed class Character
 {
     public MonsterCharacter monsterStats;
     public PlayerCharacter playerStats;
-    public AntTool.EquipmentDataRow equipmentStats;
 
     public bool IsMonster()
     {
@@ -165,6 +286,52 @@ public sealed class Character
 
         return 1;
     }
+
+    internal int GetFAtt()
+    {
+        if (IsMonster())
+        {
+            return monsterStats.monsterStats._FAtt + monsterStats.CurrentLevel * monsterStats.monsterStats._FAttGrowth;
+        }
+
+        if (IsPlayer())
+        {
+            return playerStats.databaseChar._FAtt + playerStats.CurrentLevel * playerStats.databaseChar._FAttGrowth;
+        }
+
+        return 0;
+    }
+
+    internal int GetMDef()
+    {
+        if (IsMonster())
+        {
+            return monsterStats.monsterStats._MDef + monsterStats.CurrentLevel * monsterStats.monsterStats._MDefGrowth;
+        }
+
+        if (IsPlayer())
+        {
+            return playerStats.databaseChar._MDef + playerStats.CurrentLevel * playerStats.databaseChar._MDefGrowth;
+        }
+
+        return 0;
+    }
+
+    internal int GetFDef()
+    {
+        if (IsMonster())
+        {
+            return monsterStats.monsterStats._FDef + monsterStats.CurrentLevel * monsterStats.monsterStats._FDefGrowth;
+        }
+
+        if (IsPlayer())
+        {
+            return playerStats.databaseChar._FDef + playerStats.CurrentLevel * playerStats.databaseChar._FDefGrowth;
+        }
+
+        return 0;
+    }
+
 
     public float GetSpeed()
     {

@@ -1,16 +1,42 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using SimpleJSON;
 
-public class UserData
+public interface Compressable
 {
-    public int gold;
-    public int gems;
-    public int energy;
-    public int maxEnergy;
-    public int pvpEnergy;
+    string Compress();
+    void Decompress(string deString);
+}
+
+public class UserDataContainer : Compressable
+{
+    public UserData userData;
+
+    public string Compress()
+    {
+        string compressString =  userData.Compress();
+        Debug.Log("CompressString:" + compressString);
+        return compressString;
+    }
+
+    public void Decompress(string deString)
+    {
+        userData = new UserData();
+        userData.Decompress(deString);
+    }
+}
+
+public class UserData : Compressable
+{
+    public int Gold;
+    public int Gems;
+    public int Energy;
+    public int MaxEnergy;
+    public int PvpEnergy;
     public float MAPBONUSMULTIPLIER;
 
-    public List<int> ListOfGambits = new List<int>();
+    // stored as an index to the database
+    public GambitContainer ListOfGambits = new GambitContainer();
     public List<int> ListOfCraftingMats = new List<int>();
     public List<int> ListOfEquipment = new List<int>();
 
@@ -19,164 +45,84 @@ public class UserData
 
     public UserData()
     {
-        gold = 50000;
-        gems = 2000;
-        energy = 50;
-        maxEnergy = 50;
-        pvpEnergy = 0;
+        Gold = 50000;
+        Gems = 500;
+        Energy = 50;
+        MaxEnergy = 50;
+        PvpEnergy = 5;
         MAPBONUSMULTIPLIER = 1.0f;
+
+        while (listOfTeams.Count < DataManager.MAXTEAM)
+        {
+            listOfTeams.Add(new Team());
+        }
     }
 
     public string Compress()
     {
-        string returnValue = "v1=";
+        var returnValue = JSON.Parse("{}");
+        returnValue["Gold"]                   = Gold.ToString();
+        returnValue["Gems"]                   = Gems.ToString();
+        returnValue["Energy"]                 = Energy.ToString();
+        returnValue["MaxEnergy"]              = MaxEnergy.ToString();
+        returnValue["PvpEnergy"]              = PvpEnergy.ToString();
+        returnValue["ListOfGambits"]          = ListOfGambits.Compress();
 
-        // gold
-        returnValue += "{g:" + gold.ToString() + ":g}";
-
-        // gem
-        returnValue += "{h:" + gems.ToString() + ":h}";
-
-        // energy
-        returnValue += "{i:" + energy.ToString() + ":i}";
-
-        //pvp
-        returnValue += "{p:" + pvpEnergy.ToString() + ":p}";
-
-        //teams
-        returnValue += "{tt:";
         for (int i = 0; i < listOfTeams.Count; i++)
         {
-            returnValue += "{t:";
-            for (int j = 0; j < listOfTeams[i].GetListOfIndexes().Count; j++)
-            {
-                returnValue += listOfTeams[i].GetListOfIndexes()[j].ToString();
-                returnValue += "=";
-            }
-            returnValue += ":t}";
+            returnValue["Teams"][-1] = listOfTeams[i].Compress();
         }
-        returnValue += ":tt}";
 
-        // PlayerCharacters
-        returnValue += "{yy:";
         for (int i = 0; i < listOfPlayerCharacters.Count; i++)
         {
-            returnValue += "{y:";
-            returnValue += listOfPlayerCharacters[i].ID + "=";
-            returnValue += listOfPlayerCharacters[i].CurrentLevel + "=";
-            returnValue += ":y}";
+            returnValue["PC"][-1] = listOfPlayerCharacters[i].Compress();
         }
-        returnValue += ":yy}";
 
-        return returnValue;
+
+        return returnValue.ToString();
     }
 
     public void Decompress(string deString)
     {
-        DecompressInt(deString, "g", out gold);
-        DecompressInt(deString, "h", out gems);
-        DecompressInt(deString, "i", out energy);
-        DecompressInt(deString, "p", out pvpEnergy);
+        var returnValue = JSON.Parse(deString);
+        if (returnValue["Gold"] != null)                   Gold      = returnValue["Gold"].AsInt;
+        if (returnValue["Gems"] != null)                   Gems      = returnValue["Gems"].AsInt;
+        if (returnValue["Energy"] != null)                 Energy    = returnValue["Energy"].AsInt;
+        if (returnValue["MaxEnergy"] != null)              MaxEnergy = returnValue["MaxEnergy"].AsInt;
+        if (returnValue["ListOfGambits"] != null)          ListOfGambits.Decompress(returnValue["ListOfGambits"].Value);
 
-        // PlayerCharacters
-        string pc;
-        DecompressString(deString, "yy", out pc);
-        string[] pcSpilt = pc.Split('{');
-        listOfPlayerCharacters.Clear();
-
-        // one because first token is a ""
-        for (int i = 1; i < pcSpilt.Length; i++)
-        {
-            string pcstring = "{" + pcSpilt[i];
-            string pcStringExtracted;
-            DecompressString(pcstring, "y", out pcStringExtracted);
-
-            Debug.Log("pse: " + pcStringExtracted);
-            string[] arrayOfNumbers = pcStringExtracted.Split('=');
-
-            
-            for (int j = 0; j < arrayOfNumbers.Length; j += 2)
-            {
-                if (!string.IsNullOrEmpty(arrayOfNumbers[j]))
-                {
-                    var playerChar = new PlayerCharacter();
-                    playerChar.ID = int.Parse(arrayOfNumbers[j]);
-                    playerChar.CurrentLevel = int.Parse(arrayOfNumbers[j + 1]);
-                    playerChar.databaseChar = AntTool.HeroesData.instance.Rows.Find(x => x._ID == playerChar.ID);
-                    listOfPlayerCharacters.Add(playerChar);
-                }
-            }
-        }
-
-        // Teams
-        string teams;
-        DecompressString(deString, "tt", out teams);
-        string[] teamsSpilt = teams.Split('{');
         listOfTeams.Clear();
-
-        // one because first token is a ""
-        for (int i = 1; i < teamsSpilt.Length; i++)
+        if (returnValue["Teams"] != null)
         {
-            string teamstring = "{" + teamsSpilt[i];
-            //Debug.Log("ts:" + teamstring);
-            string teamStringExtracted;
-            DecompressString(teamstring, "t", out teamStringExtracted);
-            //Debug.Log("tse:" + teamStringExtracted);
-            string[] arrayOfNumbers = teamStringExtracted.Split('=');
-
-            listOfTeams.Add(new Team());
-            for (int j = 0; j < arrayOfNumbers.Length; j++)
+            int counter = 0;
+            while (returnValue["Teams"][counter] != null)
             {
-                if (!string.IsNullOrEmpty(arrayOfNumbers[j]))
-                { 
-                    //Debug.Log(arrayOfNumbers[j]);
-                    int teamIndex = int.Parse(arrayOfNumbers[j]);
-                    //Debug.Log(teamIndex);
-                    //because loop starts from 1
-                    listOfTeams[i-1].SwapCharacter(j, teamIndex);
-                }
+                Team t = new Team();
+                t.Decompress(returnValue["Teams"][counter]);
+                listOfTeams.Add(t);
+                ++counter;
+            }
+
+            while (counter < DataManager.MAXTEAM)
+            {
+                Team t = new Team();
+                listOfTeams.Add(t);
+                ++counter;
             }
         }
-    }
 
-    void DecompressString(string originalString, string token, out string returnValue)
-    {
-        string value = "";
-        if (originalString.Contains("{"+ token + ":"))
+        listOfPlayerCharacters.Clear();
+        if (returnValue["PC"] != null)
         {
-            string tokenToFind = "{"+token+":";
-            int StartPos = originalString.IndexOf(tokenToFind);
-            int EndPos = originalString.IndexOf(":"+ token + "}", StartPos);
-            int len = EndPos - (StartPos + 2 + token.Length);
-            value = originalString.Substring(StartPos + 2 + token.Length, len);
-        }
-        else
-        {
-            Debug.LogError("Fail to parse:" + token);
-        }
-        returnValue = value;
-    }
-
-    void DecompressInt(string originalString, string token, out int returnValue)
-    {
-        int value = 0;
-        if (originalString.Contains("{" + token + ":"))
-        {
-            string tokenToFind = "{" + token + ":";
-            int StartPos = originalString.IndexOf(tokenToFind);
-            int EndPos = originalString.IndexOf(":" + token + "}", StartPos);
-            int len = EndPos - (StartPos + 2 + token.Length);
-            bool success = int.TryParse(originalString.Substring(StartPos + 2 + token.Length, len), out value);
-
-            if (!success)
+            int counter = 0;
+            while (returnValue["PC"][counter] != null)
             {
-                Debug.LogError("Fail to parse on tryparse:" + token);
+                PlayerCharacter pc = new PlayerCharacter();
+                pc.Decompress(returnValue["PC"][counter]);
+                listOfPlayerCharacters.Add(pc);
+                ++counter;
             }
         }
-        else
-        {
-            Debug.LogError("Fail to parse missing toekn:" + token);
-        }
-        returnValue = value;
+
     }
 }

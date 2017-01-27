@@ -67,16 +67,19 @@ public class PlayerIOManager : MonoBehaviour {
 		PlayerIO.QuickConnect.SimpleRegister(gameID,username,password,_email,null,null,null,null,null,OnRegister,OnRegisterFail);
 	}
 
-	public void Logout()
-	{
-		//client.Logout();
-		PlayerPrefs.SetString(PlayerPrefStrings.UserUsername,"");
-		PlayerPrefs.SetString(PlayerPrefStrings.UserPassword,"");
-		PlayerPrefs.SetString(PlayerPrefStrings.UserEmail, "");
-		PlayerPrefs.SetInt(PlayerPrefStrings.UserLoginMode, 0);
-		_loggedin = false;
-        CurrentPlayerDatabaseObject.Save();
-        CurrentPlayerDatabaseObject = null;
+    public void Logout()
+    {
+        //client.Logout();
+        PlayerPrefs.SetString(PlayerPrefStrings.UserUsername, "");
+        PlayerPrefs.SetString(PlayerPrefStrings.UserPassword, "");
+        PlayerPrefs.SetString(PlayerPrefStrings.UserEmail, "");
+        PlayerPrefs.SetInt(PlayerPrefStrings.UserLoginMode, 0);
+        if (CurrentPlayerDatabaseObject != null)
+        { 
+            CurrentPlayerDatabaseObject.Save();
+            CurrentPlayerDatabaseObject = null;
+        }
+        _loggedin = false;
     }
 
 	void OnRegisterFail(PlayerIOError _client)
@@ -115,7 +118,7 @@ public class PlayerIOManager : MonoBehaviour {
 		PlayerPrefs.SetString(PlayerPrefStrings.UserPassword,password);
 		PlayerPrefs.SetString(PlayerPrefStrings.UserEmail, email);
 		PlayerPrefs.SetInt(PlayerPrefStrings.UserLoginMode, mode);
-		_loggedin = true;
+        _loggedin = true;
 		cbFunctionSuccess();
 
         GetUserDataFromPlayerIO();
@@ -132,12 +135,37 @@ public class PlayerIOManager : MonoBehaviour {
         PopUpManager.instance.CloseLogin();
     }
 
+    string OldString = "";
+
     public void SaveToPlayerIODatabase()
     {
-        Debug.Log("Success: Saving To PlayerIODatabase");
-        string compressString = DataManager.instance.userData.Compress();
-        CurrentPlayerDatabaseObject.Set(PlayerDatabaseString, compressString);
-        CurrentPlayerDatabaseObject.Save(true, true, SaveSuccess, OnConnectFailure);
+        UserDataContainer udc = new UserDataContainer();
+
+        if (DataManager.instance.userData == null)
+        {
+            DataManager.instance.userData = new UserData();
+        }
+
+        udc.userData = DataManager.instance.userData;
+
+        string compressString = udc.Compress();
+        if (CurrentPlayerDatabaseObject != null)
+        {
+            if (OldString == compressString)
+            {
+                Debug.Log("Success: No Data Has changed. No Point saving...");
+            }
+            else
+            {
+                Debug.Log("Success: Saving To PlayerIODatabase");
+                CurrentPlayerDatabaseObject.Set(PlayerDatabaseString, compressString);
+                CurrentPlayerDatabaseObject.Save(true, true, SaveSuccess, OnConnectFailure);
+            }
+        }
+        else
+        {
+            Debug.LogWarning("No CurrentPlayerDatabase Object");
+        }
     }
 
     void SaveSuccess()
@@ -160,20 +188,24 @@ public class PlayerIOManager : MonoBehaviour {
             if (success)
             {
                 Debug.Log("Success: Got found Loadablestring: " + myObject.ToString());
+                Debug.Log("Success: isLogin true?: " + _loggedin);
                 DataManager.instance.LoadUser(myObject.ToString());
+
             }
             else // it has not be created yet, time to create one
             {
                 Debug.Log("Success: CreateString");
-                CurrentPlayerDatabaseObject.Set(PlayerDatabaseString, "v1=");
+                CurrentPlayerDatabaseObject.Set(PlayerDatabaseString, "{}");
                 SaveToPlayerIODatabase();
             }
+            _loggedin = true;
         }
         else
         {
             Debug.Log("No Database Object found??");
         }
 
+        
         PopUpManager.instance.CloseLogin();
     }
 
@@ -239,6 +271,7 @@ public class PlayerIOManager : MonoBehaviour {
 
     public void BypassLogin()
     {
+        Debug.Log("Bypass Login");
         _loggedin = true;
     }
 }

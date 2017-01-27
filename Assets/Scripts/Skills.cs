@@ -24,8 +24,14 @@ public class Skill
         skillString = skillString.Replace("{PPATT}", currentUnit.character.GetPAtt().ToString());
         skillString = skillString.Replace("{PMATT}", currentUnit.character.GetMAtt().ToString());
         skillString = skillString.Replace("{PPDEF}", currentUnit.character.GetPDef().ToString());
-        skillString = skillString.Replace("{PSTR}", currentUnit.character.GetStr().ToString());
+        skillString = skillString.Replace("{PSTR}",  currentUnit.character.GetStr().ToString());
+        skillString = skillString.Replace("{PFATT}", currentUnit.character.GetFAtt().ToString());
+
         skillString = skillString.Replace("{EPDEF}", unit.character.GetPDef().ToString());
+        skillString = skillString.Replace("{EMDEF}", unit.character.GetMDef().ToString());
+        skillString = skillString.Replace("{EFDEF}", unit.character.GetFDef().ToString());
+
+
         skillString = skillString.Replace(" ", "");
     }
 

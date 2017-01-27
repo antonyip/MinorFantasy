@@ -33,6 +33,7 @@ public class SummonSceneButtonsScript : MonoBehaviour {
         SummonSceneManager.instance.GoCraftingMats();
     }
 
+    // Heroes
     public void SummonHeroButtonPressed1Gold()
     {
         SummonSceneManager.instance.SummonHeroButtonPressed1Gold();
@@ -51,5 +52,26 @@ public class SummonSceneButtonsScript : MonoBehaviour {
     public void SummonHeroButtonPressed11Gem()
     {
         SummonSceneManager.instance.SummonHeroButtonPressed11Gem();
+    }
+
+    // Gambits
+    public void SummonGambitButtonPressed1Gold()
+    {
+        SummonSceneManager.instance.SummonGambitButtonPressed1Gold();
+    }
+
+    public void SummonGambitButtonPressed11Gold()
+    {
+        SummonSceneManager.instance.SummonGambitButtonPressed11Gold();
+    }
+
+    public void SummonGambitButtonPressed1Gem()
+    {
+        SummonSceneManager.instance.SummonGambitButtonPressed1Gem();
+    }
+
+    public void SummonGambitButtonPressed11Gem()
+    {
+        SummonSceneManager.instance.SummonGambitButtonPressed11Gem();
     }
 }

@@ -53,7 +53,7 @@ public class GameMaster : MonoBehaviour {
         experienceEarnedThisMap = 0;
 
         BattleBackground.sprite = Resources.Load<Sprite>("Backgrounds/" + AntTool.LevelData.instance.Rows.Find(x => x._ID == DataManager.instance.selectedMapLevel)._BackgroundSprite);
-        }
+    }
 
     int NumPlayerSpawn = 0;
     // Use this for initialization
@@ -93,8 +93,15 @@ public class GameMaster : MonoBehaviour {
                 u.IsEnemyUnit = false;
                 u.Start();
 
-                u.aiActions.Add(Gambits.GetGambit(1));
-                u.aiSkills.Add(new Skill(1));
+                for (int j = 0; j < playerChar.LimitGambits.Count; j++)
+                {
+                    // make sure the combination is legit
+                    if (playerChar.LimitGambits[j] == true && playerChar.CurrentGambits[i] != -1 && playerChar.CurrentSkills[i] != -1)
+                    {
+                        u.aiActions.Add(Gambits.GetGambit(playerChar.CurrentGambits[i]));
+                        u.aiSkills.Add(new Skill(playerChar.CurrentSkills[i]));
+                    }
+                }
 
                 //GameObject go = Instantiate(monsterPrefab) as GameObject;
                 string modelName = u.character.playerStats.databaseChar._SpriteIdle;
@@ -241,7 +248,7 @@ public class GameMaster : MonoBehaviour {
 
     void UpdatePlayerControls()
     {
-        List<PlayerCharacter> playerCharacters = DataManager.instance.userData.listOfTeams[DataManager.instance.selectedTeam].GetListOfCharacters();
+        //List<PlayerCharacter> playerCharacters = DataManager.instance.userData.listOfTeams[DataManager.instance.selectedTeam].GetListOfCharacters();
         for (int i = 0; i < DataManager.MAXUNITPERTEAM; i++)
         {           
             PlayerButtons[i].GetComponent<BattleButtonScript>().UpdateGUI(PlayerUnits[i]);
