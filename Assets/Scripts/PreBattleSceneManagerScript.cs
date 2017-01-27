@@ -174,6 +174,7 @@ public class PreBattleSceneManagerScript : MonoBehaviour {
 	
     public void ToBattleScene()
     {
+        DataManager.instance.userData.Energy -= AntTool.LevelData.instance.Rows.Find(x => x._ID == DataManager.instance.selectedMapLevel)._EnergyRequirement;
         UtilsManager.UpdateUserData();
         SceneManager.instance.NextSceneName = "BattleScene";
     }
