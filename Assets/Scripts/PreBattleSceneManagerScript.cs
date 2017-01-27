@@ -49,7 +49,8 @@ public class PreBattleSceneManagerScript : MonoBehaviour {
     }
 
 	// Use this for initialization
-	void Start () {
+	void Start ()
+    {
 
         // hack for userdata to be avail on this screen
         DataManager.instance.LoadUser(DataManager.BYPASSUSERLOAD);
@@ -58,8 +59,6 @@ public class PreBattleSceneManagerScript : MonoBehaviour {
         {
             TeamButtons[i].GetComponentInChildren<Text>().text = (i + 1).ToString();
         }
-
-        UpdateTeamGUI();
 
         // generate reserve list
         ReserveHeroesButtons.Clear();
@@ -90,8 +89,10 @@ public class PreBattleSceneManagerScript : MonoBehaviour {
             ReserveHeroesButtons.Add(NewReserveButton);
         }
 
+        UpdateTeamGUI();
+
         //UpdateDisabledButtons();
-	} // end start
+    } // end start
 
     void UpdateTeamGUI()
     {
@@ -103,6 +104,7 @@ public class PreBattleSceneManagerScript : MonoBehaviour {
             {
                 Debug.Assert(dataManager.userData != null);
                 Debug.Assert(dataManager.userData.listOfTeams != null);
+                Debug.Assert(dataManager.userData.listOfTeams.Count == DataManager.MAXTEAM);
                 var playerChar = dataManager.userData.listOfTeams[i].GetListOfCharacters()[j];
 
                 // special case where slot is empty
@@ -172,6 +174,7 @@ public class PreBattleSceneManagerScript : MonoBehaviour {
 	
     public void ToBattleScene()
     {
+        UtilsManager.UpdateUserData();
         SceneManager.instance.NextSceneName = "BattleScene";
     }
 

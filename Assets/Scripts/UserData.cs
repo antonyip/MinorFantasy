@@ -1,43 +1,32 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.IO;
-using System.Xml.Serialization;
-using System.Xml;
+using SimpleJSON;
 
-public class UserDataContainer
+public interface Compressable
+{
+    string Compress();
+    void Decompress(string deString);
+}
+
+public class UserDataContainer : Compressable
 {
     public UserData userData;
 
     public string Compress()
     {
-        XmlSerializer xmls = new XmlSerializer(typeof(UserData));
-        var xml = "";
-
-        using (var sww = new StringWriter())
-        {
-            using (XmlWriter writer = XmlWriter.Create(sww))
-            {
-                xmls.Serialize(writer, userData);
-                xml = sww.ToString();
-            }
-        }
-
-        Debug.Log(xml);
-
-        return xml;
+        string compressString =  userData.Compress();
+        Debug.Log("CompressString:" + compressString);
+        return compressString;
     }
 
     public void Decompress(string deString)
     {
-        var deser = new XmlSerializer(typeof(UserData));
-        StringReader sr = new StringReader(deString);
-        userData = deser.Deserialize(sr) as UserData;
+        userData = new UserData();
+        userData.Decompress(deString);
     }
 }
 
-[System.Serializable]
-public class UserData
+public class UserData : Compressable
 {
     public int Gold;
     public int Gems;
@@ -57,10 +46,76 @@ public class UserData
     public UserData()
     {
         Gold = 50000;
-        Gems = 2000;
+        Gems = 500;
         Energy = 50;
         MaxEnergy = 50;
-        PvpEnergy = 0;
+        PvpEnergy = 5;
         MAPBONUSMULTIPLIER = 1.0f;
+    }
+
+    public string Compress()
+    {
+        var returnValue = JSON.Parse("{}");
+        returnValue["Gold"]                   = Gold.ToString();
+        returnValue["Gems"]                   = Gems.ToString();
+        returnValue["Energy"]                 = Energy.ToString();
+        returnValue["MaxEnergy"]              = MaxEnergy.ToString();
+        returnValue["PvpEnergy"]              = PvpEnergy.ToString();
+        returnValue["ListOfGambits"]          = ListOfGambits.Compress();
+
+        for (int i = 0; i < listOfTeams.Count; i++)
+        {
+            returnValue["Teams"][-1] = listOfTeams[i].Compress();
+        }
+
+        for (int i = 0; i < listOfPlayerCharacters.Count; i++)
+        {
+            returnValue["PC"][-1] = listOfPlayerCharacters[i].Compress();
+        }
+
+
+        return returnValue.ToString();
+    }
+
+    public void Decompress(string deString)
+    {
+        var returnValue = JSON.Parse(deString);
+        if (returnValue["Gold"] != null)                   Gold      = returnValue["Gold"].AsInt;
+        if (returnValue["Gems"] != null)                   Gems      = returnValue["Gems"].AsInt;
+        if (returnValue["Energy"] != null)                 Energy    = returnValue["Energy"].AsInt;
+        if (returnValue["MaxEnergy"] != null)              MaxEnergy = returnValue["MaxEnergy"].AsInt;
+        if (returnValue["ListOfGambits"] != null)          ListOfGambits.Decompress(returnValue["ListOfGambits"].Value);
+
+        if (returnValue["Teams"] != null)
+        {
+            int counter = 0;
+            while (returnValue["Teams"][counter] != null)
+            {
+                Team t = new Team();
+                t.Decompress(returnValue["Teams"][counter]);
+                listOfTeams.Add(t);
+                ++counter;
+            }
+
+            while (counter < 5)
+            {
+                Team t = new Team();
+                listOfTeams.Add(t);
+                ++counter;
+            }
+        }
+
+        if (returnValue["PC"] != null)
+        {
+            int counter = 0;
+            while (returnValue["PC"][counter] != null)
+            {
+                PlayerCharacter pc = new PlayerCharacter();
+                pc.Decompress(returnValue["PC"][counter]);
+                listOfPlayerCharacters.Add(pc);
+                ++counter;
+            }
+        }
+
     }
 }

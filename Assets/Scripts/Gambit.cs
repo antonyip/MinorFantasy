@@ -1,15 +1,41 @@
 ﻿using System;
 using System.Collections.Generic;
+using SimpleJSON;
 
-[System.Serializable]
-public class GambitContainer
+public class GambitContainer : Compressable
 {
     List<Gambit> ListOfGambits = new List<Gambit>();
+
+    public string Compress()
+    {
+        var returnValue = JSON.Parse("{}");
+        for (int i = 0; i < ListOfGambits.Count; i++)
+        {
+            returnValue["Gambits"][-1] = ListOfGambits[i].Compress();
+        }
+        return returnValue.ToString();
+    }
+
+    public void Decompress(string deString)
+    {
+        var returnValue = JSON.Parse(deString);
+        if (returnValue["Gambits"] != null)
+        {
+            int counter = 0;
+            while (returnValue["Gambits"][counter] != null)
+            {
+                Gambit g = new Gambit();
+                g.Decompress(returnValue["Gambits"][counter]);
+                ListOfGambits.Add(g);
+                ++counter;
+            }
+        }
+    }
 
     public List<Gambit> S_ListOfGambits
     {
         get { return ListOfGambits; }
-        set { S_ListOfGambits = value; }
+        set { ListOfGambits = value; }
     }
 
     public int Count
@@ -29,13 +55,11 @@ public class GambitContainer
 
     public void Add(Gambit gambit)
     {
-        bool foundEmptySlot = false;
         Gambit g = null;
         for (int i = 0; i < ListOfGambits.Count; i++)
         {
             if (ListOfGambits[i].IsExists == false)
             {
-                foundEmptySlot = true;
                 g = ListOfGambits[i];
                 break;
             }
@@ -53,31 +77,27 @@ public class GambitContainer
     }
 }
 
-[System.Serializable]
-public class Gambit
+public class Gambit : Compressable
 {
-    public int S_PositionInGambitDatabase
+    public string Compress()
     {
-        get { return _PositionInGambitDatabase; }
-        set { _PositionInGambitDatabase = value; }
+        var returnValue = JSON.Parse("{}");
+        returnValue["gamPos"] = _PositionInGambitDatabase.ToString();
+        returnValue["playPos"] = _PositionInPlayerDatabase.ToString();
+        returnValue["inUse"] = _InUse.ToString();
+        returnValue["isExist"] = _IsExists.ToString();
+        return returnValue.ToString();
     }
 
-    public int S_PositionInPlayerDatabase
+    public void Decompress(string deString)
     {
-        get { return _PositionInPlayerDatabase; }
-        set { _PositionInPlayerDatabase = value; }
-    }
+        var json = JSON.Parse(deString);
 
-    public bool S_InUse
-    {
-        get { return _InUse; }
-        set { _InUse = value; }
-    }
+        if (json["gamPos"] != null) _PositionInGambitDatabase = json["gamPos"].AsInt;
+        if (json["playPos"] != null) _PositionInPlayerDatabase = json["playPos"].AsInt;
+        if (json["inUse"] != null) _InUse = json["inUse"].AsBool;
+        if (json["isExist"] != null) _IsExists = json["isExist"].AsBool;
 
-    public bool S_IsExists
-    {
-        get { return _IsExists; }
-        set { _IsExists = value; }
     }
 
     int _PositionInGambitDatabase;

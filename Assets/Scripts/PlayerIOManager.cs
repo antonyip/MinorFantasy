@@ -118,7 +118,7 @@ public class PlayerIOManager : MonoBehaviour {
 		PlayerPrefs.SetString(PlayerPrefStrings.UserPassword,password);
 		PlayerPrefs.SetString(PlayerPrefStrings.UserEmail, email);
 		PlayerPrefs.SetInt(PlayerPrefStrings.UserLoginMode, mode);
-		_loggedin = true;
+        _loggedin = true;
 		cbFunctionSuccess();
 
         GetUserDataFromPlayerIO();
@@ -182,13 +182,14 @@ public class PlayerIOManager : MonoBehaviour {
             if (success)
             {
                 Debug.Log("Success: Got found Loadablestring: " + myObject.ToString());
+                Debug.Log("Success: isLogin true?: " + _loggedin);
                 DataManager.instance.LoadUser(myObject.ToString());
 
             }
             else // it has not be created yet, time to create one
             {
                 Debug.Log("Success: CreateString");
-                CurrentPlayerDatabaseObject.Set(PlayerDatabaseString, "v1=");
+                CurrentPlayerDatabaseObject.Set(PlayerDatabaseString, "{}");
                 SaveToPlayerIODatabase();
             }
             _loggedin = true;
@@ -198,6 +199,7 @@ public class PlayerIOManager : MonoBehaviour {
             Debug.Log("No Database Object found??");
         }
 
+        
         PopUpManager.instance.CloseLogin();
     }
 
@@ -263,6 +265,7 @@ public class PlayerIOManager : MonoBehaviour {
 
     public void BypassLogin()
     {
+        Debug.Log("Bypass Login");
         _loggedin = true;
     }
 }

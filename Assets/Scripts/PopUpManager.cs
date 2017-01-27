@@ -45,17 +45,23 @@ public class PopUpManager : MonoBehaviour {
     public void CloseLogin()
     {
         bool closeCurrentPopup = false;
-        if (currentPopup.gameObject.name == "ReloginPopup" || currentPopup.gameObject.name == "LoginPopup")
-        {
-            closeCurrentPopup = true;
+        if (currentPopup != null)
+        { 
+            if (currentPopup.gameObject.name == "ReloginPopup" || currentPopup.gameObject.name == "LoginPopup")
+            {
+                closeCurrentPopup = true;
+            }
         }
 
         List<PopUpObject> listOfPopUpsTempClone = new List<PopUpObject>();
         for (int i = 0; i < listOfPopUps.Count; i++)
         {
-            if (!(currentPopup.gameObject.name == "ReloginPopup" || currentPopup.gameObject.name == "LoginPopup"))
-            {
-                listOfPopUpsTempClone.Add(listOfPopUps[i]);
+            if (currentPopup != null)
+            { 
+                if (!(currentPopup.gameObject.name == "ReloginPopup" || currentPopup.gameObject.name == "LoginPopup"))
+                {
+                    listOfPopUpsTempClone.Add(listOfPopUps[i]);
+                }
             }
         }
 

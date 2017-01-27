@@ -49,7 +49,6 @@ public class SceneManager: MonoBehaviour {
 	{
 		// TODO:: TRANSITIONS
 		NextSceneName = SceneName;
-        UtilsManager.UpdateUserData();
         UnityEngine.SceneManagement.SceneManager.LoadScene(SceneName);
 	}
 }

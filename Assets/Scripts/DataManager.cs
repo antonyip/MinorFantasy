@@ -124,7 +124,9 @@ public class DataManager : MonoBehaviour
 
     public void LoadUser(string UniqueUserName)
     {
-        if (PlayerIOManager.instance.LoggedIn == false && UniqueUserName != DataManager.BYPASSUSERLOAD) // normal loading goes here
+        Debug.Log("LoadableString:" + UniqueUserName); // LoadingString;
+        Debug.Log("Already Logged In?" + PlayerIOManager.instance.LoggedIn); // LoadingString;
+        if (PlayerIOManager.instance.LoggedIn == true && UniqueUserName != DataManager.BYPASSUSERLOAD) // normal loading goes here
         {
             Debug.Log("Decompressing");
             UserDataContainer udc = new UserDataContainer();

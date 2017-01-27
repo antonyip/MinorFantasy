@@ -5,9 +5,18 @@ using System.Collections.Generic;
 using System.IO;
 using System.Xml.Serialization;
 
-[System.Serializable]
-public class PlayerCharacter
+public class PlayerCharacter : Compressable
 {
+    public string Compress()
+    {
+        return "a";
+    }
+
+    public void Decompress(string deString)
+    {
+
+    }
+
     public int ID;
     public int CurrentLevel;
 

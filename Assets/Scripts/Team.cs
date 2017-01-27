@@ -4,8 +4,19 @@ using System.Collections.Generic;
 using System;
 using System.Xml.Serialization;
 
-[System.Serializable]
-public class Team {
+public class Team : Compressable
+{
+
+
+    public string Compress()
+    {
+        return "a";
+    }
+
+    public void Decompress(string deString)
+    {
+
+    }
 
     public const int EMPTYSLOT = -1;
 
