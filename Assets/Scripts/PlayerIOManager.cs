@@ -140,6 +140,12 @@ public class PlayerIOManager : MonoBehaviour {
     public void SaveToPlayerIODatabase()
     {
         UserDataContainer udc = new UserDataContainer();
+
+        if (DataManager.instance.userData == null)
+        {
+            DataManager.instance.userData = new UserData();
+        }
+
         udc.userData = DataManager.instance.userData;
 
         string compressString = udc.Compress();

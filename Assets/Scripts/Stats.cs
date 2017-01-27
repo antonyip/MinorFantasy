@@ -2,19 +2,68 @@
 using System.Collections;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Xml.Serialization;
+using SimpleJSON;
 
 public class PlayerCharacter : Compressable
 {
     public string Compress()
     {
-        return "a";
+        var returnValue = JSON.Parse("{}");
+        returnValue["ID"] = ID.ToString();
+        
+        returnValue["CurrentLevel"] = CurrentLevel.ToString();
+
+        for (int i = 0; i < CurrentGambits.Count; i++)
+        {
+            returnValue["Gambits"][-1] = CurrentGambits[i].ToString();
+        }
+
+        for (int i = 0; i < CurrentSkills.Count; i++)
+        {
+            returnValue["Skills"][-1] = CurrentSkills[i].ToString();
+        }
+
+        for (int i = 0; i < LimitGambits.Count; i++)
+        {
+            returnValue["LimitGambits"][-1] = LimitGambits[i].ToString();
+        }
+
+        return returnValue.ToString();
     }
 
     public void Decompress(string deString)
     {
+        var json = JSON.Parse(deString);
+        if (json["ID"] != null) ID = json["ID"].AsInt;
+        if (json["CurrentLevel"] != null) CurrentLevel = json["CurrentLevel"].AsInt;
 
+        CurrentGambits.Clear();
+        CurrentSkills.Clear();
+        LimitGambits.Clear();
+
+        int counter = 0;
+        while(json["Skills"][counter] != null)
+        {
+            CurrentSkills.Add(json["Skills"][counter].AsInt);
+            ++counter;
+        }
+
+        counter = 0;
+        while (json["Gambits"][counter] != null)
+        {
+            CurrentGambits.Add(json["Gambits"][counter].AsInt);
+            ++counter;
+        }
+
+        counter = 0;
+        while (json["LimitGambits"][counter] != null)
+        {
+            LimitGambits.Add(json["LimitGambits"][counter].AsBool);
+            ++counter;
+        }
+
+        // other init 
+        databaseChar = AntTool.HeroesData.instance.Rows.Find(x => x._ID == ID);
     }
 
     public int ID;
@@ -35,7 +84,6 @@ public class PlayerCharacter : Compressable
     /// </summary>
     public List<bool> LimitGambits = new List<bool>();
 
-    [XmlIgnore]
     public AntTool.HeroesDataRow databaseChar;
 
     public EquipmentContainer Equipments = new EquipmentContainer();

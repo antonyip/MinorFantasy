@@ -51,6 +51,11 @@ public class UserData : Compressable
         MaxEnergy = 50;
         PvpEnergy = 5;
         MAPBONUSMULTIPLIER = 1.0f;
+
+        while (listOfTeams.Count < DataManager.MAXTEAM)
+        {
+            listOfTeams.Add(new Team());
+        }
     }
 
     public string Compress()
@@ -86,6 +91,7 @@ public class UserData : Compressable
         if (returnValue["MaxEnergy"] != null)              MaxEnergy = returnValue["MaxEnergy"].AsInt;
         if (returnValue["ListOfGambits"] != null)          ListOfGambits.Decompress(returnValue["ListOfGambits"].Value);
 
+        listOfTeams.Clear();
         if (returnValue["Teams"] != null)
         {
             int counter = 0;
@@ -97,7 +103,7 @@ public class UserData : Compressable
                 ++counter;
             }
 
-            while (counter < 5)
+            while (counter < DataManager.MAXTEAM)
             {
                 Team t = new Team();
                 listOfTeams.Add(t);
@@ -105,6 +111,7 @@ public class UserData : Compressable
             }
         }
 
+        listOfPlayerCharacters.Clear();
         if (returnValue["PC"] != null)
         {
             int counter = 0;

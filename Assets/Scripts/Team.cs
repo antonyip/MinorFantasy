@@ -1,8 +1,6 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
-using System;
-using System.Xml.Serialization;
+using SimpleJSON;
 
 public class Team : Compressable
 {
@@ -10,12 +8,25 @@ public class Team : Compressable
 
     public string Compress()
     {
-        return "a";
+        var returnValue = JSON.Parse("{}");
+        for (int i = 0; i < listOfCharacters.Count; i++)
+        {
+            returnValue["TeamMembers"][-1] = listOfCharacters[i].ToString();
+        }
+        
+        return returnValue.ToString();
     }
 
     public void Decompress(string deString)
     {
-
+        var json = JSON.Parse(deString);
+        int counter = 0;
+        listOfCharacters.Clear();
+        while (json["TeamMembers"][counter] != null)
+        {
+            listOfCharacters.Add(json["TeamMembers"][counter].AsInt);
+            ++counter;
+        }
     }
 
     public const int EMPTYSLOT = -1;
@@ -23,15 +34,9 @@ public class Team : Compressable
     // indexes to userdata team
     List<int> listOfCharacters = new List<int>();
 
-    public List<int> S_ListOfCharacters
-    {
-        get { return listOfCharacters; }
-        set { listOfCharacters = value; }
-    }
-
     public Team()
     {
-        while (listOfCharacters.Count < 6)
+        while (listOfCharacters.Count < DataManager.MAXUNITPERTEAM)
         {
             listOfCharacters.Add(EMPTYSLOT);
         }
