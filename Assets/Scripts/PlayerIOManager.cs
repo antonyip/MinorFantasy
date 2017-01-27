@@ -79,6 +79,7 @@ public class PlayerIOManager : MonoBehaviour {
             CurrentPlayerDatabaseObject.Save();
             CurrentPlayerDatabaseObject = null;
         }
+        DataManager.instance.userData = null;
         _loggedin = false;
     }
 

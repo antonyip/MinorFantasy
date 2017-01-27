@@ -224,7 +224,7 @@ public class GameMaster : MonoBehaviour {
             string[] mobSkills = skillString.Split(',');
             foreach (var skillPair in mobSkills)
             {
-                string[] skillParts = skillPair.Split(':');
+                string[] skillParts = skillPair.Split('=');
                 int logic = int.Parse(skillParts[0]);
                 int skill = int.Parse(skillParts[1]);
                 u.aiActions.Add(Gambits.GetGambit(logic));
