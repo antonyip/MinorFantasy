@@ -67,7 +67,7 @@ public class PlayerCharacter : Compressable
     }
 
     public int ID;
-    public int CurrentLevel;
+    public int CurrentLevel = 1;
 
     /// <summary>
     /// The current gambits that are assigned to this player character
