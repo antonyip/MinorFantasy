@@ -19,7 +19,7 @@ public class Item
     public AntTool.HeroesDataRow      HeroDatabase = null;
     public AntTool.GambitDataRow      GambitDatabase = null;
     public AntTool.EquipmentDataRow   EquipmentDatabase = null;
-    public int IndexInDatabase = -1;
+    public int IDInDatabase = -1;
 
     public GameObject sprite;
 }

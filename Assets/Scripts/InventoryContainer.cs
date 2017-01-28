@@ -15,7 +15,7 @@ public class InventoryContainer : Compressable
         {
             if (item.Value > 0)
             { 
-                returnValue["Items"][-1] = item.Key + "=" + item.Value;
+                returnValue["Items"][-1] = item.Key.ToString() + "=" + item.Value.ToString();
             }
         }
         return returnValue.ToString();
@@ -28,8 +28,14 @@ public class InventoryContainer : Compressable
         ListOfItems.Clear();
         while (json["Items"][counter] != null)
         {
-            string[] decompstring = json["Items"][counter].ToString().Split('=');
-            ListOfItems.Add(int.Parse(decompstring[0]), int.Parse(decompstring[1]));
+            string uncleanstring = json["Items"][counter].ToString();
+            uncleanstring = uncleanstring.Replace('"', ' ');
+            uncleanstring = uncleanstring.Replace('\\', ' ');
+            uncleanstring = uncleanstring.Trim();
+            string[] decompstring = uncleanstring.Split('=');
+            int lhs = int.Parse(decompstring[0].Trim());
+            int rhs = int.Parse(decompstring[1].Trim());
+            ListOfItems.Add(lhs, rhs);
             ++counter;
         }
     }

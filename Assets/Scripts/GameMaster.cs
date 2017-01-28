@@ -26,12 +26,13 @@ public class GameMaster : MonoBehaviour {
     public GameObject Announcer;
     public GameObject StartGamePopup;
     public GameObject VictoryPopup;
+    public GameObject OptionsPopup;
 
     public GameObject ItemDropPrefab;
 
     public List<Item> ListOfItemsThatDropped = new List<Item>();
 
-    bool AutoMode = true;
+    public bool AutoMode = true;
 
     int currentWave = 0;
     int experienceEarnedThisMap = 0;
@@ -60,13 +61,13 @@ public class GameMaster : MonoBehaviour {
     void Start () {
 
         DataManager.instance.LoadUser(DataManager.BYPASSUSERLOAD);
-
+        AutoMode = DataManager.instance.userData.AutoMode;
         ResetMapDetails();
 
         // 0. setup playing field
-        OptionButtons[0].GetComponentInChildren<Text>().text = "Auto";
-        OptionButtons[1].GetComponentInChildren<Text>().text = "Tactics";
-        OptionButtons[2].GetComponentInChildren<Text>().text = "Options";
+        OptionButtons[0].GetComponent<GameOptionsButton>().Setup(0);
+        OptionButtons[1].GetComponent<GameOptionsButton>().Setup(1);
+        OptionButtons[2].GetComponent<GameOptionsButton>().Setup(2);
 
         Debug.Log("GameStarted");
         Debug.Log("Loading Fight Data");
@@ -367,6 +368,24 @@ public class GameMaster : MonoBehaviour {
             Debug.Log("LegitItem");
         }
         
+    }
+
+    public void ShowOptions()
+    {
+        OptionsPopup.SetActive(true);
+        OptionsPopup.transform.localScale = Vector3.zero;
+        OptionsPopup.transform.DOScale(Vector3.one, DataManager.NORMALANIMATION);
+    }
+
+    public void HideOptions()
+    {
+        OptionsPopup.transform.localScale = Vector3.one;
+        OptionsPopup.transform.DOScale(Vector3.zero, DataManager.NORMALANIMATION).OnComplete(HideOptionsVisible);
+    }
+
+    void HideOptionsVisible()
+    {
+        OptionsPopup.SetActive(false);
     }
 
     private void ExecuteGambits(ref Unit currentUnit)

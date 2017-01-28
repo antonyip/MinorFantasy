@@ -55,9 +55,10 @@ public class VictoryScript : MonoBehaviour
         {
             if (ListOfItemsToDisplay[i].CraftingMatsDatabase != null)
             {
-                DataManager.instance.userData.Inventory.Add(ListOfItemsToDisplay[i].IndexInDatabase);
+                DataManager.instance.userData.Inventory.Add(ListOfItemsToDisplay[i].IDInDatabase);
             }
         }
+        UtilsManager.UpdateUserData();
     }
 
     public void HandleLost()
