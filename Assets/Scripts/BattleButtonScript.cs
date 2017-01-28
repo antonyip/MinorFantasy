@@ -25,6 +25,7 @@ public class BattleButtonScript : MonoBehaviour {
             red.transform.DOScaleX(0, DataManager.NORMALANIMATION);
             blue.transform.DOScaleX(0, DataManager.NORMALANIMATION);
             yellow.transform.DOScaleX(0, DataManager.NORMALANIMATION);
+            face.sprite = Resources.Load<Sprite>("HeroPrefabs/Faces/NONE");
         }
         else
         {
@@ -34,6 +35,7 @@ public class BattleButtonScript : MonoBehaviour {
             red.transform.DOScaleX(pc.HPPercent, DataManager.NORMALANIMATION);
             blue.transform.DOScaleX(pc.MPPercent, DataManager.NORMALANIMATION);
             yellow.transform.DOScaleX(pc.SoulPercent, DataManager.NORMALANIMATION);
+            face.sprite = Resources.Load<Sprite>("HeroPrefabs/Faces/" + pc.character.playerStats.databaseChar._SpriteFace);
         }
 
 	}

@@ -48,7 +48,7 @@ public class Skill
         }
         
         // do stuffs
-        string topText = string.Format("{0} hits {1} for {2}", currentUnit.GetUnitName(), unit.GetUnitName(), result);
+        string topText = string.Format("{0} hits {1} for {2} using {3}", currentUnit.GetUnitName(), unit.GetUnitName(), result, dataBaseSkill._Name);
         string debugText = string.Format("{0} ({1})", topText, skillString);
         Debug.Log(debugText);
         GameMaster.instance.UpdateTopText(topText);

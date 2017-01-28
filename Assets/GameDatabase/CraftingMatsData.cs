@@ -23,6 +23,7 @@ namespace AntTool
       Rows.Add(new CraftingMatsDataRow("Tree_Log",1,"Tree_Log_Image"));
       Rows.Add(new CraftingMatsDataRow("CombineTicket",2,"Tree_Log_Image"));
       Rows.Add(new CraftingMatsDataRow("ChanceTicket",3,"Tree_Log_Image"));
+      Rows.Add(new CraftingMatsDataRow("SummonPack",4,"Tree_Log_Image"));
     }
 
     private class NestedCraftingMatsData

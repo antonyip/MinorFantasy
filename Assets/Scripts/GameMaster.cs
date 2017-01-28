@@ -97,10 +97,10 @@ public class GameMaster : MonoBehaviour {
                 for (int j = 0; j < playerChar.LimitGambits.Count; j++)
                 {
                     // make sure the combination is legit
-                    if (playerChar.LimitGambits[j] == true && playerChar.CurrentGambits[i] != -1 && playerChar.CurrentSkills[i] != -1)
+                    if (playerChar.LimitGambits[j] == true && playerChar.CurrentGambits[j] != -1 && playerChar.CurrentSkills[j] != -1)
                     {
-                        u.aiActions.Add(Gambits.GetGambit(playerChar.CurrentGambits[i]));
-                        u.aiSkills.Add(new Skill(playerChar.CurrentSkills[i]));
+                        u.aiActions.Add(Gambits.GetGambit(playerChar.CurrentGambits[j]));
+                        u.aiSkills.Add(new Skill(playerChar.CurrentSkills[j]));
                     }
                 }
 
@@ -133,21 +133,7 @@ public class GameMaster : MonoBehaviour {
         }
         
         SpawnWave(currentWave);
-        //UpdatePlayerControls();
-
-        Debug.Log("Determining Speed Que");
-        AllUnits = AllUnits.OrderBy(x => x.character.GetSpeed()).ToList();
-
-        for (int i = 0; i < AllUnits.Count; i++)
-        {
-            Debug.Log(i.ToString() + ". " + AllUnits[i].GetUnitName());
-        }
-
-        // 2. start fight
-        // determine order of attacks by all not null players
-        // place them in a que
-        // start the que
-
+        UpdatePlayerControls();
     } //end start
 
     void SpawnWave(int waveIndexToSpawn)
@@ -217,8 +203,7 @@ public class GameMaster : MonoBehaviour {
             u.character.monsterStats = new MonsterCharacter();
             u.character.monsterStats.ID = MobsID;
             u.character.monsterStats.monsterStats = Mob;
-            // set the hardness here for now HACK
-            u.character.monsterStats.CurrentLevel = 10;
+            u.character.monsterStats.CurrentLevel = u.character.monsterStats.monsterStats._Level;
             u.IsEnemyUnit = true;
             u.Start();
             string skillString = u.character.monsterStats.monsterStats._Skills;
@@ -245,6 +230,16 @@ public class GameMaster : MonoBehaviour {
 
             AllUnits.Add(u);
         }
+
+        Debug.Log("Determining Speed Que");
+        AllUnits = AllUnits.OrderBy(x => x.character.GetSpeed()).ToList();
+
+        for (int i = 0; i < AllUnits.Count; i++)
+        {
+            Debug.Log(i.ToString() + ". " + AllUnits[i].GetUnitName());
+        }
+
+        UnitOrderCounter = 0;
     }
 
     void UpdatePlayerControls()
