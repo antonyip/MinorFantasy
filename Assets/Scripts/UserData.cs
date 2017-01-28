@@ -43,6 +43,8 @@ public class UserData : Compressable
     public List<Team> listOfTeams = new List<Team>();
     public List<PlayerCharacter> listOfPlayerCharacters = new List<PlayerCharacter>();
 
+    public InventoryContainer Inventory = new InventoryContainer();
+
     public UserData()
     {
         Gold = 50000;
@@ -67,6 +69,7 @@ public class UserData : Compressable
         returnValue["MaxEnergy"]              = MaxEnergy.ToString();
         returnValue["PvpEnergy"]              = PvpEnergy.ToString();
         returnValue["ListOfGambits"]          = ListOfGambits.Compress();
+        returnValue["Inventory"]              = Inventory.Compress();
 
         for (int i = 0; i < listOfTeams.Count; i++)
         {
@@ -90,6 +93,7 @@ public class UserData : Compressable
         if (returnValue["Energy"] != null)                 Energy    = returnValue["Energy"].AsInt;
         if (returnValue["MaxEnergy"] != null)              MaxEnergy = returnValue["MaxEnergy"].AsInt;
         if (returnValue["ListOfGambits"] != null)          ListOfGambits.Decompress(returnValue["ListOfGambits"].Value);
+        if (returnValue["Inventory"] != null)              Inventory.Decompress(returnValue["Inventory"].Value);
 
         listOfTeams.Clear();
         if (returnValue["Teams"] != null)

@@ -51,6 +51,13 @@ public class VictoryScript : MonoBehaviour
         seq.Play();
 
         DataManager.instance.userData.Gold += AntTool.LevelData.instance.Rows.Find(x => x._ID == DataManager.instance.selectedMapLevel)._Gold;
+        for (int i = 0; i < ListOfItemsToDisplay.Count; i++)
+        {
+            if (ListOfItemsToDisplay[i].CraftingMatsDatabase != null)
+            {
+                DataManager.instance.userData.Inventory.Add(ListOfItemsToDisplay[i].IndexInDatabase);
+            }
+        }
     }
 
     public void HandleLost()
