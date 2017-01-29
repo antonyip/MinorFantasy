@@ -1,8 +1,19 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+public enum TARGETTYPE
+{
+    SELF,
+    ALLY,
+    ALLIES,
+    ENEMY,
+    ENEMIES,
+    ALL,
+};
+
 public class UtilsManager
 {
+
     public static void UpdateUserData()
     {
         PlayerIOManager.instance.SaveToPlayerIODatabase();

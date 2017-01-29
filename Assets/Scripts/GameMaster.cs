@@ -376,7 +376,7 @@ public class GameMaster : MonoBehaviour {
             if (currentUnit.IsEnemyUnit)
             {
                 Debug.Log("Turn:" + UnitOrderCounter.ToString());
-                ExecuteGambits(ref currentUnit);
+                ExecuteGambits(currentUnit, new List<Unit>());
                 ++UnitOrderCounter;
             }
             else
@@ -384,7 +384,7 @@ public class GameMaster : MonoBehaviour {
                 if (AutoMode)
                 {
                     Debug.Log("Turn:" + UnitOrderCounter.ToString());
-                    ExecuteGambits(ref currentUnit);
+                    ExecuteGambits(currentUnit, new List<Unit>());
                     ++UnitOrderCounter;
                 }
                 else
@@ -393,7 +393,14 @@ public class GameMaster : MonoBehaviour {
                     if (!FirstTimeUserOnThisTurn)
                         return;
 
+                    if (currentUnit.isDead)
+                    {
+                        ++UnitOrderCounter;
+                        return;
+                    }
+
                     Debug.Log("Turn:" + UnitOrderCounter.ToString());
+                    UserCurrentUnit = currentUnit;
 
                     PlayerButtons[currentUnit.ID].GetComponentInChildren<DOTweenVisualManager>().enabled = true;
 
@@ -454,71 +461,114 @@ public class GameMaster : MonoBehaviour {
         Debug.Log(buttonID);
         PlayerButtons[buttonID].GetComponentInChildren<DOTweenVisualManager>().enabled = false;
         SelectChoices.SetActive(true);
+        SelectChoices.GetComponent<SelectChoicesScript>().Setup(PlayerUnits.Find(x => x.ID == buttonID));
     }
-    public void SkillButtonPressed(int buttonID)
+
+    Unit UserCurrentUnit;
+    int UserSkillID;
+    public void SkillButtonPressed(AntTool.SkillDataRow skill, int buttonID)
     {
-        Debug.Log(buttonID);
+        Debug.Log(skill._Name);
+        UserSkillID = buttonID;
+        TARGETTYPE tt = TARGETTYPE.ALL;
+        switch (skill._TargetType)
+        {
+            default:
+                tt = TARGETTYPE.ALL;
+                break;
+        }
+        SelectChoices.GetComponent<SelectChoicesScript>().SetupTarget(tt, AllUnits);
+    }
+
+    public void TargetButtonPressed(int ButtonID)
+    {
         SelectChoices.SetActive(false);
+        ExecuteGambits(UserCurrentUnit, AllUnits, UserSkillID);
         FirstTimeUserOnThisTurn = true;
     }
 
-    private void ExecuteGambits(ref Unit currentUnit)
+    private void ExecuteGambits(Unit currentUnit, List<Unit> unitsAffected)
+    {
+        ExecuteGambits(currentUnit, unitsAffected, -1);
+    }
+
+    private void ExecuteGambits(Unit currentUnit, List<Unit> unitsAffected, int skillID)
     {
         if (currentUnit.isDead)
             return;
-        
+
         //evaulate gambits
-        for (int i = 0; i < DataManager.MAXGAMBITCOUNT; i++)
+        //int selectedSkillGambit = -1;
+        Skill selectedSkill = null;
+        if (!(unitsAffected != null && unitsAffected.Count > 0))
         {
-            if (i >= currentUnit.aiActions.Count)
-                return;
-
-            List<Unit> unitsAffected = currentUnit.aiActions[i].EvaluateThis(ref currentUnit, ref AllUnits);
-            if (unitsAffected != null && unitsAffected.Count > 0)
+            for (int i = 0; i < DataManager.MAXGAMBITCOUNT; i++)
             {
-                Debug.Log("Execute Gambit");
-                bool isMelee = false;
-                Unit MeleeAnimationTarget = null;
-                for (int j = 0; j < unitsAffected.Count; j++)
-                {
-                    Unit ounit = unitsAffected[j];
-                    MeleeAnimationTarget = unitsAffected[j];
+                if (i >= currentUnit.aiActions.Count)
+                    return;
 
-                    ounit.sprite.transform.DOPunchPosition(new Vector3(Random.Range(-15, 15), Random.Range(-15, 15), 0), DataManager.LONGANIMATION);
-                    isMelee = currentUnit.aiSkills[i].EvaluateSkillEffect(ref currentUnit, ref ounit);
-                    AnimationLock = isMelee;
-                    if (ounit.isDead)
-                    {
-                        Sequence seq = DOTween.Sequence();
-                        seq.AppendInterval(DataManager.LONGANIMATION);
-                        seq.Append(ounit.sprite.transform.DOScale(Vector3.zero, DataManager.LONGANIMATION));
-                        seq.Play();
-                        experienceEarnedThisMap += Mathf.CeilToInt(1.0f * ounit.character.GetExperience() * MAPBONUSMULTIPLIER * DataManager.instance.userData.MAPBONUSMULTIPLIER);
-                        RollForLoot(currentUnit, ounit);
-                    }
+                unitsAffected = currentUnit.aiActions[i].EvaluateThis(ref currentUnit, ref AllUnits);
+
+                if (unitsAffected != null && unitsAffected.Count > 0)
+                {
+                    //selectedSkillGambit = i;
+                    selectedSkill = currentUnit.aiSkills[i];
+                    break;
                 }
 
-
-
-                if (isMelee)
-                {
-                    originalSprite = currentUnit.sprite;
-                    orignalPos = currentUnit.sprite.transform.position;
-                    AnimationName = currentUnit.aiSkills[i].dataBaseSkill._Name;
-                    //Vector3 attackPos = MeleeAnimationTarget.sprite.transform.position;
-                    Vector3 attackPos = AttackSpritePositions[MeleeAnimationTarget.ID].transform.position;
-                    currentUnit.sprite.transform.DOMove(attackPos, DataManager.NORMALANIMATION).OnComplete(AttackWithCurrentUnit);
-                }
-                else
-                {
-                    currentUnit.sprite.GetComponentInChildren<SpriteAnimation>().LoadEnemyAttack(currentUnit.aiSkills[i].dataBaseSkill._Name);
-                }
-
-                
-
-                UpdatePlayerControls();
-                return;
             }
+        }
+        else
+        {
+            selectedSkill = new Skill(currentUnit.character.playerStats.AvailableSkills()[skillID]);
+        }
+
+        // handle animations
+        if (unitsAffected != null && unitsAffected.Count > 0)
+        {
+            Debug.Log("Execute Gambit");
+            bool isMelee = false;
+            Unit MeleeAnimationTarget = null;
+            for (int j = 0; j < unitsAffected.Count; j++)
+            {
+                Unit ounit = unitsAffected[j];
+                MeleeAnimationTarget = unitsAffected[j];
+
+                ounit.sprite.transform.DOPunchPosition(new Vector3(Random.Range(-15, 15), Random.Range(-15, 15), 0), DataManager.LONGANIMATION);
+                //isMelee = currentUnit.aiSkills[selectedSkillGambit].EvaluateSkillEffect(ref currentUnit, ref ounit);
+                isMelee = selectedSkill.EvaluateSkillEffect(ref currentUnit, ref ounit);
+                
+                AnimationLock = isMelee;
+                if (ounit.isDead)
+                {
+                    Sequence seq = DOTween.Sequence();
+                    seq.AppendInterval(DataManager.LONGANIMATION);
+                    seq.Append(ounit.sprite.transform.DOScale(Vector3.zero, DataManager.LONGANIMATION));
+                    seq.Play();
+                    experienceEarnedThisMap += Mathf.CeilToInt(1.0f * ounit.character.GetExperience() * MAPBONUSMULTIPLIER * DataManager.instance.userData.MAPBONUSMULTIPLIER);
+                    RollForLoot(currentUnit, ounit);
+                }
+            }
+
+
+
+            if (isMelee)
+            {
+                originalSprite = currentUnit.sprite;
+                orignalPos = currentUnit.sprite.transform.position;
+                AnimationName = selectedSkill.dataBaseSkill._Name;
+                //Vector3 attackPos = MeleeAnimationTarget.sprite.transform.position;
+                Vector3 attackPos = AttackSpritePositions[MeleeAnimationTarget.ID].transform.position;
+                currentUnit.sprite.transform.DOMove(attackPos, DataManager.NORMALANIMATION).OnComplete(AttackWithCurrentUnit);
+            }
+            else
+            {
+                currentUnit.sprite.GetComponentInChildren<SpriteAnimation>().LoadEnemyAttack(selectedSkill.dataBaseSkill._Name);
+            }
+
+            // reset the skill
+            UserSkillID = -1;
+            UpdatePlayerControls();
         }
     }
 
