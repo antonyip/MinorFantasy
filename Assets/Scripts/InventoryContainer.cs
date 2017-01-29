@@ -63,4 +63,14 @@ public class InventoryContainer : Compressable
         }
         return false;
     }
+
+    public int Count
+    {
+        get { return ListOfItems.Count; }
+    }
+
+    public List<KeyValuePair<int,int>> ToList()
+    {
+        return ListOfItems.ToList();
+    }
 }

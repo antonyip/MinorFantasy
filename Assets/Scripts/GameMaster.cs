@@ -248,9 +248,6 @@ public class GameMaster : MonoBehaviour {
         }
 
 
-        // todo move this to animation
-        ReleaseSpawnLock();
-
         Debug.Log("Determining Speed Que");
         AllUnits = AllUnits.OrderBy(x => x.character.GetSpeed()).ToList();
 
@@ -286,6 +283,9 @@ public class GameMaster : MonoBehaviour {
         ItemLock = false;
     }
 
+    /// <summary>
+    /// called by invoke
+    /// </summary>
     public void ReleaseSpawnLock()
     {
         SpawnLock = false;
@@ -316,16 +316,18 @@ public class GameMaster : MonoBehaviour {
         if (monsterCounter == monsterToSpawnCounter)
         {
             monsterCounter = 0;
-            ReleaseSpawnLock();
+            Invoke("ReleaseSpawnLock", DataManager.LONGANIMATION);
         }
     }
+
+
 
     int UnitOrderCounter = 0;
     bool HasWon = false;
     bool HasLost = false;
     bool GameNotStarted = true;
     // Update is called once per frame
-    void Update ()
+    void FixedUpdate ()
     {
         // if waiting for animation or user input..
         if ((AnimationLock && !BypassAnimationLock) || HasWon || HasLost || GameNotStarted || ItemLock || SpawnLock)
