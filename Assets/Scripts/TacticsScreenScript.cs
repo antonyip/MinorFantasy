@@ -16,6 +16,8 @@ public class TacticsScreenScript : MonoBehaviour {
     public GameObject SelectionSkillGambitPrefab;
     public Transform SelectionSkillGambitContainer;
 
+    public Text HeroNameText;
+
     PlayerCharacter currentPC;
 
     public static TacticsScreenScript instance;
@@ -63,6 +65,7 @@ public class TacticsScreenScript : MonoBehaviour {
 
         // handle actual loading
         Debug.Assert(currentPC != null);
+        HeroNameText.text = currentPC.databaseChar._Name;
         CharacterFace.sprite = Resources.Load<Sprite>("HeroPrefabs/Faces/" + currentPC.databaseChar._SpriteFace);
 
         for (int i = 0; i < GambitContainers.Count; i++)

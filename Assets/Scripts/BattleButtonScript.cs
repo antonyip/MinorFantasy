@@ -11,10 +11,12 @@ public class BattleButtonScript : MonoBehaviour {
     public Image yellow;
     public Text myname;
 
+    int ID;
+
 	// Use this for initialization
-	void Start () {
-	
-	}
+	public void Setup (int id) {
+        ID = id;
+    }
 	
 	// Update is called once per frame
     public void UpdateGUI (Unit pc)
@@ -39,5 +41,10 @@ public class BattleButtonScript : MonoBehaviour {
         }
 
 	}
+
+    public void ButtonPressed()
+    {
+        GameMaster.instance.GUIButtonPressed(ID);
+    }
 }
 

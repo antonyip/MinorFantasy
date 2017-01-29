@@ -28,6 +28,7 @@ public class GameMaster : MonoBehaviour {
     public GameObject StartGamePopup;
     public GameObject VictoryPopup;
     public GameObject OptionsPopup;
+    public GameObject SelectChoices;
 
     public GameObject ItemDropPrefab;
 
@@ -84,6 +85,11 @@ public class GameMaster : MonoBehaviour {
         NumPlayerSpawn = 0;
         for (int i = 0; i < dataManager.userData.listOfTeams[dataManager.selectedTeam].GetListOfCharacters().Count; i++)
         {
+            for (int j = 0; j < DataManager.MAXUNITPERTEAM; j++)
+            {
+                PlayerButtons[j].GetComponent<BattleButtonScript>().Setup(j);
+            }
+
             var playerChar = dataManager.userData.listOfTeams[dataManager.selectedTeam].GetListOfCharacters()[i];
             Unit u = new Unit();
             if (playerChar != null)
@@ -326,6 +332,8 @@ public class GameMaster : MonoBehaviour {
     bool HasWon = false;
     bool HasLost = false;
     bool GameNotStarted = true;
+    bool FirstTimeUserOnThisTurn = true;
+
     // Update is called once per frame
     void FixedUpdate ()
     {
@@ -363,10 +371,11 @@ public class GameMaster : MonoBehaviour {
         Unit currentUnit = AllUnits[UnitOrderCounter % AllUnits.Count];
         if (currentUnit != null)
         {
-            Debug.Log("Turn:" + UnitOrderCounter.ToString());
             
+
             if (currentUnit.IsEnemyUnit)
             {
+                Debug.Log("Turn:" + UnitOrderCounter.ToString());
                 ExecuteGambits(ref currentUnit);
                 ++UnitOrderCounter;
             }
@@ -374,12 +383,21 @@ public class GameMaster : MonoBehaviour {
             {
                 if (AutoMode)
                 {
+                    Debug.Log("Turn:" + UnitOrderCounter.ToString());
                     ExecuteGambits(ref currentUnit);
                     ++UnitOrderCounter;
                 }
                 else
                 {
                     // wait for user input - have a que system so that we can "bot" user commands
+                    if (!FirstTimeUserOnThisTurn)
+                        return;
+
+                    Debug.Log("Turn:" + UnitOrderCounter.ToString());
+
+                    PlayerButtons[currentUnit.ID].GetComponentInChildren<DOTweenVisualManager>().enabled = true;
+
+                    FirstTimeUserOnThisTurn = false;
                 }
             }
             
@@ -388,6 +406,8 @@ public class GameMaster : MonoBehaviour {
         } // endif currentUnit != null
 
     } // end update
+
+    
 
     void RollForLoot(Unit killer, Unit deadUnit)
     {
@@ -427,6 +447,19 @@ public class GameMaster : MonoBehaviour {
     void HideOptionsVisible()
     {
         OptionsPopup.SetActive(false);
+    }
+
+    public void GUIButtonPressed(int buttonID)
+    {
+        Debug.Log(buttonID);
+        PlayerButtons[buttonID].GetComponentInChildren<DOTweenVisualManager>().enabled = false;
+        SelectChoices.SetActive(true);
+    }
+    public void SkillButtonPressed(int buttonID)
+    {
+        Debug.Log(buttonID);
+        SelectChoices.SetActive(false);
+        FirstTimeUserOnThisTurn = true;
     }
 
     private void ExecuteGambits(ref Unit currentUnit)
