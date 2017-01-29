@@ -42,10 +42,11 @@ public class GameOptionsButton : MonoBehaviour {
         if (GameMaster.instance.AutoMode == true)
         {
             GetComponent<Image>().color = UtilsManager.hexToColor("5DFF00A6");
+            GameMaster.instance.AutoOn();
         }
         else
         {
-            GetComponent<Image>().color = Color.white;
+            GetComponent<Image>().color = Color.white;            
         }
     }
 

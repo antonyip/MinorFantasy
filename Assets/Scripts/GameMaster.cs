@@ -438,6 +438,15 @@ public class GameMaster : MonoBehaviour {
         
     }
 
+    public void AutoOn()
+    {
+        for (int i = 0; i < DataManager.MAXUNITPERTEAM; i++)
+        {
+            PlayerButtons[i].GetComponentInChildren<DOTweenVisualManager>().enabled = false;
+        }
+        FirstTimeUserOnThisTurn = true;
+    }
+
     public void ShowOptions()
     {
         OptionsPopup.SetActive(true);

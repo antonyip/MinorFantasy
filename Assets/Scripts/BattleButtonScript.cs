@@ -44,7 +44,11 @@ public class BattleButtonScript : MonoBehaviour {
 
     public void ButtonPressed()
     {
-        GameMaster.instance.GUIButtonPressed(ID);
+        // should change this..
+        if (GetComponentInChildren<DOTweenVisualManager>().enabled)
+        {
+            GameMaster.instance.GUIButtonPressed(ID);
+        }
     }
 }
 
