@@ -28,7 +28,6 @@ public class LameAnimatorScript : MonoBehaviour {
     IEnumerator TurnOffAttack()
     {
         yield return new WaitForSeconds(1.5f);
-        GameMaster.instance.AnimationLock = false;
     }
 }
 

@@ -5,6 +5,8 @@ using System;
 
 public class Unit
 {
+    public int ID = -1;
+
     public GameObject sprite { get; set; }
     public Character character { get; set; }
     public GameObject uiButton { get; set; }

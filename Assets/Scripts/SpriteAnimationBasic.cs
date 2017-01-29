@@ -50,7 +50,7 @@ public class SpriteAnimationBasic : MonoBehaviour {
                         LoadEnemyImageInner(oldSprite);
                         Attacking = false;
                         counter = 0;
-                        GameMaster.instance.AnimationLock = false;
+                        GameMaster.instance.ReleaseAnimationLock();
                         return;
                     }
                     GetComponent<Image>().sprite = sprites[counter];

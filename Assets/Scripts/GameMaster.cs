@@ -14,6 +14,7 @@ public class GameMaster : MonoBehaviour {
     public List<GameObject> PlayerUnitsSpritePositions = new List<GameObject>();
     public List<GameObject> PlayerUnitsSprite = new List<GameObject>();
     public List<GameObject> MonstersUnitsSpritePositions = new List<GameObject>();
+    public List<GameObject> AttackSpritePositions = new List<GameObject>();
     public List<GameObject> MonstersUnitsSprite = new List<GameObject>();
     public List<GameObject> OptionButtons = new List<GameObject>();
     public List<GameObject> PlayerButtons = new List<GameObject>();
@@ -93,6 +94,7 @@ public class GameMaster : MonoBehaviour {
                 u.character.playerStats.databaseChar = AntTool.HeroesData.instance.Rows.Find(x => x._ID == playerChar.ID);
                 u.IsEnemyUnit = false;
                 u.Start();
+                u.ID = i;
 
                 for (int j = 0; j < playerChar.LimitGambits.Count; j++)
                 {
@@ -136,8 +138,11 @@ public class GameMaster : MonoBehaviour {
         UpdatePlayerControls();
     } //end start
 
+
+    int monsterToSpawnCounter = 0;
     void SpawnWave(int waveIndexToSpawn)
     {
+        SpawnLock = true;
         // clean up old waves
         AllUnits = AllUnits.FindAll(x => x.character.IsPlayer()).ToList();
 
@@ -193,43 +198,58 @@ public class GameMaster : MonoBehaviour {
         else
             MobsToSpawn.Add(WaveString);
 
+
+        monsterToSpawnCounter = 0;
         for (int i = 0; i < MobsToSpawn.Count; i++)
         {
-            var item = MobsToSpawn[i];
-            var MobsID = int.Parse(item);
-            var Mob = AntTool.MobData.instance.Rows.Find(x => x._ID == MobsID);
-            Unit u = new Unit();
-            u.character = new Character();
-            u.character.monsterStats = new MonsterCharacter();
-            u.character.monsterStats.ID = MobsID;
-            u.character.monsterStats.monsterStats = Mob;
-            u.character.monsterStats.CurrentLevel = u.character.monsterStats.monsterStats._Level;
-            u.IsEnemyUnit = true;
-            u.Start();
-            string skillString = u.character.monsterStats.monsterStats._Skills;
-            string[] mobSkills = skillString.Split(',');
-            foreach (var skillPair in mobSkills)
+            if (MobsToSpawn[i].Trim() != "-1")
             {
-                string[] skillParts = skillPair.Split('=');
-                int logic = int.Parse(skillParts[0]);
-                int skill = int.Parse(skillParts[1]);
-                u.aiActions.Add(Gambits.GetGambit(logic));
-                u.aiSkills.Add(new Skill(skill));
+                var item = MobsToSpawn[i];
+                var MobsID = int.Parse(item);
+                var Mob = AntTool.MobData.instance.Rows.Find(x => x._ID == MobsID);
+                Unit u = new Unit();
+                u.ID = DataManager.MAXUNITPERTEAM + i;
+                u.character = new Character();
+                u.character.monsterStats = new MonsterCharacter();
+                u.character.monsterStats.ID = MobsID;
+                u.character.monsterStats.monsterStats = Mob;
+                u.character.monsterStats.CurrentLevel = u.character.monsterStats.monsterStats._Level;
+                u.IsEnemyUnit = true;
+                u.Start();
+                string skillString = u.character.monsterStats.monsterStats._Skills;
+                string[] mobSkills = skillString.Split(',');
+                foreach (var skillPair in mobSkills)
+                {
+                    string[] skillParts = skillPair.Split('=');
+                    int logic = int.Parse(skillParts[0]);
+                    int skill = int.Parse(skillParts[1]);
+                    u.aiActions.Add(Gambits.GetGambit(logic));
+                    u.aiSkills.Add(new Skill(skill));
+                }
+
+                string modelName = Mob._SpriteIdle;
+                GameObject go = Instantiate(Resources.Load("EnemyPrefabs/" + modelName)) as GameObject;
+                go.transform.SetParent(MonstersUnitsSpritePositions[i].transform);
+                go.transform.localPosition = Vector3.zero;
+                go.transform.localScale = Vector3.zero;
+                go.name = Mob._SpriteIdle;
+                go.GetComponentInChildren<SpriteAnimation>().LoadEnemyImage(Mob._SpriteIdle);
+
+                Sequence seq = DOTween.Sequence();
+                seq.AppendInterval(DataManager.NORMALANIMATION * i);
+                seq.Append(go.transform.DOScale(Vector3.one, DataManager.LONGANIMATION));
+                seq.Play().OnComplete(MonsterSpawnComplete);
+                ++monsterToSpawnCounter;
+                u.sprite = go;
+                MonstersUnitsSprite.Add(go);
+
+                AllUnits.Add(u);
             }
-
-            string modelName = Mob._SpriteIdle;
-            GameObject go = Instantiate(Resources.Load("EnemyPrefabs/" + modelName)) as GameObject;
-            go.transform.SetParent(MonstersUnitsSpritePositions[i].transform);
-            go.transform.localPosition = Vector3.zero;
-            go.transform.localScale = Vector3.one;
-            go.name = Mob._SpriteIdle; 
-            go.GetComponentInChildren<SpriteAnimation>().LoadEnemyImage(Mob._SpriteIdle);
-
-            u.sprite = go;
-            MonstersUnitsSprite.Add(go);
-
-            AllUnits.Add(u);
         }
+
+
+        // todo move this to animation
+        ReleaseSpawnLock();
 
         Debug.Log("Determining Speed Que");
         AllUnits = AllUnits.OrderBy(x => x.character.GetSpeed()).ToList();
@@ -252,11 +272,23 @@ public class GameMaster : MonoBehaviour {
     }
 
     public bool BypassAnimationLock = false;
-    public bool AnimationLock = false;
+    bool AnimationLock = false;
+    bool ItemLock = false;
+    bool SpawnLock = false;
 
     public void ReleaseAnimationLock()
     {
         AnimationLock = false;
+    }
+
+    public void ReleaseItemLock()
+    {
+        ItemLock = false;
+    }
+
+    public void ReleaseSpawnLock()
+    {
+        SpawnLock = false;
     }
 
     public void BackToMenu()
@@ -266,7 +298,7 @@ public class GameMaster : MonoBehaviour {
 
     // start Game button clicked from UI
     int counter = 0;
-    public void ButtonStartGameClicked()
+    void ButtonStartGameClicked()
     {
         ++counter;
         if (NumPlayerSpawn == counter)
@@ -274,6 +306,17 @@ public class GameMaster : MonoBehaviour {
             GameNotStarted = false;
             StartGamePopup.SetActive(false);
             UpdatePlayerControls();
+        }
+    }
+
+    int monsterCounter = 0;
+    void MonsterSpawnComplete()
+    {
+        ++monsterCounter;
+        if (monsterCounter == monsterToSpawnCounter)
+        {
+            monsterCounter = 0;
+            ReleaseSpawnLock();
         }
     }
 
@@ -285,7 +328,7 @@ public class GameMaster : MonoBehaviour {
     void Update ()
     {
         // if waiting for animation or user input..
-        if ((AnimationLock && !BypassAnimationLock) || HasWon || HasLost || GameNotStarted)
+        if ((AnimationLock && !BypassAnimationLock) || HasWon || HasLost || GameNotStarted || ItemLock || SpawnLock)
         {
             return;
         }
@@ -297,7 +340,7 @@ public class GameMaster : MonoBehaviour {
         {
             HasWon = true;
             Debug.Log("You won this wave!");
-            ++currentWave;
+            ++currentWave;         
             SpawnWave(currentWave);
             return;
         }
@@ -356,6 +399,7 @@ public class GameMaster : MonoBehaviour {
             go.transform.localScale = Vector3.zero;
             go.transform.localPosition = Vector3.zero;
             go.SetActive(true);
+            ItemLock = true;
             go.GetComponent<ItemDropScript>().SetupItem(ItemThatDropped);
 
             ItemThatDropped.sprite = go;
@@ -397,15 +441,17 @@ public class GameMaster : MonoBehaviour {
             List<Unit> unitsAffected = currentUnit.aiActions[i].EvaluateThis(ref currentUnit, ref AllUnits);
             if (unitsAffected != null && unitsAffected.Count > 0)
             {
-                // to do - change this to the proper animation
-                currentUnit.sprite.GetComponentInChildren<SpriteAnimation>().LoadEnemyAttack("Swordman_Casting");
                 Debug.Log("Execute Gambit");
+                bool isMelee = false;
+                Unit MeleeAnimationTarget = null;
                 for (int j = 0; j < unitsAffected.Count; j++)
                 {
                     Unit ounit = unitsAffected[j];
-                    ounit.sprite.transform.DOPunchPosition(new Vector3(Random.Range(-15, 15), Random.Range(-15, 15), 0), DataManager.LONGANIMATION);
-                    AnimationLock = currentUnit.aiSkills[i].EvaluateSkillEffect(ref currentUnit, ref ounit);
+                    MeleeAnimationTarget = unitsAffected[j];
 
+                    ounit.sprite.transform.DOPunchPosition(new Vector3(Random.Range(-15, 15), Random.Range(-15, 15), 0), DataManager.LONGANIMATION);
+                    isMelee = currentUnit.aiSkills[i].EvaluateSkillEffect(ref currentUnit, ref ounit);
+                    AnimationLock = isMelee;
                     if (ounit.isDead)
                     {
                         Sequence seq = DOTween.Sequence();
@@ -416,11 +462,43 @@ public class GameMaster : MonoBehaviour {
                         RollForLoot(currentUnit, ounit);
                     }
                 }
+
+
+
+                if (isMelee)
+                {
+                    originalSprite = currentUnit.sprite;
+                    orignalPos = currentUnit.sprite.transform.position;
+                    AnimationName = currentUnit.aiSkills[i].dataBaseSkill._Name;
+                    //Vector3 attackPos = MeleeAnimationTarget.sprite.transform.position;
+                    Vector3 attackPos = AttackSpritePositions[MeleeAnimationTarget.ID].transform.position;
+                    currentUnit.sprite.transform.DOMove(attackPos, DataManager.NORMALANIMATION).OnComplete(AttackWithCurrentUnit);
+                }
+                else
+                {
+                    currentUnit.sprite.GetComponentInChildren<SpriteAnimation>().LoadEnemyAttack(currentUnit.aiSkills[i].dataBaseSkill._Name);
+                }
+
+                
+
                 UpdatePlayerControls();
                 return;
             }
         }
     }
 
+    GameObject originalSprite;
+    Vector3 orignalPos;
+    string AnimationName;
 
+    void AttackWithCurrentUnit()
+    {
+        originalSprite.GetComponentInChildren<SpriteAnimation>().LoadEnemyAttack(AnimationName);
+        originalSprite.transform.DOScale(Vector3.one, DataManager.NORMALANIMATION).OnComplete(MoveBackCurrentUnit);
+    }
+
+    void MoveBackCurrentUnit()
+    {
+        originalSprite.transform.DOMove(orignalPos, DataManager.NORMALANIMATION).OnComplete(ReleaseAnimationLock);
+    }
 }

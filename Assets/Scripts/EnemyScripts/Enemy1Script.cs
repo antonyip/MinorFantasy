@@ -37,7 +37,6 @@ public class Enemy1Script : MonoBehaviour {
     {
         yield return new WaitForSeconds(0.5f);
         AnimMode = AnimationMode.IDLE;
-        GameMaster.instance.AnimationLock = false;
     }
 
     void FixedUpdate()
