@@ -30,7 +30,11 @@ public class GameMaster : MonoBehaviour {
     public GameObject OptionsPopup;
     public GameObject SelectChoices;
 
+    //prefabs
     public GameObject ItemDropPrefab;
+    public GameObject ThrowAwayDamagePrefab;
+
+    public Transform ThrowAwayDamageLayer;
 
     public List<Item> ListOfItemsThatDropped = new List<Item>();
 
@@ -581,7 +585,7 @@ public class GameMaster : MonoBehaviour {
                 ounit.sprite.transform.DOPunchPosition(new Vector3(Random.Range(-15, 15), Random.Range(-15, 15), 0), DataManager.LONGANIMATION);
                 //isMelee = currentUnit.aiSkills[selectedSkillGambit].EvaluateSkillEffect(ref currentUnit, ref ounit);
                 isMelee = selectedSkill.EvaluateSkillEffect(ref currentUnit, ref ounit);
-                
+                ounit.sprite.GetComponentInChildren<SpriteAnimation>().UpdateScreenHealthBar(ounit.HPPercent);
                 AnimationLock = isMelee;
                 if (ounit.isDead)
                 {
@@ -629,6 +633,14 @@ public class GameMaster : MonoBehaviour {
     void MoveBackCurrentUnit()
     {
         originalSprite.transform.DOMove(orignalPos, DataManager.NORMALANIMATION).OnComplete(ReleaseAnimationLock);
+    }
+
+    public void SpawnDamageAt(Vector3 positon, string damage, Color32 color)
+    {
+        GameObject ThrowAwayDamage = Instantiate(ThrowAwayDamagePrefab, positon, Quaternion.identity) as GameObject;
+        ThrowAwayDamage.transform.SetParent(ThrowAwayDamageLayer);
+        ThrowAwayDamage.transform.localScale = Vector3.one;
+        ThrowAwayDamage.GetComponent<ThrowAwayDamageScript>().SetDamage(damage, color);
     }
 }
 

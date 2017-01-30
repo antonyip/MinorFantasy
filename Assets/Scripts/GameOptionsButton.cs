@@ -20,13 +20,14 @@ public class GameOptionsButton : MonoBehaviour {
     {
         if (id == 0)
         {
-            GetComponentInChildren<Text>().text = "Auto";
+            GetComponentInChildren<Text>().text = "Gambits";
             UpdateAutoButton();
         }
 
         if (id == 1)
         {
-            GetComponentInChildren<Text>().text = "Tactics";
+            GetComponentInChildren<Text>().text = "RepeatLast";
+            GetComponent<Button>().interactable = false;
         }
 
         if (id == 2)

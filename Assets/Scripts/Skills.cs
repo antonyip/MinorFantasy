@@ -54,6 +54,9 @@ public class Skill
         string debugText = string.Format("{0} ({1})", topText, skillString);
         Debug.Log(debugText);
         GameMaster.instance.UpdateTopText(topText);
+        GameMaster.instance.SpawnDamageAt(unit.sprite.transform.position, result.ToString(), Color.red);
+
+
         unit.HP -= result;
         return dataBaseSkill._AnimationType.Contains("AnimType_MeleeTarget");
     }
