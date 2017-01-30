@@ -39,7 +39,7 @@ public class SelectChoicesScript : MonoBehaviour {
         }
     }
 
-    public void SetupTarget(TARGETTYPE tt, List<Unit> selectableUnits)
+    public void SetupTarget(List<string> selectableUnits)
     {
         DestroyExisting();
 
@@ -49,7 +49,7 @@ public class SelectChoicesScript : MonoBehaviour {
             go.transform.SetParent(ButtonContainers);
             go.transform.localPosition = Vector3.zero;
             go.transform.localScale = Vector3.one;
-            go.GetComponent<SkillTargetButtonScript>().SetupTarget(selectableUnits[i].GetUnitName(), i);
+            go.GetComponent<SkillTargetButtonScript>().SetupTarget(selectableUnits[i], i);
         }
     }
 }

@@ -9,6 +9,7 @@ public enum TARGETTYPE
     ENEMY,
     ENEMIES,
     ALL,
+    INDIVIDUAL,
 };
 
 public class UtilsManager

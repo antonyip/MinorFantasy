@@ -467,32 +467,67 @@ public class GameMaster : MonoBehaviour {
 
     public void GUIButtonPressed(int buttonID)
     {
-        Debug.Log(buttonID);
-        PlayerButtons[buttonID].GetComponentInChildren<DOTweenVisualManager>().enabled = false;
         SelectChoices.SetActive(true);
         SelectChoices.GetComponent<SelectChoicesScript>().Setup(PlayerUnits.Find(x => x.ID == buttonID));
     }
 
     Unit UserCurrentUnit;
     int UserSkillID;
+    Dictionary<string, List<Unit>> AffectedUnits;
     public void SkillButtonPressed(AntTool.SkillDataRow skill, int buttonID)
     {
         Debug.Log(skill._Name);
         UserSkillID = buttonID;
-        TARGETTYPE tt = TARGETTYPE.ALL;
-        switch (skill._TargetType)
+        AffectedUnits = new Dictionary<string, List<Unit>>();
+
+        if (skill._TargetType.Equals("TargetType_Target"))
         {
-            default:
-                tt = TARGETTYPE.ALL;
-                break;
+            List<string> namesToPassDown = new List<string>();
+            foreach (var item in AllUnits)
+            {
+                namesToPassDown.Add(item.character.GetName());
+                List<Unit> units = new List<Unit>();
+                units.Add(item);
+                AffectedUnits.Add(item.character.GetName(), units);
+            }
+            namesToPassDown.Add("Cancel");
+            AffectedUnits.Add("Cancel", null);
+            SelectChoices.GetComponent<SelectChoicesScript>().SetupTarget(namesToPassDown);
+            return;
         }
-        SelectChoices.GetComponent<SelectChoicesScript>().SetupTarget(tt, AllUnits);
+
+        if (skill._TargetType.Equals("TargetType_Multiple"))
+        {
+            List<string> namesToPassDown = new List<string>();
+            namesToPassDown.Add("Allies");
+            var AllyUnits = AllUnits.FindAll(x => !x.IsEnemyUnit).ToList();
+            AffectedUnits.Add("Allies", AllyUnits);
+
+            namesToPassDown.Add("Enemies");
+            var EnemyUnits = AllUnits.FindAll(x => x.IsEnemyUnit).ToList();
+            AffectedUnits.Add("Enemies", EnemyUnits);
+
+            namesToPassDown.Add("Cancel");
+            AffectedUnits.Add("Cancel", null);
+            SelectChoices.GetComponent<SelectChoicesScript>().SetupTarget(namesToPassDown);
+            return;
+        }
     }
 
     public void TargetButtonPressed(int ButtonID)
     {
         SelectChoices.SetActive(false);
-        ExecuteGambits(UserCurrentUnit, AllUnits, UserSkillID);
+        var units = AffectedUnits.Values.ElementAt(ButtonID);
+        if (units == null)
+            return;
+
+        ExecuteGambits(UserCurrentUnit, units, UserSkillID);
+        ++UnitOrderCounter;
+        // reset after everything is done
+        PlayerButtons[UserCurrentUnit.ID].GetComponentInChildren<DOTweenVisualManager>().enabled = false;
+        AffectedUnits = null;
+        UserCurrentUnit = null;
+        UserSkillID = -1;
         FirstTimeUserOnThisTurn = true;
     }
 
@@ -596,3 +631,4 @@ public class GameMaster : MonoBehaviour {
         originalSprite.transform.DOMove(orignalPos, DataManager.NORMALANIMATION).OnComplete(ReleaseAnimationLock);
     }
 }
+

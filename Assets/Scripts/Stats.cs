@@ -317,6 +317,21 @@ public sealed class Character
         return 0;
     }
 
+    internal int GetInt()
+    {
+        if (IsMonster())
+        {
+            return monsterStats.monsterStats._INT + monsterStats.CurrentLevel * monsterStats.monsterStats._INTGrowth;
+        }
+
+        if (IsPlayer())
+        {
+            return playerStats.databaseChar._INT + playerStats.CurrentLevel * playerStats.databaseChar._INTGrowth;
+        }
+
+        return 0;
+    }
+
     internal int GetFDef()
     {
         if (IsMonster())
