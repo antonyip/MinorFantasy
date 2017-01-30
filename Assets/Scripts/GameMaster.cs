@@ -555,7 +555,7 @@ public class GameMaster : MonoBehaviour {
                 if (i >= currentUnit.aiActions.Count)
                     return;
 
-                unitsAffected = currentUnit.aiActions[i].EvaluateThis(ref currentUnit, ref AllUnits);
+                unitsAffected = currentUnit.aiActions[i].EvaluateThis(currentUnit, AllUnits);
 
                 if (unitsAffected != null && unitsAffected.Count > 0)
                 {
@@ -577,6 +577,7 @@ public class GameMaster : MonoBehaviour {
             Debug.Log("Execute Gambit");
             bool isMelee = false;
             Unit MeleeAnimationTarget = null;
+            Debug.Log("NumOfUnits:" + unitsAffected.Count);
             for (int j = 0; j < unitsAffected.Count; j++)
             {
                 Unit ounit = unitsAffected[j];
@@ -584,9 +585,11 @@ public class GameMaster : MonoBehaviour {
 
                 ounit.sprite.transform.DOPunchPosition(new Vector3(Random.Range(-15, 15), Random.Range(-15, 15), 0), DataManager.LONGANIMATION);
                 //isMelee = currentUnit.aiSkills[selectedSkillGambit].EvaluateSkillEffect(ref currentUnit, ref ounit);
-                isMelee = selectedSkill.EvaluateSkillEffect(ref currentUnit, ref ounit);
+                isMelee = selectedSkill.EvaluateSkillEffect(currentUnit, ounit);
                 ounit.sprite.GetComponentInChildren<SpriteAnimation>().UpdateScreenHealthBar(ounit.HPPercent);
-                AnimationLock = isMelee;
+
+                // hack animation lock for now
+                AnimationLock = isMelee ? true : true;
                 if (ounit.isDead)
                 {
                     Sequence seq = DOTween.Sequence();
@@ -612,6 +615,7 @@ public class GameMaster : MonoBehaviour {
             else
             {
                 currentUnit.sprite.GetComponentInChildren<SpriteAnimation>().LoadEnemyAttack(selectedSkill.dataBaseSkill._Name);
+                currentUnit.sprite.transform.DOScale(Vector3.one, DataManager.LONGANIMATION).OnComplete(ReleaseAnimationLock);
             }
 
             // reset the skill
@@ -637,6 +641,7 @@ public class GameMaster : MonoBehaviour {
 
     public void SpawnDamageAt(Vector3 positon, string damage, Color32 color)
     {
+        Debug.Log("spawncalled");
         GameObject ThrowAwayDamage = Instantiate(ThrowAwayDamagePrefab, positon, Quaternion.identity) as GameObject;
         ThrowAwayDamage.transform.SetParent(ThrowAwayDamageLayer);
         ThrowAwayDamage.transform.localScale = Vector3.one;

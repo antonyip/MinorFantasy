@@ -4,7 +4,7 @@ using System;
 
 public abstract class AIAction
 {
-    public virtual List<Unit> EvaluateThis(ref Unit MyUnit, ref List<Unit> allUnits)
+    public virtual List<Unit> EvaluateThis(Unit MyUnit, List<Unit> allUnits)
     {
         return allUnits;
     }

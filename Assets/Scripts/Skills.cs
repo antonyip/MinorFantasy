@@ -37,7 +37,7 @@ public class Skill
         skillString = skillString.Replace(" ", "");
     }
 
-    public bool EvaluateSkillEffect(ref Unit currentUnit, ref Unit unit)
+    public bool EvaluateSkillEffect(Unit currentUnit, Unit unit)
     {
         skillString = dataBaseSkill._SkillFomular;
         SubsituteTexts(ref currentUnit, ref unit);
