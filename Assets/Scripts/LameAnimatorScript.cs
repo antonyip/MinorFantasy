@@ -22,12 +22,6 @@ public class LameAnimatorScript : MonoBehaviour {
     public void LoadEnemyAttackInner(string s)
     {
         GetComponentInChildren<Animator>().SetInteger("StateMachine", 1);
-        StartCoroutine("TurnOffAttack");
-    }
-
-    IEnumerator TurnOffAttack()
-    {
-        yield return new WaitForSeconds(1.5f);
     }
 }
 
