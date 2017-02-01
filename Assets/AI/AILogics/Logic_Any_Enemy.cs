@@ -9,10 +9,6 @@ public class Logic_Any_Enemy : AIAction
     {
         Unit u = MyUnit;
         var selectedUnits = allUnits.FindAll(x => u.IsEnemyUnit != x.IsEnemyUnit && !x.isDead).ToList();
-        if (selectedUnits.Count > 1)
-        {
-            selectedUnits.RemoveRange(1, selectedUnits.Count - 1);
-        }
         return selectedUnits;
     }
 

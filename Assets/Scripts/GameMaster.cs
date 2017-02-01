@@ -111,7 +111,8 @@ public class GameMaster : MonoBehaviour {
                     // make sure the combination is legit
                     if (playerChar.LimitGambits[j] == true && playerChar.CurrentGambits[j] != -1 && playerChar.CurrentSkills[j] != -1)
                     {
-                        u.aiActions.Add(Gambits.GetGambit(playerChar.CurrentGambits[j]));
+                        int GambitDatabase = DataManager.instance.userData.ListOfGambits.GetGambitAt(playerChar.CurrentGambits[j]).PositionInGambitDatabase;
+                        u.aiActions.Add(Gambits.GetGambit(GambitDatabase));
                         u.aiSkills.Add(new Skill(playerChar.CurrentSkills[j]));
                     }
                 }
@@ -342,7 +343,10 @@ public class GameMaster : MonoBehaviour {
     void FixedUpdate ()
     {
         // if waiting for animation or user input..
-        if ((AnimationLock && !BypassAnimationLock) || HasWon || HasLost || GameNotStarted || ItemLock || SpawnLock)
+        if ((AnimationLock && !BypassAnimationLock) 
+            || HasWon || HasLost || GameNotStarted 
+            || (ItemLock && !BypassAnimationLock) 
+            || (SpawnLock&& !BypassAnimationLock))
         {
             return;
         }
@@ -477,25 +481,25 @@ public class GameMaster : MonoBehaviour {
 
     Unit UserCurrentUnit;
     int UserSkillID;
-    Dictionary<string, List<Unit>> AffectedUnits;
+    Dictionary<int, List<Unit>> AffectedUnits = new Dictionary<int, List<Unit>>();
     public void SkillButtonPressed(AntTool.SkillDataRow skill, int buttonID)
     {
         Debug.Log(skill._Name);
         UserSkillID = buttonID;
-        AffectedUnits = new Dictionary<string, List<Unit>>();
+        AffectedUnits.Clear();
 
         if (skill._TargetType.Equals("TargetType_Target"))
         {
             List<string> namesToPassDown = new List<string>();
-            foreach (var item in AllUnits)
+            foreach (var unit in AllUnits)
             {
-                namesToPassDown.Add(item.character.GetName());
+                namesToPassDown.Add(unit.character.GetName());
                 List<Unit> units = new List<Unit>();
-                units.Add(item);
-                AffectedUnits.Add(item.character.GetName(), units);
+                units.Add(unit);
+                AffectedUnits.Add(unit.ID, units);
             }
             namesToPassDown.Add("Cancel");
-            AffectedUnits.Add("Cancel", null);
+            AffectedUnits.Add(-1, null);
             SelectChoices.GetComponent<SelectChoicesScript>().SetupTarget(namesToPassDown);
             return;
         }
@@ -504,15 +508,15 @@ public class GameMaster : MonoBehaviour {
         {
             List<string> namesToPassDown = new List<string>();
             namesToPassDown.Add("Allies");
-            var AllyUnits = AllUnits.FindAll(x => !x.IsEnemyUnit).ToList();
-            AffectedUnits.Add("Allies", AllyUnits);
+            var AllyUnits = AllUnits.FindAll(x => x.IsEnemyUnit == false).ToList();
+            AffectedUnits.Add(60, AllyUnits);
 
             namesToPassDown.Add("Enemies");
-            var EnemyUnits = AllUnits.FindAll(x => x.IsEnemyUnit).ToList();
-            AffectedUnits.Add("Enemies", EnemyUnits);
+            var EnemyUnits = AllUnits.FindAll(x => x.IsEnemyUnit == true).ToList();
+            AffectedUnits.Add(61, EnemyUnits);
 
             namesToPassDown.Add("Cancel");
-            AffectedUnits.Add("Cancel", null);
+            AffectedUnits.Add(-1, null);
             SelectChoices.GetComponent<SelectChoicesScript>().SetupTarget(namesToPassDown);
             return;
         }
@@ -529,7 +533,7 @@ public class GameMaster : MonoBehaviour {
         ++UnitOrderCounter;
         // reset after everything is done
         PlayerButtons[UserCurrentUnit.ID].GetComponentInChildren<DOTweenVisualManager>().enabled = false;
-        AffectedUnits = null;
+        AffectedUnits.Clear();
         UserCurrentUnit = null;
         UserSkillID = -1;
         FirstTimeUserOnThisTurn = true;
@@ -577,25 +581,36 @@ public class GameMaster : MonoBehaviour {
             Debug.Log("Execute Gambit");
             bool isMelee = false;
             Unit MeleeAnimationTarget = null;
-            Debug.Log("NumOfUnits:" + unitsAffected.Count);
-            for (int j = 0; j < unitsAffected.Count; j++)
-            {
-                Unit ounit = unitsAffected[j];
-                MeleeAnimationTarget = unitsAffected[j];
+            Debug.Log("NumOfUnits targeted:" + unitsAffected.Count);
 
-                ounit.sprite.transform.DOPunchPosition(new Vector3(Random.Range(-15, 15), Random.Range(-15, 15), 0), DataManager.LONGANIMATION);
+            // weird thing here to handle team selection heal all
+            List<Unit>Targets = selectedSkill.FigureOutTargets(currentUnit, AllUnits);
+
+            Debug.Log("NumOfUnits affected:" + Targets.Count);
+
+            for (int j = 0; j < Targets.Count; j++)
+            {
+                Unit ounit = Targets[j];
+                MeleeAnimationTarget = Targets[j];
+
+                if (!BypassAnimationLock)
+                    ounit.sprite.transform.DOPunchPosition(new Vector3(Random.Range(-15, 15), Random.Range(-15, 15), 0), DataManager.LONGANIMATION);
+                
                 //isMelee = currentUnit.aiSkills[selectedSkillGambit].EvaluateSkillEffect(ref currentUnit, ref ounit);
                 isMelee = selectedSkill.EvaluateSkillEffect(currentUnit, ounit);
                 ounit.sprite.GetComponentInChildren<SpriteAnimation>().UpdateScreenHealthBar(ounit.HPPercent);
 
-                // hack animation lock for now
+                // HACK animation lock for now
                 AnimationLock = isMelee ? true : true;
                 if (ounit.isDead)
                 {
                     Sequence seq = DOTween.Sequence();
                     seq.AppendInterval(DataManager.LONGANIMATION);
                     seq.Append(ounit.sprite.transform.DOScale(Vector3.zero, DataManager.LONGANIMATION));
-                    seq.Play();
+
+                    if (!BypassAnimationLock)
+                        seq.Play();
+                    
                     experienceEarnedThisMap += Mathf.CeilToInt(1.0f * ounit.character.GetExperience() * MAPBONUSMULTIPLIER * DataManager.instance.userData.MAPBONUSMULTIPLIER);
                     RollForLoot(currentUnit, ounit);
                 }
@@ -610,12 +625,16 @@ public class GameMaster : MonoBehaviour {
                 AnimationName = selectedSkill.dataBaseSkill._Name;
                 //Vector3 attackPos = MeleeAnimationTarget.sprite.transform.position;
                 Vector3 attackPos = AttackSpritePositions[MeleeAnimationTarget.ID].transform.position;
-                currentUnit.sprite.transform.DOMove(attackPos, DataManager.NORMALANIMATION).OnComplete(AttackWithCurrentUnit);
+
+                if (!BypassAnimationLock)
+                    currentUnit.sprite.transform.DOMove(attackPos, DataManager.NORMALANIMATION).OnComplete(AttackWithCurrentUnit);
             }
             else
             {
                 currentUnit.sprite.GetComponentInChildren<SpriteAnimation>().LoadEnemyAttack(selectedSkill.dataBaseSkill._Name);
-                currentUnit.sprite.transform.DOScale(Vector3.one, DataManager.LONGANIMATION).OnComplete(ReleaseAnimationLock);
+
+                if (!BypassAnimationLock)
+                    currentUnit.sprite.transform.DOScale(Vector3.one, DataManager.LONGANIMATION).OnComplete(ReleaseAnimationLock);
             }
 
             // reset the skill

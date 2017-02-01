@@ -20,7 +20,20 @@ public class Unit
         get { return _HP; }
         set
         {
-            _HP = value; if (_HP <= 0) { isDead = true; } else { isDead = false; }
+            _HP = value;
+            if (_HP <= 0) 
+            { 
+                isDead = true; 
+            } 
+            else 
+            { 
+                isDead = false;
+            }
+
+            if (_HP > _MAXHP)
+            {
+                _HP = _MAXHP;
+            }
         }
     }
 

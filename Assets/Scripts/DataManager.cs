@@ -67,16 +67,6 @@ public class DataManager : MonoBehaviour
 
     // battle selection
 
-
-    void GenerateEmptyTeamStructure()
-    {
-        for (int i = 0; i < MAXTEAM; i++)
-        {
-            Team t = new Team();
-            userData.listOfTeams.Add(t);
-        }
-    }
-
     void Awake()
     {
         Debug.Log("InitDataManager");
@@ -105,7 +95,7 @@ public class DataManager : MonoBehaviour
             CurrentHeroesOdds.Add(5);
         }
 
-        // hack to generate current odds for hero summon pool
+        // hack to generate current odds for gambit summon pool
         for (int i = 0; i < 5; i++)
         {
             CurrentGambitOdds.Add(1);
@@ -113,13 +103,16 @@ public class DataManager : MonoBehaviour
             CurrentGambitOdds.Add(3);
             CurrentGambitOdds.Add(4);
             CurrentGambitOdds.Add(5);
+            CurrentGambitOdds.Add(6);
+            CurrentGambitOdds.Add(7);
+
+            CurrentGambitOdds.Add(21);
+            CurrentGambitOdds.Add(22);
+            CurrentGambitOdds.Add(23);
+            CurrentGambitOdds.Add(24);
+            CurrentGambitOdds.Add(25);
+            CurrentGambitOdds.Add(26);
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 
     public void LoadUser(string UniqueUserName)
@@ -137,7 +130,6 @@ public class DataManager : MonoBehaviour
         else if (PlayerIOManager.instance.LoggedIn == false && UniqueUserName == DataManager.BYPASSUSERLOAD)
         {
             userData = new UserData();
-            GenerateEmptyTeamStructure();
 
             Debug.Log("Loading UserData from our database::TODO");
             // insert unique pc for first 4.
@@ -156,8 +148,10 @@ public class DataManager : MonoBehaviour
             pc = new PlayerCharacter();
             pc.ID = 3;
             pc.databaseChar = AntTool.HeroesData.instance.Rows.Find(x => x._ID == pc.ID);
-            pc.CurrentGambits[0] = 0;
-            pc.CurrentSkills[0] = 1;
+            pc.CurrentGambits[0] = 17;
+            pc.CurrentSkills[0] = 10;
+            pc.CurrentGambits[1] = 0;
+            pc.CurrentSkills[1] = 1;
             userData.listOfPlayerCharacters.Add(pc);
 
             // insert random for last 8
@@ -185,6 +179,29 @@ public class DataManager : MonoBehaviour
             userData.ListOfGambits.Add(new Gambit(3));
             userData.ListOfGambits.Add(new Gambit(4));
             userData.ListOfGambits.Add(new Gambit(5));
+            userData.ListOfGambits.Add(new Gambit(6));
+            userData.ListOfGambits.Add(new Gambit(7));
+            userData.ListOfGambits.Add(new Gambit(1));
+            userData.ListOfGambits.Add(new Gambit(2));
+            userData.ListOfGambits.Add(new Gambit(3));
+            userData.ListOfGambits.Add(new Gambit(4));
+            userData.ListOfGambits.Add(new Gambit(5));
+            userData.ListOfGambits.Add(new Gambit(6));
+            userData.ListOfGambits.Add(new Gambit(7));
+
+            userData.ListOfGambits.Add(new Gambit(21));
+            userData.ListOfGambits.Add(new Gambit(22));
+            userData.ListOfGambits.Add(new Gambit(23));
+            userData.ListOfGambits.Add(new Gambit(24));
+            userData.ListOfGambits.Add(new Gambit(25));
+            userData.ListOfGambits.Add(new Gambit(26));
+            userData.ListOfGambits.Add(new Gambit(21));
+            userData.ListOfGambits.Add(new Gambit(22));
+            userData.ListOfGambits.Add(new Gambit(23));
+            userData.ListOfGambits.Add(new Gambit(24));
+            userData.ListOfGambits.Add(new Gambit(25));
+            userData.ListOfGambits.Add(new Gambit(26));
+
 
             PlayerIOManager.instance.BypassLogin();
         }
