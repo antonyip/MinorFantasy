@@ -32,7 +32,12 @@ public class ItemDropScript : MonoBehaviour {
         seq.Append(transform.DOLocalMoveY(50, DataManager.NORMALANIMATION));
         seq.Append(transform.DOScale(Vector3.zero, DataManager.NORMALANIMATION));
         // TODO make it nicer
-        seq.Play();
+        seq.Play().OnComplete(ReleaseItemLock);
+    }
+
+    void ReleaseItemLock()
+    {
+        GameMaster.instance.ReleaseItemLock();
     }
 }
 

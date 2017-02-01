@@ -46,6 +46,12 @@ namespace AntTool
       Rows.Add(new GambitDataRow("G_18","Every Other Turn","Gambit_Team",18,"Every Other Turn","NONE"));
       Rows.Add(new GambitDataRow("G_19","Every 5 turns","Gambit_Team",19,"Every 5 turns","NONE"));
       Rows.Add(new GambitDataRow("G_20","Every Turn","Gambit_Team",20,"Every Turn","NONE"));
+      Rows.Add(new GambitDataRow("G_21","Enemy < 75%","Gambit_Target",21,"Enemy < 75%","NONE"));
+      Rows.Add(new GambitDataRow("G_22","Enemy < 50%","Gambit_Target",22,"Enemy < 50%","NONE"));
+      Rows.Add(new GambitDataRow("G_23","Enemy < 25%","Gambit_Target",23,"Enemy < 25%","NONE"));
+      Rows.Add(new GambitDataRow("G_24","Ally < 75%","Gambit_Target",24,"Ally < 75%","NONE"));
+      Rows.Add(new GambitDataRow("G_25","Ally < 50%","Gambit_Target",25,"Ally < 50%","NONE"));
+      Rows.Add(new GambitDataRow("G_26","Ally < 25%","Gambit_Target",26,"Ally < 25%","NONE"));
     }
 
     private class NestedGambitData

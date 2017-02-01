@@ -14,10 +14,12 @@ namespace AntTool
     public string _AttackType;
     public string _TargetType;
     public string _AnimationType;
+    public bool _CanHitDeadUnits;
     public string _SoundFile;
     public string _SpriteAnimation;
     public string _SpriteIcon;
     public string _SkillFomular;
+    public string _DamageType;
     public int _Turns;
     public int _Hits;
     public int _HPFlat;
@@ -52,7 +54,7 @@ namespace AntTool
     public int _Completion;
     public int _Quality;
     public int _Steps;
-    public SkillDataRow(string SkillIndex,string Name,int ID,string Description,int Level,string AttackType,string TargetType,string AnimationType,string SoundFile,string SpriteAnimation,string SpriteIcon,string SkillFomular,int Turns,int Hits,int HPFlat,int HPPercent,int MPFlat,int MPPercent,int Energy,int ShieldPercent,int ShieldFlat,int AttFlat,int AttPercent,int DefFlat,int DefPercent,int MAttFlat,int MAttPercent,int MDefFlat,int MDefPercent,int STRFlat,int STRPercent,int DEXFlat,int DEXPercent,int INTFlat,int INTPercent,int LUKFlat,int LUKPercent,int SpeedFlat,int SpeedPercent,int ExpFlat,int ExpPercent,int DropFlat,int DropPercent,int Completion,int Quality,int Steps)
+    public SkillDataRow(string SkillIndex,string Name,int ID,string Description,int Level,string AttackType,string TargetType,string AnimationType,bool CanHitDeadUnits,string SoundFile,string SpriteAnimation,string SpriteIcon,string SkillFomular,string DamageType,int Turns,int Hits,int HPFlat,int HPPercent,int MPFlat,int MPPercent,int Energy,int ShieldPercent,int ShieldFlat,int AttFlat,int AttPercent,int DefFlat,int DefPercent,int MAttFlat,int MAttPercent,int MDefFlat,int MDefPercent,int STRFlat,int STRPercent,int DEXFlat,int DEXPercent,int INTFlat,int INTPercent,int LUKFlat,int LUKPercent,int SpeedFlat,int SpeedPercent,int ExpFlat,int ExpPercent,int DropFlat,int DropPercent,int Completion,int Quality,int Steps)
     {
      _SkillIndex = SkillIndex;
      _Name = Name;
@@ -62,10 +64,12 @@ namespace AntTool
      _AttackType = AttackType;
      _TargetType = TargetType;
      _AnimationType = AnimationType;
+     _CanHitDeadUnits = CanHitDeadUnits;
      _SoundFile = SoundFile;
      _SpriteAnimation = SpriteAnimation;
      _SpriteIcon = SpriteIcon;
      _SkillFomular = SkillFomular;
+     _DamageType = DamageType;
      _Turns = Turns;
      _Hits = Hits;
      _HPFlat = HPFlat;
@@ -106,48 +110,48 @@ namespace AntTool
   {
     private SkillData()
     {
-      Rows.Add(new SkillDataRow("S_1","Attack (Melee)",1,"Attack an enemy with a melee weapon",1,"AttackType_PATT","TargetType_Target","AnimType_MeleeTarget","NONE","NONE","NONE","{PSTR}+{PPATT}-{EPDEF}",0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0));
-      Rows.Add(new SkillDataRow("S_2","Attack (Range)",2,"Attack an enemy with a ranged weapon",1,"AttackType_PATT","TargetType_Target","AnimType_RangeTarget","NONE","NONE","NONE","{PSTR}+{PPATT}-{EPDEF}",0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0));
-      Rows.Add(new SkillDataRow("S_3","Magic Bolt",3,"Attack an enemy with a Magic bolt",1,"AttackType_MATT","TargetType_Target","AnimType_RangeTarget","NONE","NONE","NONE","{PINT}+{PMATT}-{EMDEF}",0,1,0,0,10,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0));
-      Rows.Add(new SkillDataRow("S_4","Heal",4,"Heals a Target",2,"AttackType_MATT","TargetType_Target","AnimType_RangeTarget","NONE","NONE","NONE","0-{PINT}-{PMATT}-{PMDEF}",0,1,0,0,50,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0));
-      Rows.Add(new SkillDataRow("S_5","Protect",5,"Shields a Target",1,"AttackType_BUFF","TargetType_Target","AnimType_RangeTarget","NONE","NONE","NONE","0-0",5,1,0,0,200,0,1,100,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0));
-      Rows.Add(new SkillDataRow("S_6","Fire Sword",6,"Attacks an enemy with a fire sword",9,"AttackType_PATT","TargetType_Target","AnimType_MeleeTarget","NONE","NONE","NONE","{PSTR}+{PPATT}+{PMATT}+{PFATT}-{EPDEF}-{EMDEF}+{EFDEF}",0,1,0,0,50,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0));
-      Rows.Add(new SkillDataRow("S_7","Guard Position",7,"Physical Defence Doubled!",6,"AttackType_BUFF","TargetType_Target","AnimType_Self","NONE","NONE","NONE","0-0",0,1,0,0,50,0,1,0,0,0,0,0,200,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0));
-      Rows.Add(new SkillDataRow("S_8","Berserk",8,"Attack Doubled, Defence Halfed",45,"AttackType_BUFF","TargetType_Target","AnimType_Self","NONE","NONE","NONE","0-0",0,1,0,0,200,0,1,0,0,0,200,0,50,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0));
-      Rows.Add(new SkillDataRow("S_9","Blood Sacrifice",9,"Passes HP to an Ally",32,"AttackType_BUFF","TargetType_Target","AnimType_RangeTarget","NONE","NONE","NONE","0-{PSTR}-{PPATT}-{PMATT}",0,1,0,50,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0));
-      Rows.Add(new SkillDataRow("S_10","Heal All",10,"Heals all allies",28,"AttackType_BUFF","TargetType_Multiple","AnimType_Ally","NONE","NONE","NONE","0-{PINT}",0,1,0,0,250,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0));
-      Rows.Add(new SkillDataRow("S_11","Regeneration",11,"Heals a Target Over Time",4,"AttackType_BUFF","TargetType_Target","AnimType_RangeTarget","NONE","NONE","NONE","(0-{PINT}-{PMATT}-{PMDEF})/3",5,1,0,0,80,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0));
-      Rows.Add(new SkillDataRow("S_12","Sacrifice",12,"Heals all allies to full by sacrificing life",48,"AttackType_BUFF","TargetType_Multiple","AnimType_Ally","NONE","NONE","NONE","0-9999",0,1,0,100,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0));
-      Rows.Add(new SkillDataRow("S_13","Shell",13,"Doubles Mdef of allies",28,"AttackType_BUFF","TargetType_Multiple","AnimType_Ally","NONE","NONE","NONE","0",5,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,200,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0));
-      Rows.Add(new SkillDataRow("S_14","Dispel",14,"Removes all Buffs",41,"AttackType_BUFF","TargetType_Target","AnimType_RangeTarget","NONE","NONE","NONE","{SPECIAL}{REMOVEBUFFS}",0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0));
-      Rows.Add(new SkillDataRow("S_15","PowerShot (T)",15,"iploremsum...",1,"AttackType_PATT","TargetType_Target","AnimType_RangeTarget","NONE","NONE","NONE","0",0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0));
-      Rows.Add(new SkillDataRow("S_16","PowerShot (F)",16,"iploremsum...",1,"AttackType_PATT","TargetType_Target","AnimType_RangeTarget","NONE","NONE","NONE","0",0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0));
-      Rows.Add(new SkillDataRow("S_17","PowerShot (I)",17,"iploremsum...",1,"AttackType_PATT","TargetType_Target","AnimType_RangeTarget","NONE","NONE","NONE","0",0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0));
-      Rows.Add(new SkillDataRow("S_18","dummyskill",18,"iploremsum...",1,"AttackType_BUFF","TargetType_Multiple","AnimType_Ally","NONE","NONE","NONE","0",0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0));
-      Rows.Add(new SkillDataRow("S_19","dummyskill",19,"iploremsum...",1,"AttackType_BUFF","TargetType_Multiple","AnimType_Ally","NONE","NONE","NONE","0",0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0));
-      Rows.Add(new SkillDataRow("S_20","dummyskill",20,"iploremsum...",1,"AttackType_BUFF","TargetType_Multiple","AnimType_Ally","NONE","NONE","NONE","0",0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0));
-      Rows.Add(new SkillDataRow("S_21","dummyskill",21,"iploremsum...",1,"AttackType_BUFF","TargetType_Multiple","AnimType_Ally","NONE","NONE","NONE","0",0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0));
-      Rows.Add(new SkillDataRow("S_22","dummyskill",21,"iploremsum...",1,"AttackType_BUFF","TargetType_Multiple","AnimType_Ally","NONE","NONE","NONE","0",0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0));
-      Rows.Add(new SkillDataRow("S_23","dummyskill",21,"iploremsum...",1,"AttackType_BUFF","TargetType_Multiple","AnimType_Ally","NONE","NONE","NONE","0",0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0));
-      Rows.Add(new SkillDataRow("S_24","dummyskill",21,"iploremsum...",1,"AttackType_BUFF","TargetType_Multiple","AnimType_Ally","NONE","NONE","NONE","0",0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0));
-      Rows.Add(new SkillDataRow("S_25","dummyskill",21,"iploremsum...",1,"AttackType_BUFF","TargetType_Multiple","AnimType_Ally","NONE","NONE","NONE","0",0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0));
-      Rows.Add(new SkillDataRow("S_26","dummyskill",21,"iploremsum...",1,"AttackType_BUFF","TargetType_Multiple","AnimType_Ally","NONE","NONE","NONE","0",0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0));
-      Rows.Add(new SkillDataRow("S_27","dummyskill",21,"iploremsum...",1,"AttackType_BUFF","TargetType_Multiple","AnimType_Ally","NONE","NONE","NONE","0",0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0));
-      Rows.Add(new SkillDataRow("S_28","dummyskill",21,"iploremsum...",1,"AttackType_BUFF","TargetType_Multiple","AnimType_Ally","NONE","NONE","NONE","0",0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0));
-      Rows.Add(new SkillDataRow("S_29","dummyskill",21,"iploremsum...",1,"AttackType_BUFF","TargetType_Multiple","AnimType_Ally","NONE","NONE","NONE","0",0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0));
-      Rows.Add(new SkillDataRow("S_30","dummyskill",21,"iploremsum...",1,"AttackType_BUFF","TargetType_Multiple","AnimType_Ally","NONE","NONE","NONE","0",0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0));
-      Rows.Add(new SkillDataRow("S_31","dummyskill",21,"iploremsum...",1,"AttackType_BUFF","TargetType_Multiple","AnimType_Ally","NONE","NONE","NONE","0",0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0));
-      Rows.Add(new SkillDataRow("S_32","dummyskill",21,"iploremsum...",1,"AttackType_BUFF","TargetType_Multiple","AnimType_Ally","NONE","NONE","NONE","0",0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0));
-      Rows.Add(new SkillDataRow("S_33","dummyskill",21,"iploremsum...",1,"AttackType_BUFF","TargetType_Multiple","AnimType_Ally","NONE","NONE","NONE","0",0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0));
-      Rows.Add(new SkillDataRow("S_34","dummyskill",21,"iploremsum...",1,"AttackType_BUFF","TargetType_Multiple","AnimType_Ally","NONE","NONE","NONE","0",0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0));
-      Rows.Add(new SkillDataRow("S_35","dummyskill",21,"iploremsum...",1,"AttackType_BUFF","TargetType_Multiple","AnimType_Ally","NONE","NONE","NONE","0",0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0));
-      Rows.Add(new SkillDataRow("S_36","dummyskill",21,"iploremsum...",1,"AttackType_BUFF","TargetType_Multiple","AnimType_Ally","NONE","NONE","NONE","0",0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0));
-      Rows.Add(new SkillDataRow("S_37","dummyskill",21,"iploremsum...",1,"AttackType_BUFF","TargetType_Multiple","AnimType_Ally","NONE","NONE","NONE","0",0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0));
-      Rows.Add(new SkillDataRow("S_38","dummyskill",21,"iploremsum...",1,"AttackType_BUFF","TargetType_Multiple","AnimType_Ally","NONE","NONE","NONE","0",0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0));
-      Rows.Add(new SkillDataRow("S_39","dummyskill",21,"iploremsum...",1,"AttackType_BUFF","TargetType_Multiple","AnimType_Ally","NONE","NONE","NONE","0",0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0));
-      Rows.Add(new SkillDataRow("S_40","dummyskill",21,"iploremsum...",1,"AttackType_BUFF","TargetType_Multiple","AnimType_Ally","NONE","NONE","NONE","0",0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0));
-      Rows.Add(new SkillDataRow("S_41","dummyskill",21,"iploremsum...",1,"AttackType_BUFF","TargetType_Multiple","AnimType_Ally","NONE","NONE","NONE","0",0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0));
-      Rows.Add(new SkillDataRow("S_42","dummyskill",21,"iploremsum...",1,"AttackType_BUFF","TargetType_Multiple","AnimType_Ally","NONE","NONE","NONE","0",0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0));
+      Rows.Add(new SkillDataRow("S_1","Attack (Melee)",1,"Attack an enemy with a melee weapon",1,"AttackType_PATT","TargetType_Target","AnimType_MeleeTarget",false,"NONE","NONE","NONE","{PSTR}+{PPATT}-{EPDEF}","DAMAGE",0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0));
+      Rows.Add(new SkillDataRow("S_2","Attack (Range)",2,"Attack an enemy with a ranged weapon",1,"AttackType_PATT","TargetType_Target","AnimType_RangeTarget",false,"NONE","NONE","NONE","{PSTR}+{PPATT}-{EPDEF}","DAMAGE",0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0));
+      Rows.Add(new SkillDataRow("S_3","Magic Bolt",3,"Attack an enemy with a Magic bolt",1,"AttackType_MATT","TargetType_Target","AnimType_RangeTarget",false,"NONE","NONE","NONE","{PINT}+{PMATT}-{EMDEF}","DAMAGE",0,1,0,0,10,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0));
+      Rows.Add(new SkillDataRow("S_4","Heal",4,"Heals a Target",2,"AttackType_MATT","TargetType_Target","AnimType_RangeTarget",false,"NONE","NONE","NONE","0-{PINT}-{PMATT}-{PMDEF}","HEAL",0,1,0,0,50,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0));
+      Rows.Add(new SkillDataRow("S_5","Protect",5,"Shields a Target",1,"AttackType_BUFF","TargetType_Target","AnimType_RangeTarget",false,"NONE","NONE","NONE","0-0","NONE",5,1,0,0,200,0,1,100,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0));
+      Rows.Add(new SkillDataRow("S_6","Fire Sword",6,"Attacks an enemy with a fire sword",9,"AttackType_PATT","TargetType_Target","AnimType_MeleeTarget",false,"NONE","NONE","NONE","{PSTR}+{PPATT}+{PMATT}+{PFATT}-{EPDEF}-{EMDEF}+{EFDEF}","DAMAGE",0,1,0,0,50,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0));
+      Rows.Add(new SkillDataRow("S_7","Guard Position",7,"Physical Defence Doubled!",6,"AttackType_BUFF","TargetType_Target","AnimType_Self",false,"NONE","NONE","NONE","0-0","NONE",0,1,0,0,50,0,1,0,0,0,0,0,200,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0));
+      Rows.Add(new SkillDataRow("S_8","Berserk",8,"Attack Doubled, Defence Halfed",45,"AttackType_BUFF","TargetType_Target","AnimType_Self",false,"NONE","NONE","NONE","0-0","NONE",0,1,0,0,200,0,1,0,0,0,200,0,50,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0));
+      Rows.Add(new SkillDataRow("S_9","Blood Sacrifice",9,"Passes HP to an Ally",32,"AttackType_BUFF","TargetType_Target","AnimType_RangeTarget",false,"NONE","NONE","NONE","0-{PSTR}-{PPATT}-{PMATT}","HEAL",0,1,0,50,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0));
+      Rows.Add(new SkillDataRow("S_10","Heal All",10,"Heals all allies",28,"AttackType_BUFF","TargetType_Multiple","AnimType_Ally",false,"NONE","NONE","NONE","0-{PINT}","HEAL",0,1,0,0,250,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0));
+      Rows.Add(new SkillDataRow("S_11","Regeneration",11,"Heals a Target Over Time",4,"AttackType_BUFF","TargetType_Target","AnimType_RangeTarget",false,"NONE","NONE","NONE","(0-{PINT}-{PMATT}-{PMDEF})/3","HEAL",5,1,0,0,80,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0));
+      Rows.Add(new SkillDataRow("S_12","Sacrifice",12,"Heals all allies to full by sacrificing life",48,"AttackType_BUFF","TargetType_Multiple","AnimType_Ally",false,"NONE","NONE","NONE","0-9999","HEAL",0,1,0,100,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0));
+      Rows.Add(new SkillDataRow("S_13","Shell",13,"Doubles Mdef of allies",28,"AttackType_BUFF","TargetType_Multiple","AnimType_Ally",false,"NONE","NONE","NONE","0","NONE",5,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,200,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0));
+      Rows.Add(new SkillDataRow("S_14","Dispel",14,"Removes all Buffs",41,"AttackType_BUFF","TargetType_Target","AnimType_RangeTarget",false,"NONE","NONE","NONE","{SPECIAL}{REMOVEBUFFS}","NONE",0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0));
+      Rows.Add(new SkillDataRow("S_15","PowerShot (T)",15,"iploremsum...",1,"AttackType_PATT","TargetType_Target","AnimType_RangeTarget",false,"NONE","NONE","NONE","0","DAMAGE",0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0));
+      Rows.Add(new SkillDataRow("S_16","PowerShot (F)",16,"iploremsum...",1,"AttackType_PATT","TargetType_Target","AnimType_RangeTarget",false,"NONE","NONE","NONE","0","DAMAGE",0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0));
+      Rows.Add(new SkillDataRow("S_17","PowerShot (I)",17,"iploremsum...",1,"AttackType_PATT","TargetType_Target","AnimType_Ally",false,"NONE","NONE","NONE","0","DAMAGE",0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0));
+      Rows.Add(new SkillDataRow("S_18","Thunder Spear",18,"Attack using elemental damage",7,"AttackType_PATT","TargetType_Target","AnimType_MeleeTarget",false,"NONE","NONE","NONE","9999","DAMAGE",0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0));
+      Rows.Add(new SkillDataRow("S_19","WarCry",19,"Buffs attacks of allies",24,"AttackType_BUFF","TargetType_Multiple","AnimType_Ally",false,"NONE","NONE","NONE","0","NONE",0,1,0,0,0,0,0,0,0,0,200,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0));
+      Rows.Add(new SkillDataRow("S_20","Ice Spear",20,"Attack using elemental damage",7,"AttackType_PATT","TargetType_Target","AnimType_MeleeTarget",false,"NONE","NONE","NONE","9999","DAMAGE",0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0));
+      Rows.Add(new SkillDataRow("S_21","dummyskill",21,"iploremsum...",1,"AttackType_BUFF","TargetType_Multiple","AnimType_Ally",false,"NONE","NONE","NONE","0","DAMAGE",0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0));
+      Rows.Add(new SkillDataRow("S_22","dummyskill",21,"iploremsum...",1,"AttackType_BUFF","TargetType_Multiple","AnimType_Ally",false,"NONE","NONE","NONE","0","DAMAGE",0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0));
+      Rows.Add(new SkillDataRow("S_23","dummyskill",21,"iploremsum...",1,"AttackType_BUFF","TargetType_Multiple","AnimType_Ally",false,"NONE","NONE","NONE","0","DAMAGE",0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0));
+      Rows.Add(new SkillDataRow("S_24","dummyskill",21,"iploremsum...",1,"AttackType_BUFF","TargetType_Multiple","AnimType_Ally",false,"NONE","NONE","NONE","0","DAMAGE",0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0));
+      Rows.Add(new SkillDataRow("S_25","dummyskill",21,"iploremsum...",1,"AttackType_BUFF","TargetType_Multiple","AnimType_Ally",false,"NONE","NONE","NONE","0","DAMAGE",0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0));
+      Rows.Add(new SkillDataRow("S_26","dummyskill",21,"iploremsum...",1,"AttackType_BUFF","TargetType_Multiple","AnimType_Ally",false,"NONE","NONE","NONE","0","DAMAGE",0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0));
+      Rows.Add(new SkillDataRow("S_27","dummyskill",21,"iploremsum...",1,"AttackType_BUFF","TargetType_Multiple","AnimType_Ally",false,"NONE","NONE","NONE","0","DAMAGE",0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0));
+      Rows.Add(new SkillDataRow("S_28","dummyskill",21,"iploremsum...",1,"AttackType_BUFF","TargetType_Multiple","AnimType_Ally",false,"NONE","NONE","NONE","0","DAMAGE",0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0));
+      Rows.Add(new SkillDataRow("S_29","dummyskill",21,"iploremsum...",1,"AttackType_BUFF","TargetType_Multiple","AnimType_Ally",false,"NONE","NONE","NONE","0","DAMAGE",0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0));
+      Rows.Add(new SkillDataRow("S_30","dummyskill",21,"iploremsum...",1,"AttackType_BUFF","TargetType_Multiple","AnimType_Ally",false,"NONE","NONE","NONE","0","DAMAGE",0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0));
+      Rows.Add(new SkillDataRow("S_31","dummyskill",21,"iploremsum...",1,"AttackType_BUFF","TargetType_Multiple","AnimType_Ally",false,"NONE","NONE","NONE","0","DAMAGE",0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0));
+      Rows.Add(new SkillDataRow("S_32","dummyskill",21,"iploremsum...",1,"AttackType_BUFF","TargetType_Multiple","AnimType_Ally",false,"NONE","NONE","NONE","0","DAMAGE",0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0));
+      Rows.Add(new SkillDataRow("S_33","dummyskill",21,"iploremsum...",1,"AttackType_BUFF","TargetType_Multiple","AnimType_Ally",false,"NONE","NONE","NONE","0","DAMAGE",0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0));
+      Rows.Add(new SkillDataRow("S_34","dummyskill",21,"iploremsum...",1,"AttackType_BUFF","TargetType_Multiple","AnimType_Ally",false,"NONE","NONE","NONE","0","DAMAGE",0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0));
+      Rows.Add(new SkillDataRow("S_35","dummyskill",21,"iploremsum...",1,"AttackType_BUFF","TargetType_Multiple","AnimType_Ally",false,"NONE","NONE","NONE","0","DAMAGE",0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0));
+      Rows.Add(new SkillDataRow("S_36","dummyskill",21,"iploremsum...",1,"AttackType_BUFF","TargetType_Multiple","AnimType_Ally",false,"NONE","NONE","NONE","0","DAMAGE",0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0));
+      Rows.Add(new SkillDataRow("S_37","dummyskill",21,"iploremsum...",1,"AttackType_BUFF","TargetType_Multiple","AnimType_Ally",false,"NONE","NONE","NONE","0","DAMAGE",0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0));
+      Rows.Add(new SkillDataRow("S_38","dummyskill",21,"iploremsum...",1,"AttackType_BUFF","TargetType_Multiple","AnimType_Ally",false,"NONE","NONE","NONE","0","DAMAGE",0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0));
+      Rows.Add(new SkillDataRow("S_39","dummyskill",21,"iploremsum...",1,"AttackType_BUFF","TargetType_Multiple","AnimType_Ally",false,"NONE","NONE","NONE","0","DAMAGE",0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0));
+      Rows.Add(new SkillDataRow("S_40","dummyskill",21,"iploremsum...",1,"AttackType_BUFF","TargetType_Multiple","AnimType_Ally",false,"NONE","NONE","NONE","0","DAMAGE",0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0));
+      Rows.Add(new SkillDataRow("S_41","dummyskill",21,"iploremsum...",1,"AttackType_BUFF","TargetType_Multiple","AnimType_Ally",false,"NONE","NONE","NONE","0","DAMAGE",0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0));
+      Rows.Add(new SkillDataRow("S_42","dummyskill",21,"iploremsum...",1,"AttackType_BUFF","TargetType_Multiple","AnimType_Ally",false,"NONE","NONE","NONE","0","DAMAGE",0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0));
     }
 
     private class NestedSkillData

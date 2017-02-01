@@ -33,6 +33,11 @@ public class MainMenuButton : MonoBehaviour
         SceneManager.instance.NextSceneName = "Credits";
     }
 
+    public void GoInventoryScreen()
+    {
+        SceneManager.instance.NextSceneName = "InventoryScene";
+    }
+
     public void GoMainMenu()
     {
         SceneManager.instance.NextSceneName = "MainMenu";

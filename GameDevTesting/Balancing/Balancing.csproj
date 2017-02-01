@@ -53,23 +53,20 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="..\..\Assets\Google2uGen\StaticDB\Resources\CraftingData\CraftingData.cs">
+    <Compile Include="..\..\Assets\GameDatabase\CraftingData.cs">
       <Link>Databases\CraftingData.cs</Link>
     </Compile>
-    <Compile Include="..\..\Assets\Google2uGen\StaticDB\Resources\CraftngMatsData\CraftngMatsData.cs">
+    <Compile Include="..\..\Assets\GameDatabase\CraftingMatsData.cs">
       <Link>Databases\CraftngMatsData.cs</Link>
     </Compile>
-    <Compile Include="..\..\Assets\Google2uGen\StaticDB\Resources\HeroesData\HeroesData.cs">
+    <Compile Include="..\..\Assets\GameDatabase\HeroesData.cs">
       <Link>Databases\HeroesData.cs</Link>
     </Compile>
-    <Compile Include="..\..\Assets\Google2uGen\StaticDB\Resources\EquipmentData\EquipmentData.cs">
+    <Compile Include="..\..\Assets\GameDatabase\EquipmentData.cs">
       <Link>Databases\EquipmentData.cs</Link>
     </Compile>
-    <Compile Include="..\..\Assets\Google2uGen\StaticDB\Resources\MobData\MobData.cs">
+    <Compile Include="..\..\Assets\GameDatabase\MobData.cs">
       <Link>Databases\MobData.cs</Link>
-    </Compile>    
-    <Compile Include="..\..\Assets\Standard Assets\Resources\Google2u\ComponentBase.cs">
-      <Link>Google2u\ComponentBase.cs</Link>
     </Compile>
     <Compile Include="TestHelpers.cs" />
     <Compile Include="UnitTests.cs" />

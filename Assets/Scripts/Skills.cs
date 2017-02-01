@@ -26,6 +26,8 @@ public class Skill
         skillString = skillString.Replace("{PPDEF}", currentUnit.character.GetPDef().ToString());
         skillString = skillString.Replace("{PSTR}",  currentUnit.character.GetStr().ToString());
         skillString = skillString.Replace("{PFATT}", currentUnit.character.GetFAtt().ToString());
+        skillString = skillString.Replace("{PINT}", currentUnit.character.GetInt().ToString());
+        skillString = skillString.Replace("{PMDEF}", currentUnit.character.GetMDef().ToString());
 
         skillString = skillString.Replace("{EPDEF}", unit.character.GetPDef().ToString());
         skillString = skillString.Replace("{EMDEF}", unit.character.GetMDef().ToString());
@@ -35,24 +37,92 @@ public class Skill
         skillString = skillString.Replace(" ", "");
     }
 
-    public bool EvaluateSkillEffect(ref Unit currentUnit, ref Unit unit)
+    public List<Unit> FigureOutTargets(Unit currentUnit, List<Unit> allUnits)
+    {
+        bool CanHitDeadUnits = dataBaseSkill._CanHitDeadUnits;
+
+        if (dataBaseSkill._TargetType.Equals("TargetType_Target"))
+        {
+            if (dataBaseSkill._AttackType.Equals("AttackType_BUFF"))
+            {
+                return allUnits.FindAll(x => x.IsEnemyUnit == currentUnit.IsEnemyUnit && (x.isDead == false || CanHitDeadUnits)).ToList().GetRange(0,1);
+            }
+            else if (dataBaseSkill._AttackType.Equals("AttackType_PATT"))
+            {
+                return allUnits.FindAll(x => x.IsEnemyUnit != currentUnit.IsEnemyUnit && (x.isDead == false || CanHitDeadUnits)).ToList().GetRange(0,1);
+            }
+            else if (dataBaseSkill._AttackType.Equals("AttackType_MATT"))
+            {
+                return allUnits.FindAll(x => x.IsEnemyUnit != currentUnit.IsEnemyUnit && (x.isDead == false || CanHitDeadUnits)).ToList().GetRange(0,1);
+            }
+        }
+        else if (dataBaseSkill._TargetType.Equals("TargetType_Multiple"))
+        {
+            if (dataBaseSkill._AttackType.Equals("AttackType_BUFF"))
+            {
+                return allUnits.FindAll(x => x.IsEnemyUnit == currentUnit.IsEnemyUnit && (x.isDead == false || CanHitDeadUnits)).ToList();
+            }
+            else if (dataBaseSkill._AttackType.Equals("AttackType_PATT"))
+            {
+                return allUnits.FindAll(x => x.IsEnemyUnit != currentUnit.IsEnemyUnit && (x.isDead == false || CanHitDeadUnits)).ToList();
+            }
+            else if (dataBaseSkill._AttackType.Equals("AttackType_MATT"))
+            {
+                return allUnits.FindAll(x => x.IsEnemyUnit != currentUnit.IsEnemyUnit && (x.isDead == false || CanHitDeadUnits)).ToList();
+            }
+        }
+
+        Debug.Assert(false, "Shouldn't happen");
+        return allUnits;
+    }
+
+    public bool EvaluateSkillEffect(Unit currentUnit, Unit unit)
     {
         skillString = dataBaseSkill._SkillFomular;
         SubsituteTexts(ref currentUnit, ref unit);
         int result = (int)ep.Evaluate(skillString);
+        Color32 color = Color.red;
+        bool ShowDamage = true;
+
 
         // limit damage
-        if (result < 1)
+        if (dataBaseSkill._DamageType.Equals("DAMAGE"))
         {
-            result = 1;
+            if (result < 1)
+            {
+                result = 1;
+            }
         }
+
+        int resultDisplay = result;
+
+        if (dataBaseSkill._DamageType.Equals("HEAL"))
+        {
+            color = Color.green;
+            resultDisplay = -resultDisplay;
+        }
+
+        if (dataBaseSkill._DamageType.Equals("NONE"))
+        {
+            ShowDamage = false;
+        }
+
+
         
         // do stuffs
-        string topText = string.Format("{0} hits {1} for {2}", currentUnit.GetUnitName(), unit.GetUnitName(), result);
+        string topText = string.Format("{0} uses {1} on {2}", currentUnit.GetUnitName(), dataBaseSkill._Name, unit.GetUnitName());
         string debugText = string.Format("{0} ({1})", topText, skillString);
         Debug.Log(debugText);
         GameMaster.instance.UpdateTopText(topText);
+
+        if (ShowDamage)
+        {
+            GameMaster.instance.SpawnDamageAt(unit.sprite.transform.position, resultDisplay.ToString(), color);
+        }
+
+
         unit.HP -= result;
+
         return dataBaseSkill._AnimationType.Contains("AnimType_MeleeTarget");
     }
 }

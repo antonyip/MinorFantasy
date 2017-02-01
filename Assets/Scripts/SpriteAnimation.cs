@@ -1,14 +1,20 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class SpriteAnimation : MonoBehaviour
 {
     public MonoBehaviour AdapterScript;
-    //int counter = 1;
-    //bool Loaded = false;
-    //bool Attacking = false;
-    //string oldSprite;
+    GameObject simpleHealthBar;
+
+    void Start()
+    {
+        simpleHealthBar = Instantiate(Resources.Load<GameObject>("SimpleHealthBar")) as GameObject;
+        simpleHealthBar.transform.SetParent(transform);
+        simpleHealthBar.transform.localScale = Vector3.one;
+        simpleHealthBar.transform.localPosition = new Vector3(-90,-140);
+    }
 
     public void LoadEnemyImage(string s)
     {
@@ -20,8 +26,9 @@ public class SpriteAnimation : MonoBehaviour
         AdapterScript.SendMessage("LoadEnemyAttackInner",s);
     }
     
-    void Update()
+    public void UpdateScreenHealthBar(float percent)
     {
-        
+        simpleHealthBar.GetComponent<SimpleHealthBarScript>().UpdateScreenHealthBar(percent);
     }
+
 }

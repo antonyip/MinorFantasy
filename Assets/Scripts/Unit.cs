@@ -5,6 +5,8 @@ using System;
 
 public class Unit
 {
+    public int ID = -1;
+
     public GameObject sprite { get; set; }
     public Character character { get; set; }
     public GameObject uiButton { get; set; }
@@ -18,7 +20,20 @@ public class Unit
         get { return _HP; }
         set
         {
-            _HP = value; if (_HP <= 0) { isDead = true; } else { isDead = false; }
+            _HP = value;
+            if (_HP <= 0) 
+            { 
+                isDead = true; 
+            } 
+            else 
+            { 
+                isDead = false;
+            }
+
+            if (_HP > _MAXHP)
+            {
+                _HP = _MAXHP;
+            }
         }
     }
 

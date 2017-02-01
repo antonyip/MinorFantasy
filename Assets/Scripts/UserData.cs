@@ -33,6 +33,7 @@ public class UserData : Compressable
     public int Energy;
     public int MaxEnergy;
     public int PvpEnergy;
+    public bool AutoMode;
     public float MAPBONUSMULTIPLIER;
 
     // stored as an index to the database
@@ -43,6 +44,8 @@ public class UserData : Compressable
     public List<Team> listOfTeams = new List<Team>();
     public List<PlayerCharacter> listOfPlayerCharacters = new List<PlayerCharacter>();
 
+    public InventoryContainer Inventory = new InventoryContainer();
+
     public UserData()
     {
         Gold = 50000;
@@ -51,6 +54,7 @@ public class UserData : Compressable
         MaxEnergy = 50;
         PvpEnergy = 5;
         MAPBONUSMULTIPLIER = 1.0f;
+        AutoMode = false;
 
         while (listOfTeams.Count < DataManager.MAXTEAM)
         {
@@ -66,7 +70,11 @@ public class UserData : Compressable
         returnValue["Energy"]                 = Energy.ToString();
         returnValue["MaxEnergy"]              = MaxEnergy.ToString();
         returnValue["PvpEnergy"]              = PvpEnergy.ToString();
+        returnValue["AutoMode"]               = AutoMode.ToString();
+
         returnValue["ListOfGambits"]          = ListOfGambits.Compress();
+        returnValue["Inventory"]              = Inventory.Compress();
+        
 
         for (int i = 0; i < listOfTeams.Count; i++)
         {
@@ -89,7 +97,9 @@ public class UserData : Compressable
         if (returnValue["Gems"] != null)                   Gems      = returnValue["Gems"].AsInt;
         if (returnValue["Energy"] != null)                 Energy    = returnValue["Energy"].AsInt;
         if (returnValue["MaxEnergy"] != null)              MaxEnergy = returnValue["MaxEnergy"].AsInt;
+        if (returnValue["AutoMode"] != null)               AutoMode = returnValue["AutoMode"].AsBool;
         if (returnValue["ListOfGambits"] != null)          ListOfGambits.Decompress(returnValue["ListOfGambits"].Value);
+        if (returnValue["Inventory"] != null)              Inventory.Decompress(returnValue["Inventory"].Value);
 
         listOfTeams.Clear();
         if (returnValue["Teams"] != null)

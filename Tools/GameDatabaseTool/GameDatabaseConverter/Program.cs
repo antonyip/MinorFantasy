@@ -112,6 +112,11 @@ namespace GameDatabaseConverter
                         ConstructorVars += (PrintString[j]);
                         ConstructorVars += (",");
                     }
+                    else if (typeArray[j].ToLower().Equals("bool"))
+                    {
+                        ConstructorVars += (PrintString[j].ToLower());
+                        ConstructorVars += (",");
+                    }
                     else
                     {
                         ConstructorVars += ("\"");

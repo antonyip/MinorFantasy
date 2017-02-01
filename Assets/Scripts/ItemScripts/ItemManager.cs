@@ -19,35 +19,35 @@ public class ItemManager : MonoBehaviour
         {
             returnValue = new Item();
             returnValue.CraftingMatsDatabase = AntTool.CraftingMatsData.instance.Rows.Find(x => x._Name.Equals(NameOfItem));
-            returnValue.IndexInDatabase = AntTool.CraftingMatsData.instance.Rows.FindIndex(x => x._ID == returnValue.CraftingMatsDatabase._ID);
+            returnValue.IDInDatabase = returnValue.CraftingMatsDatabase._ID;
         }
 
         if (AntTool.CraftingData.instance.Rows.Find(x => x._Name.Equals(NameOfItem)) != null)
         {
             returnValue = new Item();
             returnValue.CraftingDataDatabase = AntTool.CraftingData.instance.Rows.Find(x => x._Name.Equals(NameOfItem));
-            returnValue.IndexInDatabase = AntTool.CraftingData.instance.Rows.FindIndex(x => x._ID == returnValue.CraftingDataDatabase._ID);
+            returnValue.IDInDatabase = returnValue.CraftingDataDatabase._ID;
         }
 
         if (AntTool.HeroesData.instance.Rows.Find(x => x._Name.Equals(NameOfItem)) != null)
         {
             returnValue = new Item();
             returnValue.HeroDatabase = AntTool.HeroesData.instance.Rows.Find(x => x._Name.Equals(NameOfItem));
-            returnValue.IndexInDatabase = AntTool.HeroesData.instance.Rows.FindIndex(x => x._ID == returnValue.HeroDatabase._ID);
+            returnValue.IDInDatabase = returnValue.HeroDatabase._ID;
         }
 
         if (AntTool.GambitData.instance.Rows.Find(x => x._Name.Equals(NameOfItem)) != null)
         {
             returnValue = new Item();
             returnValue.GambitDatabase = AntTool.GambitData.instance.Rows.Find(x => x._Name.Equals(NameOfItem));
-            returnValue.IndexInDatabase = AntTool.GambitData.instance.Rows.FindIndex(x => x._ID == returnValue.GambitDatabase._ID);
+            returnValue.IDInDatabase = returnValue.GambitDatabase._ID;
         }
 
         if (AntTool.EquipmentData.instance.Rows.Find(x => x._Name.Equals(NameOfItem)) != null)
         {
             returnValue = new Item();
             returnValue.EquipmentDatabase = AntTool.EquipmentData.instance.Rows.Find(x => x._Name.Equals(NameOfItem));
-            returnValue.IndexInDatabase = AntTool.EquipmentData.instance.Rows.FindIndex(x => x._ID == returnValue.EquipmentDatabase._ID);
+            returnValue.IDInDatabase = returnValue.EquipmentDatabase._ID;
         }
         
         return returnValue;

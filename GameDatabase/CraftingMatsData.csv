@@ -1,3 +1,8 @@
 Name;ID;Sprite
 string;Int;string
 Tree_Log;1;Tree_Log_Image
+CombineTicket;2;Tree_Log_Image
+ChanceTicket;3;Tree_Log_Image
+SummonPack;4;Tree_Log_Image
+Gold100;5;Tree_Log_Image
+Gold1000;6;Tree_Log_Image
