@@ -67,16 +67,6 @@ public class DataManager : MonoBehaviour
 
     // battle selection
 
-
-    void GenerateEmptyTeamStructure()
-    {
-        for (int i = 0; i < MAXTEAM; i++)
-        {
-            Team t = new Team();
-            userData.listOfTeams.Add(t);
-        }
-    }
-
     void Awake()
     {
         Debug.Log("InitDataManager");
@@ -137,7 +127,6 @@ public class DataManager : MonoBehaviour
         else if (PlayerIOManager.instance.LoggedIn == false && UniqueUserName == DataManager.BYPASSUSERLOAD)
         {
             userData = new UserData();
-            GenerateEmptyTeamStructure();
 
             Debug.Log("Loading UserData from our database::TODO");
             // insert unique pc for first 4.
