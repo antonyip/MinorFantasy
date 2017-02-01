@@ -20,3 +20,9 @@ G_17;Do Once Per Battle;Gambit_Team;17;Do Once Per Battle;NONE
 G_18;Every Other Turn;Gambit_Team;18;Every Other Turn;NONE
 G_19;Every 5 turns;Gambit_Team;19;Every 5 turns;NONE
 G_20;Every Turn;Gambit_Team;20;Every Turn;NONE
+G_21;Enemy < 75%;Gambit_Target;21;Enemy < 75%;NONE
+G_22;Enemy < 50%;Gambit_Target;22;Enemy < 50%;NONE
+G_23;Enemy < 25%;Gambit_Target;23;Enemy < 25%;NONE
+G_24;Ally < 75%;Gambit_Target;24;Ally < 75%;NONE
+G_25;Ally < 50%;Gambit_Target;25;Ally < 50%;NONE
+G_26;Ally < 25%;Gambit_Target;26;Ally < 25%;NONE

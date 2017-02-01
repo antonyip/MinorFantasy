@@ -477,25 +477,25 @@ public class GameMaster : MonoBehaviour {
 
     Unit UserCurrentUnit;
     int UserSkillID;
-    Dictionary<string, List<Unit>> AffectedUnits;
+    Dictionary<int, List<Unit>> AffectedUnits = new Dictionary<int, List<Unit>>();
     public void SkillButtonPressed(AntTool.SkillDataRow skill, int buttonID)
     {
         Debug.Log(skill._Name);
         UserSkillID = buttonID;
-        AffectedUnits = new Dictionary<string, List<Unit>>();
+        AffectedUnits.Clear();
 
         if (skill._TargetType.Equals("TargetType_Target"))
         {
             List<string> namesToPassDown = new List<string>();
-            foreach (var item in AllUnits)
+            foreach (var unit in AllUnits)
             {
-                namesToPassDown.Add(item.character.GetName());
+                namesToPassDown.Add(unit.character.GetName());
                 List<Unit> units = new List<Unit>();
-                units.Add(item);
-                AffectedUnits.Add(item.character.GetName(), units);
+                units.Add(unit);
+                AffectedUnits.Add(unit.ID, units);
             }
             namesToPassDown.Add("Cancel");
-            AffectedUnits.Add("Cancel", null);
+            AffectedUnits.Add(-1, null);
             SelectChoices.GetComponent<SelectChoicesScript>().SetupTarget(namesToPassDown);
             return;
         }
@@ -505,14 +505,14 @@ public class GameMaster : MonoBehaviour {
             List<string> namesToPassDown = new List<string>();
             namesToPassDown.Add("Allies");
             var AllyUnits = AllUnits.FindAll(x => !x.IsEnemyUnit).ToList();
-            AffectedUnits.Add("Allies", AllyUnits);
+            AffectedUnits.Add(60, AllyUnits);
 
             namesToPassDown.Add("Enemies");
             var EnemyUnits = AllUnits.FindAll(x => x.IsEnemyUnit).ToList();
-            AffectedUnits.Add("Enemies", EnemyUnits);
+            AffectedUnits.Add(61, EnemyUnits);
 
             namesToPassDown.Add("Cancel");
-            AffectedUnits.Add("Cancel", null);
+            AffectedUnits.Add(-1, null);
             SelectChoices.GetComponent<SelectChoicesScript>().SetupTarget(namesToPassDown);
             return;
         }
@@ -529,7 +529,7 @@ public class GameMaster : MonoBehaviour {
         ++UnitOrderCounter;
         // reset after everything is done
         PlayerButtons[UserCurrentUnit.ID].GetComponentInChildren<DOTweenVisualManager>().enabled = false;
-        AffectedUnits = null;
+        AffectedUnits.Clear();
         UserCurrentUnit = null;
         UserSkillID = -1;
         FirstTimeUserOnThisTurn = true;
@@ -588,7 +588,7 @@ public class GameMaster : MonoBehaviour {
                 isMelee = selectedSkill.EvaluateSkillEffect(currentUnit, ounit);
                 ounit.sprite.GetComponentInChildren<SpriteAnimation>().UpdateScreenHealthBar(ounit.HPPercent);
 
-                // hack animation lock for now
+                // HACK animation lock for now
                 AnimationLock = isMelee ? true : true;
                 if (ounit.isDead)
                 {
