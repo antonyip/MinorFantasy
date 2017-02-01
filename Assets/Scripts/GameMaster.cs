@@ -343,7 +343,10 @@ public class GameMaster : MonoBehaviour {
     void FixedUpdate ()
     {
         // if waiting for animation or user input..
-        if ((AnimationLock && !BypassAnimationLock) || HasWon || HasLost || GameNotStarted || ItemLock || SpawnLock)
+        if ((AnimationLock && !BypassAnimationLock) 
+            || HasWon || HasLost || GameNotStarted 
+            || (ItemLock && !BypassAnimationLock) 
+            || (SpawnLock&& !BypassAnimationLock))
         {
             return;
         }
@@ -590,7 +593,9 @@ public class GameMaster : MonoBehaviour {
                 Unit ounit = Targets[j];
                 MeleeAnimationTarget = Targets[j];
 
-                ounit.sprite.transform.DOPunchPosition(new Vector3(Random.Range(-15, 15), Random.Range(-15, 15), 0), DataManager.LONGANIMATION);
+                if (!BypassAnimationLock)
+                    ounit.sprite.transform.DOPunchPosition(new Vector3(Random.Range(-15, 15), Random.Range(-15, 15), 0), DataManager.LONGANIMATION);
+                
                 //isMelee = currentUnit.aiSkills[selectedSkillGambit].EvaluateSkillEffect(ref currentUnit, ref ounit);
                 isMelee = selectedSkill.EvaluateSkillEffect(currentUnit, ounit);
                 ounit.sprite.GetComponentInChildren<SpriteAnimation>().UpdateScreenHealthBar(ounit.HPPercent);
@@ -602,7 +607,10 @@ public class GameMaster : MonoBehaviour {
                     Sequence seq = DOTween.Sequence();
                     seq.AppendInterval(DataManager.LONGANIMATION);
                     seq.Append(ounit.sprite.transform.DOScale(Vector3.zero, DataManager.LONGANIMATION));
-                    seq.Play();
+
+                    if (!BypassAnimationLock)
+                        seq.Play();
+                    
                     experienceEarnedThisMap += Mathf.CeilToInt(1.0f * ounit.character.GetExperience() * MAPBONUSMULTIPLIER * DataManager.instance.userData.MAPBONUSMULTIPLIER);
                     RollForLoot(currentUnit, ounit);
                 }
@@ -617,12 +625,16 @@ public class GameMaster : MonoBehaviour {
                 AnimationName = selectedSkill.dataBaseSkill._Name;
                 //Vector3 attackPos = MeleeAnimationTarget.sprite.transform.position;
                 Vector3 attackPos = AttackSpritePositions[MeleeAnimationTarget.ID].transform.position;
-                currentUnit.sprite.transform.DOMove(attackPos, DataManager.NORMALANIMATION).OnComplete(AttackWithCurrentUnit);
+
+                if (!BypassAnimationLock)
+                    currentUnit.sprite.transform.DOMove(attackPos, DataManager.NORMALANIMATION).OnComplete(AttackWithCurrentUnit);
             }
             else
             {
                 currentUnit.sprite.GetComponentInChildren<SpriteAnimation>().LoadEnemyAttack(selectedSkill.dataBaseSkill._Name);
-                currentUnit.sprite.transform.DOScale(Vector3.one, DataManager.LONGANIMATION).OnComplete(ReleaseAnimationLock);
+
+                if (!BypassAnimationLock)
+                    currentUnit.sprite.transform.DOScale(Vector3.one, DataManager.LONGANIMATION).OnComplete(ReleaseAnimationLock);
             }
 
             // reset the skill
