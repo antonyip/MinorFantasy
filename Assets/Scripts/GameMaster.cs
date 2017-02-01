@@ -111,7 +111,8 @@ public class GameMaster : MonoBehaviour {
                     // make sure the combination is legit
                     if (playerChar.LimitGambits[j] == true && playerChar.CurrentGambits[j] != -1 && playerChar.CurrentSkills[j] != -1)
                     {
-                        u.aiActions.Add(Gambits.GetGambit(playerChar.CurrentGambits[j]));
+                        int GambitDatabase = DataManager.instance.userData.ListOfGambits.GetGambitAt(playerChar.CurrentGambits[j]).PositionInGambitDatabase;
+                        u.aiActions.Add(Gambits.GetGambit(GambitDatabase));
                         u.aiSkills.Add(new Skill(playerChar.CurrentSkills[j]));
                     }
                 }
@@ -504,11 +505,11 @@ public class GameMaster : MonoBehaviour {
         {
             List<string> namesToPassDown = new List<string>();
             namesToPassDown.Add("Allies");
-            var AllyUnits = AllUnits.FindAll(x => !x.IsEnemyUnit).ToList();
+            var AllyUnits = AllUnits.FindAll(x => x.IsEnemyUnit == false).ToList();
             AffectedUnits.Add(60, AllyUnits);
 
             namesToPassDown.Add("Enemies");
-            var EnemyUnits = AllUnits.FindAll(x => x.IsEnemyUnit).ToList();
+            var EnemyUnits = AllUnits.FindAll(x => x.IsEnemyUnit == true).ToList();
             AffectedUnits.Add(61, EnemyUnits);
 
             namesToPassDown.Add("Cancel");
@@ -577,11 +578,17 @@ public class GameMaster : MonoBehaviour {
             Debug.Log("Execute Gambit");
             bool isMelee = false;
             Unit MeleeAnimationTarget = null;
-            Debug.Log("NumOfUnits:" + unitsAffected.Count);
-            for (int j = 0; j < unitsAffected.Count; j++)
+            Debug.Log("NumOfUnits targeted:" + unitsAffected.Count);
+
+            // weird thing here to handle team selection heal all
+            List<Unit>Targets = selectedSkill.FigureOutTargets(currentUnit, AllUnits);
+
+            Debug.Log("NumOfUnits affected:" + Targets.Count);
+
+            for (int j = 0; j < Targets.Count; j++)
             {
-                Unit ounit = unitsAffected[j];
-                MeleeAnimationTarget = unitsAffected[j];
+                Unit ounit = Targets[j];
+                MeleeAnimationTarget = Targets[j];
 
                 ounit.sprite.transform.DOPunchPosition(new Vector3(Random.Range(-15, 15), Random.Range(-15, 15), 0), DataManager.LONGANIMATION);
                 //isMelee = currentUnit.aiSkills[selectedSkillGambit].EvaluateSkillEffect(ref currentUnit, ref ounit);

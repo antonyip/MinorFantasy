@@ -37,6 +37,45 @@ public class Skill
         skillString = skillString.Replace(" ", "");
     }
 
+    public List<Unit> FigureOutTargets(Unit currentUnit, List<Unit> allUnits)
+    {
+        bool CanHitDeadUnits = dataBaseSkill._CanHitDeadUnits;
+
+        if (dataBaseSkill._TargetType.Equals("TargetType_Target"))
+        {
+            if (dataBaseSkill._AttackType.Equals("AttackType_BUFF"))
+            {
+                return allUnits.FindAll(x => x.IsEnemyUnit == currentUnit.IsEnemyUnit && (x.isDead == false || CanHitDeadUnits)).ToList().GetRange(0,1);
+            }
+            else if (dataBaseSkill._AttackType.Equals("AttackType_PATT"))
+            {
+                return allUnits.FindAll(x => x.IsEnemyUnit != currentUnit.IsEnemyUnit && (x.isDead == false || CanHitDeadUnits)).ToList().GetRange(0,1);
+            }
+            else if (dataBaseSkill._AttackType.Equals("AttackType_MATT"))
+            {
+                return allUnits.FindAll(x => x.IsEnemyUnit != currentUnit.IsEnemyUnit && (x.isDead == false || CanHitDeadUnits)).ToList().GetRange(0,1);
+            }
+        }
+        else if (dataBaseSkill._TargetType.Equals("TargetType_Multiple"))
+        {
+            if (dataBaseSkill._AttackType.Equals("AttackType_BUFF"))
+            {
+                return allUnits.FindAll(x => x.IsEnemyUnit == currentUnit.IsEnemyUnit && (x.isDead == false || CanHitDeadUnits)).ToList();
+            }
+            else if (dataBaseSkill._AttackType.Equals("AttackType_PATT"))
+            {
+                return allUnits.FindAll(x => x.IsEnemyUnit != currentUnit.IsEnemyUnit && (x.isDead == false || CanHitDeadUnits)).ToList();
+            }
+            else if (dataBaseSkill._AttackType.Equals("AttackType_MATT"))
+            {
+                return allUnits.FindAll(x => x.IsEnemyUnit != currentUnit.IsEnemyUnit && (x.isDead == false || CanHitDeadUnits)).ToList();
+            }
+        }
+
+        Debug.Assert(false, "Shouldn't happen");
+        return allUnits;
+    }
+
     public bool EvaluateSkillEffect(Unit currentUnit, Unit unit)
     {
         skillString = dataBaseSkill._SkillFomular;

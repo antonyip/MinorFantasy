@@ -148,8 +148,10 @@ public class DataManager : MonoBehaviour
             pc = new PlayerCharacter();
             pc.ID = 3;
             pc.databaseChar = AntTool.HeroesData.instance.Rows.Find(x => x._ID == pc.ID);
-            pc.CurrentGambits[0] = 0;
-            pc.CurrentSkills[0] = 1;
+            pc.CurrentGambits[0] = 17;
+            pc.CurrentSkills[0] = 10;
+            pc.CurrentGambits[1] = 0;
+            pc.CurrentSkills[1] = 1;
             userData.listOfPlayerCharacters.Add(pc);
 
             // insert random for last 8
@@ -177,6 +179,29 @@ public class DataManager : MonoBehaviour
             userData.ListOfGambits.Add(new Gambit(3));
             userData.ListOfGambits.Add(new Gambit(4));
             userData.ListOfGambits.Add(new Gambit(5));
+            userData.ListOfGambits.Add(new Gambit(6));
+            userData.ListOfGambits.Add(new Gambit(7));
+            userData.ListOfGambits.Add(new Gambit(1));
+            userData.ListOfGambits.Add(new Gambit(2));
+            userData.ListOfGambits.Add(new Gambit(3));
+            userData.ListOfGambits.Add(new Gambit(4));
+            userData.ListOfGambits.Add(new Gambit(5));
+            userData.ListOfGambits.Add(new Gambit(6));
+            userData.ListOfGambits.Add(new Gambit(7));
+
+            userData.ListOfGambits.Add(new Gambit(21));
+            userData.ListOfGambits.Add(new Gambit(22));
+            userData.ListOfGambits.Add(new Gambit(23));
+            userData.ListOfGambits.Add(new Gambit(24));
+            userData.ListOfGambits.Add(new Gambit(25));
+            userData.ListOfGambits.Add(new Gambit(26));
+            userData.ListOfGambits.Add(new Gambit(21));
+            userData.ListOfGambits.Add(new Gambit(22));
+            userData.ListOfGambits.Add(new Gambit(23));
+            userData.ListOfGambits.Add(new Gambit(24));
+            userData.ListOfGambits.Add(new Gambit(25));
+            userData.ListOfGambits.Add(new Gambit(26));
+
 
             PlayerIOManager.instance.BypassLogin();
         }

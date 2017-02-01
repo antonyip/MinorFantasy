@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UnityEngine;
 
 public class Logic_EnemyMoreThanSelections : AIAction
 {
@@ -10,10 +11,7 @@ public class Logic_EnemyMoreThanSelections : AIAction
     public override List<Unit> EvaluateThis(Unit MyUnit, List<Unit> allUnits)
     {
         var selectedUnits = allUnits.FindAll(x => MyUnit.IsEnemyUnit != x.IsEnemyUnit && !x.isDead && x.HPPercent >= HPLimit).ToList();
-        if (selectedUnits.Count > 1)
-        {
-            selectedUnits.RemoveRange(1, selectedUnits.Count - 1);
-        }
+        Debug.Log("EnemyMoreThenCalled:" + HPLimit);
         return selectedUnits;
     }
 }
@@ -26,10 +24,7 @@ public class Logic_EnemyLessThanSelections : AIAction
     public override List<Unit> EvaluateThis(Unit MyUnit, List<Unit> allUnits)
     {
         var selectedUnits = allUnits.FindAll(x => MyUnit.IsEnemyUnit != x.IsEnemyUnit && !x.isDead && x.HPPercent <= HPLimit).ToList();
-        if (selectedUnits.Count > 1)
-        {
-            selectedUnits.RemoveRange(1, selectedUnits.Count - 1);
-        }
+        Debug.Log("EnemyLessThenCalled:" + HPLimit);
         return selectedUnits;
     }
 }
